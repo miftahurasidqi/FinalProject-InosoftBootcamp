@@ -8,10 +8,3 @@
 </p>
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
-
--DB_CONNECTION=mongodb
--DB_HOST=127.0.0.1
--DB_PORT=27017
--DB_DATABASE=final-project
--DB_USERNAME=
--DB_PASSWORD=
