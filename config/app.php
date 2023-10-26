@@ -154,12 +154,13 @@ return [
     | this array to grant expanded functionality to your applications.
     |
     */
+    Jenssegers\Mongodb\MongodbServiceProvider::class,
+
 
     'providers' => ServiceProvider::defaultProviders()->merge([
         /*
          * Package Service Providers...
          */
-
         /*
          * Application Service Providers...
          */
