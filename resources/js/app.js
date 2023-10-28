@@ -6,6 +6,8 @@
 
 import "./bootstrap";
 import { createApp } from "vue";
+import { createRouter, createWebHistory } from "vue-router";
+import { routes } from "./routes";
 import store from "./store";
 
 /**
@@ -15,9 +17,13 @@ import store from "./store";
  */
 
 const app = createApp({});
+const router = createRouter({
+    history: createWebHistory(),
+    routes,
+});
 
-import ExampleComponent from "./components/ExampleComponent.vue";
-app.component("example-component", ExampleComponent);
+import App from "./App.vue"; // Komponen App ini untuk induk aplikasi
+app.component("App", App); // router-view sama navbar dipasang di App.vue
 
 /**
  * The following block of code may be used to automatically register your
@@ -37,4 +43,5 @@ app.component("example-component", ExampleComponent);
  * scaffolding. Otherwise, you will need to add an element yourself.
  */
 
+app.use(router);
 app.use(store).mount("#app");
