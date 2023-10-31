@@ -1,7 +1,7 @@
 {
     "instructions": [
         {
-            "instructionId": "LI-2022",
+            "instructionId": "LI-2022-0",
             "linkTo": "TRF-2022",
             "instructionType": "LI",
             "assignedVendor": "Qube Logistic",
@@ -11,7 +11,7 @@
             "status": "In Progress"
         },
         {
-            "instructionId": "LI-2022",
+            "instructionId": "LI-2022-1",
             "linkTo": "TRF-2022",
             "instructionType": "LI",
             "assignedVendor": "Qube Logistic",
@@ -21,7 +21,7 @@
             "status": "Completed"
         },
         {
-            "instructionId": "LI-2022",
+            "instructionId": "LI-2022-2",
             "linkTo": "TRF-2022",
             "instructionType": "LI",
             "assignedVendor": "Qube Logistic",
@@ -31,7 +31,7 @@
             "status": "Cancelled"
         },
         {
-            "instructionId": "LI-2022",
+            "instructionId": "LI-2022-3",
             "linkTo": "TRF-2022",
             "instructionType": "LI",
             "assignedVendor": "Qube Logistic",

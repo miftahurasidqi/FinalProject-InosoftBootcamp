@@ -1,5 +1,5 @@
 <template>
-    <tr>
+    <tr @click="goToDetail">
         <th>{{ instruction.instructionId }}</th>
         <td>{{ instruction.linkTo }}</td>
         <td>{{ instruction.instructionType }}</td>
@@ -15,7 +15,14 @@
 export default {
     name: "HomeTable",
     props: {
-        instruction: Object,
+        instruction: {
+            type: Object,
+        },
+    },
+    methods: {
+        goToDetail() {
+            this.$router.push(`/detail/${this.instruction.instructionId}`);
+        },
     },
 };
 </script>

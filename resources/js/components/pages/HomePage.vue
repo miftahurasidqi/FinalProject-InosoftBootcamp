@@ -6,16 +6,16 @@
                 <div id="card-header">
                     <div class="my-4 mx-2 d-flex justify-content-between">
                         <div>
-                            <button @click="isOpenSwitcher">Open</button>
-                            <button @click="isCloseSwitcher">Completed</button>
+                            <ActionButton @click="isOpenSwitcher" text="Open" />
+                            <ActionButton @click="isCloseSwitcher" text="Completed" />
                         </div>
                         <div>
-                            <button>Search</button>
-                            <button>Export</button>
+                            <ActionButton text="Search" />
+                            <ActionButton text="Export" />
                         </div>
                     </div>
                     <div class="my-4 mx-2 d-flex justify-content-end">
-                        <button>Create 3rd Party Instruction</button>
+                        <ActionButton text="Create 3rd Party Instruction" />
                     </div>
                 </div>
 
@@ -49,11 +49,13 @@
 <script>
 import { mapGetters } from "vuex";
 import HomeTable from "../HomeTable.vue";
+import ActionButton from "../ActionButton.vue";
 
 export default {
     name: "HomePage",
     components: {
         HomeTable,
+        ActionButton,
     },
     data() {
         return {
@@ -63,7 +65,7 @@ export default {
     computed: {
         ...mapGetters({
             openInstructions: "getOpenInstructions",
-            closeInstructions: 'getCloseInstructions'
+            closeInstructions: "getCloseInstructions",
         }),
     },
     methods: {

@@ -15,7 +15,7 @@ export const routes = [
         component: CreatePage,
     },
     {
-        path: "/detail",
+        path: "/detail/:id",
         name: "detail",
         component: DetailPage,
     },
