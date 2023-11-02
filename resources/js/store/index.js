@@ -5,6 +5,11 @@ export default createStore({
         instructions: [],
     },
     getters: {
+        getInstructionById: (state) => (id) => {
+            return state.instructions.find(
+                (instruction) => instruction.instructionId === id,
+            );
+        },
         getOpenInstructions(state) {
             // Untuk mendapatkan data untuk halaman 'Open'
             return state.instructions.filter(
@@ -20,7 +25,7 @@ export default createStore({
                     instruction.status === "Completed" ||
                     instruction.status === "Cancelled",
             );
-        }
+        },
     },
     actions: {
         async FETCH_DATA() {

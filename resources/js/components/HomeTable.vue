@@ -21,7 +21,7 @@ export default {
     },
     methods: {
         goToDetail() {
-            this.$router.push(`/detail/${this.instruction.instructionId}`);
+            this.$router.push(`/${this.instruction.instructionId}`);
         },
     },
 };
