@@ -1,7 +1,11 @@
 <template>
     <tr @click="goToDetail">
         <th>{{ instruction.instructionId }}</th>
-        <td>{{ instruction.linkTo }}</td>
+        <td>
+            <p v-for="item in instruction.linkTo">
+                {{ item }}
+            </p>
+        </td>
         <td>{{ instruction.instructionType }}</td>
         <td>{{ instruction.assignedVendor }}</td>
         <td>{{ instruction.attentionOf }}</td>
@@ -21,7 +25,7 @@ export default {
     },
     methods: {
         goToDetail() {
-            this.$router.push(`/${this.instruction.instructionId}`);
+            this.$router.push(`/detail/${this.instruction.id}`);
         },
     },
 };

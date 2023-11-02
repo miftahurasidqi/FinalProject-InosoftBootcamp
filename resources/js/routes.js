@@ -15,12 +15,12 @@ export const routes = [
         component: CreatePage,
     },
     {
-        path: "/:id",
+        path: "/detail/:id",
         name: "detail",
         component: DetailPage,
     },
     {
-        path: "/edit",
+        path: "/edit/:id",
         name: "edit",
         component: EditPage,
     },
