@@ -13,8 +13,5 @@ export default {
     components: {
         TheNavbar,
     },
-    created() {
-        this.$store.dispatch("FETCH_DATA");
-    },
 };
 </script>

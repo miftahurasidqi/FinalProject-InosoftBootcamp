@@ -7,7 +7,10 @@
                     <div class="my-4 mx-2 d-flex justify-content-between">
                         <div>
                             <ActionButton @click="isOpenSwitcher" text="Open" />
-                            <ActionButton @click="isCloseSwitcher" text="Completed" />
+                            <ActionButton
+                                @click="isCloseSwitcher"
+                                text="Completed"
+                            />
                         </div>
                         <div>
                             <ActionButton text="Search" />
@@ -34,10 +37,16 @@
                     </thead>
                     <tbody>
                         <template v-if="isOpen === true">
-                            <HomeTable v-for="instruction in openInstructions" :instruction="instruction" />
+                            <HomeTable
+                                v-for="instruction in openInstructions"
+                                :instruction="instruction"
+                            />
                         </template>
                         <template v-else-if="isOpen === false">
-                            <HomeTable v-for="instruction in closeInstructions" :instruction="instruction" />
+                            <HomeTable
+                                v-for="instruction in closeInstructions"
+                                :instruction="instruction"
+                            />
                         </template>
                     </tbody>
                 </table>
@@ -47,7 +56,7 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 import HomeTable from "../HomeTable.vue";
 import ActionButton from "../ActionButton.vue";
 
@@ -62,6 +71,10 @@ export default {
             isOpen: true, // Secara default menunjukkan halaman 'Open'
         };
     },
+    mounted() {
+        // menjalankan function saat renderan awal
+        this.getAllInstructions();
+    },
     computed: {
         ...mapGetters({
             openInstructions: "getOpenInstructions",
@@ -69,6 +82,10 @@ export default {
         }),
     },
     methods: {
+        // mengakses function dari store  (store/actions.js)
+        ...mapActions({
+            getAllInstructions: "getAllInstructions",
+        }),
         isOpenSwitcher() {
             this.isOpen = true;
         },
