@@ -14,10 +14,17 @@
                         </div>
                         <div>
                             <ActionButton text="Search" />
-                            <ActionButton text="Export" />
+                            <ActionButton
+                                text="Export"
+                                @click="getOpenInstructions(1)"
+                            />
                         </div>
                     </div>
-                    <div class="my-4 mx-2 d-flex justify-content-end">
+                    <div class="my-4 mx-2 d-flex justify-content-between">
+                        <p>
+                            show {{ pageInfo.size }} of
+                            {{ pageInfo.totalData }} data
+                        </p>
                         <ActionButton text="Create 3rd Party Instruction" />
                     </div>
                 </div>
@@ -36,20 +43,17 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <template v-if="isOpen === true">
-                            <HomeTable
-                                v-for="instruction in openInstructions"
-                                :instruction="instruction"
-                            />
-                        </template>
-                        <template v-else-if="isOpen === false">
-                            <HomeTable
-                                v-for="instruction in closeInstructions"
-                                :instruction="instruction"
-                            />
-                        </template>
+                        <HomeTable
+                            v-for="instruction in instructions"
+                            :instruction="instruction"
+                        />
                     </tbody>
                 </table>
+
+                <ActionButton
+                    @click="loadNextInstructions"
+                    text="Load Next Data"
+                />
             </div>
         </div>
     </div>
@@ -73,24 +77,37 @@ export default {
     },
     mounted() {
         // menjalankan function saat renderan awal
-        this.getAllInstructions();
+        this.getOpenInstructions(0);
     },
     computed: {
         ...mapGetters({
-            openInstructions: "getOpenInstructions",
-            closeInstructions: "getCloseInstructions",
+            instructions: "instructions",
+            openInstructions: "openInstructions",
+            completedInstructions: "completedInstructions",
+            pageInfo: "pageInfo",
         }),
     },
     methods: {
         // mengakses function dari store  (store/actions.js)
         ...mapActions({
-            getAllInstructions: "getAllInstructions",
+            getOpenInstructions: "getOpenInstructions",
+            getCompletedInstructions: "getCompletedInstructions",
         }),
         isOpenSwitcher() {
             this.isOpen = true;
+            this.getOpenInstructions(0);
         },
         isCloseSwitcher() {
             this.isOpen = false;
+            this.getCompletedInstructions(0);
+        },
+        loadNextInstructions() {
+            // memeriksa tab apakah open atau completed
+            if (this.isOpen) {
+                this.getOpenInstructions(this.pageInfo.currrentPage);
+            } else {
+                this.getCompletedInstructions(this.pageInfo.currrentPage);
+            }
         },
     },
 };

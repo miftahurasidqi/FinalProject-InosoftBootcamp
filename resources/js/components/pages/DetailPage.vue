@@ -4,7 +4,10 @@
         <!-- <DetailPageContent /> -->
         <div class="card">
             <h2>{{ instruction.instructionId }}</h2>
-            <div id="top-panel" class="flex-wrap d-flex justify-content-between">
+            <div
+                id="top-panel"
+                class="flex-wrap d-flex justify-content-between"
+            >
                 <div>
                     <p>Back</p>
                 </div>
@@ -13,7 +16,10 @@
                     <p>Modify</p>
                 </div>
             </div>
-            <div id="info-panel" class="flex-row card d-flex justify-content-evenly">
+            <div
+                id="info-panel"
+                class="flex-row card d-flex justify-content-evenly"
+            >
                 <div>
                     <p>Type</p>
                     <p>{{ instruction.instructionType }}</p>
@@ -65,8 +71,8 @@ export default {
     //},
     computed: {
         instruction() {
-            return this.$store.getters["getInstructionById"](
-                this.$route.params.id,
+            return this.$store.getters.getInstructionById(
+                this.$route.params.id
             );
         },
     },
