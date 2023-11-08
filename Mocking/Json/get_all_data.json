@@ -9,6 +9,34 @@
             "attentionOf": "Tina",
             "quotationNo": 1895,
             "customerPO": "foobar",
+            "costDetails": [
+                {
+                    "description": "desc",
+                    "qty": 2,
+                    "uom": "TRP",
+                    "unitPrice": 120000,
+                    "discount": 0,
+                    "gst": 0,
+                    "currency": "AED",
+                    "vatAmount": 20,
+                    "subTotal": 120000,
+                    "total": 120000,
+                    "chargeTo": "Mitme"
+                },
+                {
+                    "description": "desc2",
+                    "qty": 2,
+                    "uom": "TRP",
+                    "unitPrice": 120000,
+                    "discount": 0,
+                    "gst": 0,
+                    "currency": "AED",
+                    "vatAmount": 20,
+                    "subTotal": 120000,
+                    "total": 120000,
+                    "chargeTo": "Mitme"
+                }
+            ],
             "status": "In Progress"
         },
         {
