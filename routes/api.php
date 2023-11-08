@@ -19,3 +19,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::get('/getAllData', 'Mocking\Controllers\InstructionsController@getData');
+Route::post('/postData', 'Mocking\Controllers\InstructionsController@postData');
