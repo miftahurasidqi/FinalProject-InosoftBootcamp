@@ -6,7 +6,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 
 class InstructionsController extends Controller
+
 {
+
     public function getOpenInstructions(Request $request)
     {
         $page = $request->input('page', ''); // Mendapatkan nilai query string 'page' (default: '')
