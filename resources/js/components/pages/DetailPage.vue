@@ -3,7 +3,10 @@
         <h1>3rd Party Instruction</h1>
         <div class="card">
             <h2>{{ instruction.instructionId }}</h2>
-            <div id="top-panel" class="flex-wrap d-flex justify-content-between">
+            <div
+                id="top-panel"
+                class="flex-wrap d-flex justify-content-between"
+            >
                 <div>
                     <p>Back</p>
                 </div>
@@ -61,8 +64,8 @@ export default {
     },
     computed: {
         instruction() {
-            return this.$store.getters["getInstructionById"](
-                this.$route.params.id,
+            return this.$store.getters.getInstructionById(
+                this.$route.params.id
             );
         },
     },

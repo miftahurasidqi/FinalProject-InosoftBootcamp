@@ -1,3 +1,7 @@
 export const state = {
-    instructions: [],
+    instructions: {
+        data: [],
+        page: {},
+    },
+    // instructionDetail: {},
 };

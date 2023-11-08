@@ -1,19 +1,12 @@
 export const getInstructionById = (state) => (id) => {
-    return state.instructions.find((instruction) => instruction.id === id);
+    return state.instructions.data.find((instruction) => instruction.id === id);
 };
-export const getOpenInstructions = (state) => {
-    // Untuk mendapatkan data untuk halaman 'Open'
-    return state.instructions.filter(
-        (instruction) =>
-            instruction.status === "In Progress" ||
-            instruction.status === "Draft"
-    );
+
+export const instructions = (state) => {
+    // console.log(state.openInstructions);
+    return state.instructions.data;
 };
-export const getCloseInstructions = (state) => {
-    // Untuk mendapatkan data untuk halaman 'Close'
-    return state.instructions.filter(
-        (instruction) =>
-            instruction.status === "Completed" ||
-            instruction.status === "Cancelled"
-    );
+
+export const pageInfo = (state) => {
+    return state.instructions.page;
 };
