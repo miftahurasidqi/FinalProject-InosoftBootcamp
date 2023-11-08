@@ -1,5 +1,5 @@
 {
-    "instructions": [
+    "openInstructions": [
         {
             "id": "1",
             "instructionId": "LI-2022-0",
@@ -10,28 +10,6 @@
             "quotationNo": 1895,
             "customerPO": "foobar",
             "status": "In Progress"
-        },
-        {
-            "id": "2",
-            "instructionId": "LI-2022-1",
-            "linkTo": ["TRF-2022"],
-            "instructionType": "LI",
-            "assignedVendor": "Qube Logistic",
-            "attentionOf": "Tina",
-            "quotationNo": 1895,
-            "customerPO": "foobar",
-            "status": "Completed"
-        },
-        {
-            "id": "3",
-            "instructionId": "LI-2022-2",
-            "linkTo": ["TRF-2022", "TRF-2023"],
-            "instructionType": "LI",
-            "assignedVendor": "Qube Logistic",
-            "attentionOf": "Tina",
-            "quotationNo": 1895,
-            "customerPO": "foobar",
-            "status": "Cancelled"
         },
         {
             "id": "4",
@@ -78,28 +56,6 @@
             "status": "In Progress"
         },
         {
-            "id": "8",
-            "instructionId": "LI-2022-8",
-            "linkTo": ["TRF-2022", "TRF-2021", "TRF-2020"],
-            "instructionType": "LI",
-            "assignedVendor": "Qube Logistic",
-            "attentionOf": "Tina",
-            "quotationNo": 1008,
-            "customerPO": "foobar",
-            "status": "Completed"
-        },
-        {
-            "id": "9",
-            "instructionId": "LI-2022-9",
-            "linkTo": ["TRF-2022", "TRF-2021"],
-            "instructionType": "LI",
-            "assignedVendor": "Qube Logistic",
-            "attentionOf": "Tina",
-            "quotationNo": 1009,
-            "customerPO": "foobar",
-            "status": "Completed"
-        },
-        {
             "id": "10",
             "instructionId": "LI-2022-10",
             "linkTo": ["TRF-2022"],
@@ -109,17 +65,6 @@
             "quotationNo": 10010,
             "customerPO": "foobar",
             "status": "In Progress"
-        },
-        {
-            "id": "11",
-            "instructionId": "LI-2022-11",
-            "linkTo": ["TRF-2022"],
-            "instructionType": "LI",
-            "assignedVendor": "Qube Logistic",
-            "attentionOf": "Tinaa",
-            "quotationNo": 10011,
-            "customerPO": "foobar",
-            "status": "Cancelled"
         },
         {
             "id": "12",
@@ -144,6 +89,129 @@
             "status": "Draft"
         },
         {
+            "id": "16",
+            "instructionId": "SI-2022-16",
+            "linkTo": ["TRF-2022", "TRF-2021"],
+            "instructionType": "SI",
+            "assignedVendor": "Qube Logistic",
+            "attentionOf": "tio",
+            "quotationNo": 10016,
+            "customerPO": "foobar",
+            "status": "Draft"
+        },
+        {
+            "id": "17",
+            "instructionId": "LI-2022-17",
+            "linkTo": ["TRF-2022"],
+            "instructionType": "LI",
+            "assignedVendor": "Qube Logistic",
+            "attentionOf": "mifta",
+            "quotationNo": 10017,
+            "customerPO": "foobar",
+            "status": "In Progress"
+        },
+        {
+            "id": "18",
+            "instructionId": "SI-2022-18",
+            "linkTo": ["TRF-2022"],
+            "instructionType": "SI",
+            "assignedVendor": "Qube Logistic",
+            "attentionOf": "mifta",
+            "quotationNo": 10018,
+            "customerPO": "foobar",
+            "status": "Draft"
+        },
+        {
+            "id": "19",
+            "instructionId": "LI-2022-19",
+            "linkTo": ["TRF-2022"],
+            "instructionType": "LI",
+            "assignedVendor": "Qube Logistic",
+            "attentionOf": "Tina",
+            "quotationNo": 10019,
+            "customerPO": "foobar",
+            "status": "In Progress"
+        },
+        {
+            "id": "20",
+            "instructionId": "SI-2022-20",
+            "linkTo": ["TRF-2022"],
+            "instructionType": "SI",
+            "assignedVendor": "Qube Logistic",
+            "attentionOf": "tio",
+            "quotationNo": 10020,
+            "customerPO": "foobar",
+            "status": "Draft"
+        },
+        {
+            "id": "21",
+            "instructionId": "LI-2022-21",
+            "linkTo": ["TRF-2022"],
+            "instructionType": "LI",
+            "assignedVendor": "Qube Logistic",
+            "attentionOf": "Mifta",
+            "quotationNo": 10021,
+            "customerPO": "foobar",
+            "status": "In Progress"
+        }
+    ],
+    "completedInstructions": [
+        {
+            "id": "2",
+            "instructionId": "LI-2022-1",
+            "linkTo": ["TRF-2022"],
+            "instructionType": "LI",
+            "assignedVendor": "Qube Logistic",
+            "attentionOf": "Tina",
+            "quotationNo": 1895,
+            "customerPO": "foobar",
+            "status": "Completed"
+        },
+        {
+            "id": "3",
+            "instructionId": "LI-2022-2",
+            "linkTo": ["TRF-2022", "TRF-2023"],
+            "instructionType": "LI",
+            "assignedVendor": "Qube Logistic",
+            "attentionOf": "Tina",
+            "quotationNo": 1895,
+            "customerPO": "foobar",
+            "status": "Cancelled"
+        },
+        {
+            "id": "8",
+            "instructionId": "LI-2022-8",
+            "linkTo": ["TRF-2022", "TRF-2021", "TRF-2020"],
+            "instructionType": "LI",
+            "assignedVendor": "Qube Logistic",
+            "attentionOf": "Tina",
+            "quotationNo": 1008,
+            "customerPO": "foobar",
+            "status": "Completed"
+        },
+        {
+            "id": "9",
+            "instructionId": "LI-2022-9",
+            "linkTo": ["TRF-2022", "TRF-2021"],
+            "instructionType": "LI",
+            "assignedVendor": "Qube Logistic",
+            "attentionOf": "Tina",
+            "quotationNo": 1009,
+            "customerPO": "foobar",
+            "status": "Completed"
+        },
+        {
+            "id": "11",
+            "instructionId": "LI-2022-11",
+            "linkTo": ["TRF-2022"],
+            "instructionType": "LI",
+            "assignedVendor": "Qube Logistic",
+            "attentionOf": "Tinaa",
+            "quotationNo": 10011,
+            "customerPO": "foobar",
+            "status": "Cancelled"
+        },
+        {
             "id": "14",
             "instructionId": "LI-2022-14",
             "linkTo": ["TRF-2022"],
@@ -164,6 +232,50 @@
             "quotationNo": 10015,
             "customerPO": "foobar",
             "status": "Cancelled"
+        },
+        {
+            "id": "22",
+            "instructionId": "SI-2022-22",
+            "linkTo": ["TRF-2022"],
+            "instructionType": "SI",
+            "assignedVendor": "Qube Logistic",
+            "attentionOf": "Mifta",
+            "quotationNo": 10022,
+            "customerPO": "foobar",
+            "status": "Completed"
+        },
+        {
+            "id": "23",
+            "instructionId": "LI-2022-23",
+            "linkTo": ["TRF-2022"],
+            "instructionType": "LI",
+            "assignedVendor": "Qube Logistic",
+            "attentionOf": "Mifta",
+            "quotationNo": 10023,
+            "customerPO": "foobar",
+            "status": "Cancelled"
+        },
+        {
+            "id": "24",
+            "instructionId": "SI-2022-24",
+            "linkTo": ["TRF-2022"],
+            "instructionType": "SI",
+            "assignedVendor": "Qube Logistic",
+            "attentionOf": "Mifta",
+            "quotationNo": 10024,
+            "customerPO": "foobar",
+            "status": "Cancelled"
+        },
+        {
+            "id": "25",
+            "instructionId": "LI-2022-25",
+            "linkTo": ["TRF-2022"],
+            "instructionType": "LI",
+            "assignedVendor": "Qube Logistic",
+            "attentionOf": "Mifta",
+            "quotationNo": 10025,
+            "customerPO": "foobar",
+            "status": "Completed"
         }
     ]
 }

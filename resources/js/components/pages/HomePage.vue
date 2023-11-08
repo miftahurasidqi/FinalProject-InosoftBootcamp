@@ -17,12 +17,18 @@
                                 class="b-completed"
                             />
                         </div>
+
                         <div class="container-s-e">
                             <ActionButton text="Search" class="border mx-2" />
                             <ActionButton text="Export" class="border" />
                         </div>
                     </div>
                     <div class="conatiner-b-intruction">
+                        <p>
+                            show {{ pageInfo.size }} of
+                            {{ pageInfo.totalData }} data
+                        </p>
+
                         <div style="position: relative">
                             <ActionButton
                                 @click="toggleList"
@@ -40,37 +46,31 @@
                         </div>
                     </div>
                 </div>
-
-                <table class="table my-4">
-                    <thead class="table-h">
-                        <tr>
-                            <th>Instruction ID</th>
-                            <th>Link To</th>
-                            <th>Instruction Type</th>
-                            <th>Assigned Vendor</th>
-                            <th>Attention Of</th>
-                            <th>Quotation No.</th>
-                            <th>Customer PO</th>
-                            <th class="th-status">Status</th>
-                        </tr>
-                    </thead>
-                    <tbody class="table-b">
-                        <template v-if="isOpen === true">
-                            <HomeTable
-                                v-for="instruction in openInstructions"
-                                :instruction="instruction"
-                                style="height: auto"
-                            />
-                        </template>
-                        <template v-else-if="isOpen === false">
-                            <HomeTable
-                                v-for="instruction in closeInstructions"
-                                :instruction="instruction"
-                            />
-                        </template>
-                    </tbody>
-                </table>
             </div>
+
+            <table class="table my-4">
+                <thead class="table-h">
+                    <tr>
+                        <th>Instruction ID</th>
+                        <th>Link To</th>
+                        <th>Instruction Type</th>
+                        <th>Assigned Vendor</th>
+                        <th>Attention Of</th>
+                        <th>Quotation No.</th>
+                        <th>Customer PO</th>
+                        <th class="th-status">Status</th>
+                    </tr>
+                </thead>
+                <tbody class="table-b">
+                    <HomeTable
+                        v-for="instruction in instructions"
+                        :instruction="instruction"
+                        style="height: auto"
+                    />
+                </tbody>
+            </table>
+
+            <ActionButton @click="loadNextInstructions" text="Load Next Data" />
         </div>
     </div>
 </template>
@@ -94,12 +94,12 @@ export default {
     },
     mounted() {
         // menjalankan function saat renderan awal
-        this.getAllInstructions();
+        this.getOpenInstructions(0);
     },
     computed: {
         ...mapGetters({
-            openInstructions: "getOpenInstructions",
-            closeInstructions: "getCloseInstructions",
+            instructions: "instructions",
+            pageInfo: "pageInfo",
         }),
         listClass() {
             return this.isListOpen ? "open" : "close";
@@ -108,13 +108,28 @@ export default {
     methods: {
         // mengakses function dari store  (store/actions.js)
         ...mapActions({
-            getAllInstructions: "getAllInstructions",
+            getOpenInstructions: "getOpenInstructions",
+            getCompletedInstructions: "getCompletedInstructions",
         }),
         isOpenSwitcher() {
             this.isOpen = true;
+            this.getOpenInstructions(0);
         },
         isCloseSwitcher() {
             this.isOpen = false;
+            this.getCompletedInstructions(0);
+        },
+        loadNextInstructions() {
+            // memeriksa tab apakah open atau completed
+            if (this.pageInfo.currrentPage === this.pageInfo.totalPages) {
+                console.log("semua data telah diambil");
+            } else {
+                if (this.isOpen) {
+                    this.getOpenInstructions(this.pageInfo.currrentPage);
+                } else {
+                    this.getCompletedInstructions(this.pageInfo.currrentPage);
+                }
+            }
         },
         toggleList() {
             this.isListOpen = !this.isListOpen;
@@ -161,7 +176,7 @@ export default {
 
 .conatiner-b-intruction {
     display: flex;
-    justify-content: end;
+    justify-content: space-between;
 }
 
 .close {
