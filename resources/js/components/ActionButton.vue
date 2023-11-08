@@ -12,3 +12,11 @@ export default {
     },
 };
 </script>
+
+<style scoped>
+button {
+    background: none;
+    border: none;
+    color: black;
+}
+</style>
