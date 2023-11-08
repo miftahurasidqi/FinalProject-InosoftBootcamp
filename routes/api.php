@@ -18,5 +18,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/getAllData', 'Mocking\Controllers\InstructionsController@getData');
+Route::get('/data3Party/open', 'Mocking\Controllers\InstructionsController@getOpenInstructions');
+Route::get('/data3Party/completed', 'Mocking\Controllers\InstructionsController@getCompletedInstructions');
+
+Route::get('/data3Party/open/search', 'Mocking\Controllers\InstructionsController@searchOpenInstructions');
+Route::get('/data3Party/completed/search', 'Mocking\Controllers\InstructionsController@searchCompletedInstructions');
+
 Route::post('/postData', 'Mocking\Controllers\InstructionsController@postData');
