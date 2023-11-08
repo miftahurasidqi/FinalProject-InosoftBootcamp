@@ -17,7 +17,7 @@
                                 class="b-completed"
                             />
                         </div>
-                        
+
                         <div class="container-s-e">
                             <ActionButton text="Search" class="border mx-2" />
                             <ActionButton text="Export" class="border" />
@@ -44,41 +44,33 @@
                                 </button>
                             </div>
                         </div>
-                        
-       
-                    </div>
-
-                        
                     </div>
                 </div>
-
-                <table class="table my-4">
-                    <thead class="table-h">
-                        <tr>
-                            <th>Instruction ID</th>
-                            <th>Link To</th>
-                            <th>Instruction Type</th>
-                            <th>Assigned Vendor</th>
-                            <th>Attention Of</th>
-                            <th>Quotation No.</th>
-                            <th>Customer PO</th>
-                            <th class="th-status">Status</th>
-                        </tr>
-                    </thead>
-                    <tbody class="table-b">
-                        <HomeTable
-                            v-for="instruction in instructions"
-                            :instruction="instruction"
-                            style="height: auto"
-                        />
-                    </tbody>
-                </table>
-
-                <ActionButton
-                    @click="loadNextInstructions"
-                    text="Load Next Data"
-                />
             </div>
+
+            <table class="table my-4">
+                <thead class="table-h">
+                    <tr>
+                        <th>Instruction ID</th>
+                        <th>Link To</th>
+                        <th>Instruction Type</th>
+                        <th>Assigned Vendor</th>
+                        <th>Attention Of</th>
+                        <th>Quotation No.</th>
+                        <th>Customer PO</th>
+                        <th class="th-status">Status</th>
+                    </tr>
+                </thead>
+                <tbody class="table-b">
+                    <HomeTable
+                        v-for="instruction in instructions"
+                        :instruction="instruction"
+                        style="height: auto"
+                    />
+                </tbody>
+            </table>
+
+            <ActionButton @click="loadNextInstructions" text="Load Next Data" />
         </div>
     </div>
 </template>
@@ -129,10 +121,14 @@ export default {
         },
         loadNextInstructions() {
             // memeriksa tab apakah open atau completed
-            if (this.isOpen) {
-                this.getOpenInstructions(this.pageInfo.currrentPage);
+            if (this.pageInfo.currrentPage === this.pageInfo.totalPages) {
+                console.log("semua data telah diambil");
             } else {
-                this.getCompletedInstructions(this.pageInfo.currrentPage);
+                if (this.isOpen) {
+                    this.getOpenInstructions(this.pageInfo.currrentPage);
+                } else {
+                    this.getCompletedInstructions(this.pageInfo.currrentPage);
+                }
             }
         },
         toggleList() {
