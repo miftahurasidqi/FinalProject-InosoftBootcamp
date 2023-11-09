@@ -110,8 +110,9 @@ class InstructionsController extends Controller
             // Tambahkan data lagi di sini
             // Sesuaikan dengan data di get_all_data
         ];
-        $instructions['instructions'][] = $newInstruction;
+        $instructions['openInstructions'][] = $newInstruction;
         File::put($path, json_encode($instructions));
         return response()->json(['message' => 'Data inserted successfully']);
     }
 }
+
