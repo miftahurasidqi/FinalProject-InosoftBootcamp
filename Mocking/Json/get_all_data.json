@@ -183,13 +183,51 @@
             "status": "In Progress"
         },
         {
-            "id": 5000,
+            "id": "5003",
             "instructionType": "Service Instruction",
             "assignedVendor": "Machine Shop",
-            "attentionOf": "saas",
-            "quotationNo": "1",
+            "attentionOf": null,
+            "quotationNo": 0,
+            "invoiceTo": null,
+            "vendorAddress": null,
+            "costDetails": [
+                {
+                    "description": "testing",
+                    "qty": 0,
+                    "uom": null,
+                    "unitPrice": 0,
+                    "gst": 0,
+                    "currency": null,
+                    "vatAmount": 0,
+                    "subTotal": 0,
+                    "total": 0,
+                    "chargeTo": null
+                }
+            ],
+            "status": "In Progress"
+        },
+        {
+            "id": "500",
+            "instructionType": "Service Instruction",
+            "assignedVendor": null,
+            "attentionOf": "caca",
+            "quotationNo": 0,
             "invoiceTo": "MITO",
-            "vendorAddress": "caca",
+            "vendorAddress": "wawa",
+            "costDetails": [
+                {
+                    "description": "sasa",
+                    "qty": "2",
+                    "uom": "Three",
+                    "unitPrice": "2220",
+                    "gst": "4",
+                    "currency": "SGD",
+                    "vatAmount": 0,
+                    "subTotal": 0,
+                    "total": 0,
+                    "chargeTo": "3"
+                }
+            ],
             "status": "In Progress"
         }
     ],
