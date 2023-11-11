@@ -16,7 +16,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr v-for="detail in instruction.costDetails">
+            <tr v-for="(detail, index) in instruction.costDetails" :key="index">
                 <td>{{ detail.description }}</td>
                 <td>{{ detail.qty }}</td>
                 <td>{{ detail.uom }}</td>

@@ -103,9 +103,16 @@ class InstructionsController extends Controller
     {
         $path = base_path() . "/Mocking/Json/get_all_data.json";
         $instructions = json_decode(file_get_contents($path), true);
+        $costDetails = $request->input('costDetails');
         $newInstruction = [
+            'id' => $request->input('id'),
             'instructionType' => $request->input('instructionType'),
             'assignedVendor' => $request->input('assignedVendor'),
+            'attentionOf' => $request->input('attentionOf'),
+            'quotationNo' => $request->input('quotationNo'),
+            'invoiceTo' => $request->input('invoiceTo'),
+            'vendorAddress' => $request->input('vendorAddress'),
+            'costDetails' => $costDetails,
             'status' => $request->input('status'),
             // Tambahkan data lagi di sini
             // Sesuaikan dengan data di get_all_data
@@ -115,4 +122,3 @@ class InstructionsController extends Controller
         return response()->json(['message' => 'Data inserted successfully']);
     }
 }
-
