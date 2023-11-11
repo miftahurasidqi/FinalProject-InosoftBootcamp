@@ -115,7 +115,12 @@
                             />
                             <tr>
                                 <td>
-                                    <button>+</button>
+                                    <button
+                                        type="button"
+                                        @click="addCostDetail"
+                                    >
+                                        +
+                                    </button>
                                 </td>
                             </tr>
                         </tbody>
@@ -123,7 +128,7 @@
                 </div>
             </div>
             <div class="card">
-                <button>submit</button>
+                <button type="submit">submit</button>
             </div>
         </form>
     </div>
@@ -142,7 +147,8 @@ export default {
             formData: {
                 // bagian dari v-model
                 // sesuaikan dengan database
-                id: "500",
+                // formdata ini adalah object yang bakal didorong ke openInstructions
+                id: "5010",
                 instructionType: "",
                 assignedVendor: "",
                 attentionOf: "",
@@ -170,6 +176,7 @@ export default {
     methods: {
         async submitForm() {
             // pindahkan ke actions nanti
+            // berfungsi untuk menambah data ke openInstructions
             try {
                 const response = await axios.post(
                     "/api/postData",
@@ -179,6 +186,23 @@ export default {
             } catch (error) {
                 console.error(error);
             }
+        },
+        addCostDetail() {
+            // berfungsi untuk mendorong object ini
+            // biarin aja gini, udah dicoba dimasukin ke data
+            // hasilnya malah table 2 dan seterusnya sama
+            this.formData.costDetails.push({
+                description: "",
+                qty: 0,
+                uom: "",
+                unitPrice: 0,
+                gst: 0,
+                currency: "",
+                vatAmount: 0,
+                subTotal: 0,
+                total: 0,
+                chargeTo: "",
+            });
         },
     },
 };
