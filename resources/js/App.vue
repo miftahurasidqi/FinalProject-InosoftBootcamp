@@ -1,8 +1,8 @@
 <template>
-    <div>
+    <div id="container-utama">
         <TheNavbar />
+        <TheSideBar />
         <div class="conten">
-            <TheSideBar />
             <router-view style="width: calc(100% - 75px)"></router-view>
         </div>
     </div>
@@ -24,5 +24,7 @@ export default {
 <style scoped>
 .conten {
     display: flex;
+    padding-top: 50px;
+    padding-left: 72px;
 }
 </style>
