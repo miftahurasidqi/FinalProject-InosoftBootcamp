@@ -131,15 +131,33 @@
                 <button type="submit">submit</button>
             </div>
         </form>
+
+        <div>
+            <h1>Create</h1>
+            <!-- <SendMail />
+        <InternalNote />
+        <ReasonCancellation />
+        <VendorInvoice /> -->
+            <!-- <AddInvoiceTarget /> -->
+        </div>
     </div>
 </template>
 
 <script>
 import CreatePageTable from "../CreatePageTable.vue";
-
+import InternalNote from "../modal/InternalNote.vue";
+import VendorInvoice from "../modal/VendorInvoice.vue";
+import ReasonCancellation from "../modal/ReasonCancellation.vue";
+import SendMail from "../modal/SendMail.vue";
+import AddInvoiceTarget from "../modal/AddInvoiceTarget.vue";
 export default {
     name: "CreatePage",
     components: {
+        InternalNote,
+        VendorInvoice,
+        ReasonCancellation,
+        SendMail,
+        AddInvoiceTarget,
         CreatePageTable,
     },
     data() {
@@ -180,7 +198,7 @@ export default {
             try {
                 const response = await axios.post(
                     "/api/postData",
-                    this.formData,
+                    this.formData
                 );
                 console.log(response);
             } catch (error) {
