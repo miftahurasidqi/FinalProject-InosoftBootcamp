@@ -334,7 +334,6 @@ export default {
     display: flex;
     flex-direction: column;
 }
-
 .b-plus {
     display: flex;
     justify-content: center;
