@@ -11,7 +11,7 @@
             "customerPO": "foobar",
             "costDetails": [
                 {
-                    "description": "desc",
+                    "description": "jh",
                     "qty": 2,
                     "uom": "TRP",
                     "unitPrice": 120000,
@@ -24,7 +24,7 @@
                     "chargeTo": "Mitme"
                 },
                 {
-                    "description": "desc2",
+                    "description": "lk",
                     "qty": 2,
                     "uom": "TRP",
                     "unitPrice": 120000,
@@ -35,6 +35,18 @@
                     "subTotal": 120000,
                     "total": 120000,
                     "chargeTo": "Mitme"
+                },
+                {
+                    "description": "po",
+                    "qty": 0,
+                    "uom": null,
+                    "unitPrice": 0,
+                    "gst": 0,
+                    "currency": null,
+                    "vatAmount": 0,
+                    "subTotal": 0,
+                    "total": 0,
+                    "chargeTo": null
                 }
             ],
             "status": "In Progress"
