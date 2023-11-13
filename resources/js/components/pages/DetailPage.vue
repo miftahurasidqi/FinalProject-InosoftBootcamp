@@ -16,7 +16,7 @@
                 </div>
             </div>
             <DetailPageInfoPanel :instruction="instruction" />
-            <hr />
+            <!-- <hr /> -->
             <div id="cost-detail-panel" class="card">
                 <h2>Cost Detail</h2>
                 <DetailPageTable :instruction="instruction" />

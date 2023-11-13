@@ -4,7 +4,7 @@
             <input
                 type="text"
                 placeholder="Enter Description"
-                class="table-input"
+                class="table-input-large"
                 :value="description"
                 @input="$emit('update:description', $event.target.value)"
             />
@@ -13,14 +13,15 @@
             <input
                 type="number"
                 placeholder="Enter Qty"
-                class="table-input"
+                class="table-input-large"
                 :value="qty"
                 @input="$emit('update:qty', $event.target.value)"
             />
         </td>
         <td>
             <select
-                class="form-select table-input"
+                class="form-select"
+                style="width: 80px"
                 aria-label="Select UOM"
                 :value="uom"
                 @input="$emit('update:uom', $event.target.value)"
@@ -34,7 +35,7 @@
             <input
                 type="number"
                 placeholder="Enter Unit Price"
-                class="table-input"
+                class="table-input-large"
                 :value="unitPrice"
                 @input="$emit('update:unitPrice', $event.target.value)"
             />
@@ -42,14 +43,14 @@
         <td>
             <input
                 type="number"
-                class="table-input"
+                class="table-input-large"
                 :value="gst"
                 @input="$emit('update:gst', $event.target.value)"
             />
         </td>
         <td>
             <select
-                class="form-select table-input"
+                class="form-select"
                 aria-label="Select currency"
                 :value="currency"
                 @input="$emit('update:currency', $event.target.value)"
@@ -75,7 +76,9 @@
             </select>
         </td>
         <td>
-            <button>-</button>
+            <button class="b-min">
+                <p style="transform: translateY(-4px)">_</p>
+            </button>
         </td>
     </tr>
 </template>
@@ -111,7 +114,18 @@ export default {
 </script>
 
 <style scoped>
-.table-input {
-    max-width: 2rem;
+.table-input-large {
+    max-width: 150px;
+}
+
+.b-min {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: x-large;
+    height: 30px;
+    width: 30px;
+    border-radius: 5px;
+    border: none;
 }
 </style>
