@@ -16,7 +16,7 @@
                 </div>
             </div>
             <DetailPageInfoPanel :instruction="instruction" />
-            <hr />
+            <!-- <hr /> -->
             <div id="cost-detail-panel" class="card">
                 <h2>Cost Detail</h2>
                 <DetailPageTable :instruction="instruction" />
@@ -65,7 +65,7 @@ export default {
     computed: {
         instruction() {
             return this.$store.getters.getInstructionById(
-                this.$route.params.id,
+                this.$route.params.id
             );
         },
     },
