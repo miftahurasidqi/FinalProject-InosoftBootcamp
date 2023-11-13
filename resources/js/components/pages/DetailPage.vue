@@ -65,7 +65,7 @@ export default {
     computed: {
         instruction() {
             return this.$store.getters.getInstructionById(
-                this.$route.params.id,
+                this.$route.params.id
             );
         },
     },
