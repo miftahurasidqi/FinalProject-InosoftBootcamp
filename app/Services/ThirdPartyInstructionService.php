@@ -7,11 +7,18 @@ use Illuminate\Support\Facades\Validator;
 
 class ThirdPartyInstructionService
 {
-    protected $thirdpartyrepository;
+    protected $thirdpartyRepository;
+    protected $vendoraddressService;
+    protected $invoicetoService;
 
-    public function __construct(ThirdPartyInstructionRepository $thirdpartyrepository)
-    {
-        $this->thirdpartyrepository = $thirdpartyrepository;
+    public function __construct(
+        ThirdPartyInstructionRepository $thirdpartyRepository,
+        VendorAddressService $vendoraddressService,
+        InvoiceToService $invoicetoService
+    ) {
+        $this->thirdpartyRepository = $thirdpartyRepository;
+        $this->vendoraddressService = $vendoraddressService;
+        $this->invoicetoService = $invoicetoService;
     }
 
     public function createInstruction(array $data)
@@ -47,9 +54,21 @@ class ThirdPartyInstructionService
 
 
         if ($validator->fails()) {
-            return ['success' => false, 'errors' => $validator->errors()];
+            return response()->json(['error' => $validator->errors()], 400);
         }
 
-        return $this->thirdpartyrepository->create($data);
+        // Ambil data vendorAddress dari service VendorAddress
+        $vendorAddressData = $this->vendoraddressService->getAll($data['vendorAddress']);
+
+        // Ambil data invoiceTo dari service InvoiceTo
+        $invoiceToData = $this->invoicetoService->getAll($data['invoiceTo']);
+
+        // Gabungkan data vendorAddress dan invoiceTo dengan data instruksi pihak ketiga
+        $data['vendorAddress'] = $vendorAddressData;
+        $data['invoiceTo'] = $invoiceToData;
+
+        $result = $this->thirdpartyRepository->createInstructionRepository($data);
+
+        return response()->json(['Create New Third Party Instruction Success' => true, 'data' => $result], 200);
     }
 }

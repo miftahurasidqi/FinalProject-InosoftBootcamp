@@ -7,34 +7,30 @@ use Illuminate\Http\Request;
 
 class InvoiceToController extends Controller
 {
-    protected $invoicetoservice;
+    protected $invoicetoService;
 
-    public function __construct(InvoiceToService $invoicetoservice)
+    public function __construct(InvoiceToService $invoicetoService)
     {
-        $this->invoicetoservice = $invoicetoservice;
+        $this->invoicetoService = $invoicetoService;
     }
 
-    public function create(Request $request)
+    public function store(Request $request)
     {
+        return $this->invoicetoService->createInvoiceTo($request->all());
+    }
 
-        $data = $request->all();
+    public function getInvoiceToList()
+    {
+        return $this->invoicetoService->getAll();
+    }
 
-        // var_dump(($data));
-        // die();
-        $result = $this->invoicetoservice->createInstruction($data);
+    public function show($id)
+    {
+        return $this->invoicetoService->getOne($id);
+    }
 
-        if ($result['success']) {
-            return response()->json([
-                'message' => 'Create New 3rd Party Instruction success',
-                'data' => [
-                    'invoiceToName' => $result['data']->invoiceToName,
-                ]
-            ]);
-        } else {
-            return response()->json([
-                'message' => 'Failed to create 3rd Party Instruction',
-                'errors' => $result['errors']
-            ], 422); // 422 Unprocessable Entity status code for validation errors
-        }
+    public function delete($id)
+    {
+        return $this->invoicetoService->delete($id);
     }
 }

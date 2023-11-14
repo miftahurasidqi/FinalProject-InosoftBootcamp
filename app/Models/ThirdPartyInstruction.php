@@ -11,21 +11,23 @@ class ThirdPartyInstruction extends Eloquent
     protected $collection = 'third_party_instructions';
 
     protected $fillable = [
-        'instructionType',
         'linkTo',
-        'attentionOf',
-        'invoiceTo',
         'assignedVendor',
+        'attentionOf',
         'vendorAddress',
+        'invoiceTo',
         'vendorQuotationNo',
-        'customer',
+        'customerContract',
         'NoCustomerPO',
         'status',
-        'costDetail'
     ];
 
     protected $casts = [
-        'linkTo' => 'array',
         'costDetail' => 'array'
     ];
+
+    public function invoiceTo()
+    {
+        return $this->belongsTo(InvoiceTo::class, 'invoiceTo');
+    }
 }

@@ -5,13 +5,13 @@ namespace App\Models;
 use Jenssegers\Mongodb\Eloquent\Model as Eloquent;
 
 
-class InvoiceTo extends Eloquent
+class LinkTo extends Eloquent
 {
     protected $connection = 'mongodb';
-    protected $collection = 'invoice_tos';
+    protected $collection = 'link_tos';
 
     protected $fillable = [
 
-        'invoiceTo'
+        'linkTo'
     ];
 }

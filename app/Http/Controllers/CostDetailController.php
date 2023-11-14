@@ -2,32 +2,32 @@
 
 namespace App\Http\Controllers;
 
-use App\Services\ThirdPartyInstructionService;
+use App\Services\CostDetailService;
 use Illuminate\Http\Request;
 
-class ThirdPartyInstructionController extends Controller
+class CostDetailController extends Controller
 {
-    protected $thirdpartyinstructionservice;
+    protected $costdetailservice;
 
-    public function __construct(ThirdPartyInstructionService $thirdpartyinstructionservice)
+    public function __construct(CostDetailService $costdetailservice)
     {
-        $this->thirdpartyinstructionservice = $thirdpartyinstructionservice;
+        $this->costdetailservice = $costdetailservice;
     }
 
-    public function store(Request $request)
+    public function create(Request $request)
     {
 
         $data = $request->all();
 
         // var_dump(($data));
         // die();
-        $result = $this->thirdpartyinstructionservice->createInstruction($data);
+        $result = $this->costdetailservice->createInvoiceTo($data);
 
         if ($result['success']) {
             return response()->json([
-                'message' => 'Create New 3rd Party Instruction success',
+                'message' => 'Create Invoice To success',
                 'data' => [
-                    'id' => $result['data']->id,
+                    'invoiceTo' => $result['data']->invoiceToName,
                 ]
             ]);
         } else {

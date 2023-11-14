@@ -26,6 +26,13 @@ class CreateThirdPartyInstructionsCollection extends Migration
             $collection->string('NoCustomerPO');
             $collection->string('status');
 
+
+            // Foreign keys
+            $collection->foreignId('assigned_vendor_id')->constrained('assigned_vendors');
+            $collection->foreignId('vendor_address_id')->constrained('vendor_addresses');
+            $collection->foreignId('invoice_to_id')->constrained('invoice_to');
+            $collection->foreignId('customer_contract_id')->constrained('customer_contracts');
+
             // Cost Detail Subdocument
             $collection->embedsMany('costDetail', function (Blueprint $embed) {
                 $embed->embedsMany('costItem', function (Blueprint $embed) {

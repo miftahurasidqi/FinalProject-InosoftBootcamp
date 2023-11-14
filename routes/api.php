@@ -1,7 +1,10 @@
 <?php
 
+use App\Http\Controllers\AssignedVendorController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CustomerContractController;
 use App\Http\Controllers\InvoiceToController;
+use App\Http\Controllers\LinkToController;
 use App\Http\Controllers\ThirdPartyInstructionController;
 use App\Http\Controllers\VendorAddressController;
 use Illuminate\Http\Request;
@@ -46,21 +49,54 @@ Route::group([
 
 ], function () {
     // Routes for Create Third Party Instruction
-    Route::post('/new3Party', [ThirdPartyInstructionController::class, 'create']);
+    Route::post('/new3Party', [ThirdPartyInstructionController::class, 'store']);
     // Route::get('/', [TodoListController::class, 'getTodoList']);
     // Route::get('/{id}', [TodoListController::class, 'show']);
     // Route::put('/{id}', [TodoListController::class, 'update']);
     // Route::delete('/{id}', [TodoListController::class, 'destroy']);
 });
 
-// Route Api For InvoiceTo 
-Route::group([], function () {
-    // Routes for Todos
-    Route::post('/invoiceTo', [InvoiceToController::class, 'create']);
+// Route Api For Link To
+Route::group(['prefix' => 'linkTo'], function () {
+    Route::post('/', [LinkToController::class, 'store']);
+    Route::get('/', [LinkToController::class, 'getLinkToList']);
+    Route::get('/{id}', [LinkToController::class, 'show']);
+    Route::put('/{id}', [LinkToController::class, 'update']);
+    Route::delete('/{id}', [LinkToController::class, 'delete']);
+});
+
+// Route Api For Assigned Vendor
+Route::group(['prefix' => 'assignedVendor'], function () {
+    Route::post('/', [AssignedVendorController::class, 'store']);
+    Route::get('/', [AssignedVendorController::class, 'getAssignedVendorList']);
+    Route::get('/{id}', [AssignedVendorController::class, 'show']);
+    Route::put('/{id}', [AssignedVendorController::class, 'update']);
+    Route::delete('/{id}', [AssignedVendorController::class, 'delete']);
 });
 
 // Route Api For Vendor Address 
-Route::group([], function () {
-    // Routes for Todos
-    Route::post('/vendorAddress', [VendorAddressController::class, 'create']);
+Route::group(['prefix' => 'vendorAddress'], function () {
+    Route::post('/', [VendorAddressController::class, 'store']);
+    Route::get('/', [VendorAddressController::class, 'getVendorAddressList']);
+    Route::get('/{id}', [VendorAddressController::class, 'show']);
+    Route::put('/{id}', [VendorAddressController::class, 'update']);
+    Route::delete('/{id}', [VendorAddressController::class, 'delete']);
+});
+
+// Route Api For InvoiceTo 
+Route::group(['prefix' => 'invoiceTo'], function () {
+    Route::post('/', [InvoiceToController::class, 'store']);
+    Route::get('/', [InvoiceToController::class, 'getInvoiceToList']);
+    Route::get('/{id}', [InvoiceToController::class, 'show']);
+    Route::put('/{id}', [InvoiceToController::class, 'update']);
+    Route::delete('/{id}', [InvoiceToController::class, 'delete']);
+});
+
+// Route Api For Customer Contract
+Route::group(['prefix' => 'customerContract'], function () {
+    Route::post('/', [CustomerContractController::class, 'store']);
+    Route::get('/', [CustomerContractController::class, 'getCustomerContractList']);
+    Route::get('/{id}', [CustomerContractController::class, 'show']);
+    Route::put('/{id}', [CustomerContractController::class, 'update']);
+    Route::delete('/{id}', [CustomerContractController::class, 'delete']);
 });
