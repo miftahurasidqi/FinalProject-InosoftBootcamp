@@ -121,4 +121,32 @@ class InstructionsController extends Controller
         File::put($path, json_encode($instructions));
         return response()->json(['message' => 'Data inserted successfully']);
     }
+
+    public function patchData(Request $request, $id)
+    {
+        $path = base_path() . "/Mocking/Json/get_all_data.json";
+        $instructions = json_decode(file_get_contents($path), true);
+
+        // Mencari instruction berdasarkan id
+        $instructionId = array_search($id, array_column($instructions['openInstructions'], 'id'));
+
+        if ($instructionId !== false) {
+            $existingData['openInstructions'][$instructionId]['assignedVendor'] = $request->input('assignedVendor');
+            $existingData['openInstructions'][$instructionId]['attentionOf'] = $request->input('attentionOf');
+            $existingData['openInstructions'][$instructionId]['quotationNo'] = $request->input('quotationNo');
+            $existingData['openInstructions'][$instructionId]['invoiceTo'] = $request->input('invoiceTo');
+            $existingData['openInstructions'][$instructionId]['vendorAddress'] = $request->input('vendorAddress');
+
+            // Untuk mengupdate costDetails
+            $costDetails = $request->input('costDetails');
+            if ($costDetails && is_array($costDetails)) {
+                $instructions['openInstructions'][$instructionId]['costDetails'] = $costDetails;
+            }
+
+            file_put_contents($path, json_encode($instructions));
+            return response()->json(['message' => 'Data updated successfully']);
+        }
+
+        return response()->json(['message' => 'Instruction not found'], 404);
+    }
 }

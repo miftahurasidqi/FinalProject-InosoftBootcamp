@@ -10,9 +10,15 @@
                 <div>
                     <p>Back</p>
                 </div>
-                <div class="d-flex fles-row">
-                    <p>Terminate</p>
-                    <p>Modify</p>
+                <div
+                    class="d-flex fles-row"
+                    v-if="
+                        instruction.status === 'In Progress' ||
+                        instruction.status === 'Draft'
+                    "
+                >
+                    <ActionButton text="Terminate" />
+                    <ActionButton text="Modify" @click="goToEdit" />
                 </div>
             </div>
             <DetailPageInfoPanel :instruction="instruction" />
@@ -55,18 +61,25 @@
 <script>
 import DetailPageInfoPanel from "../DetailPageInfoPanel.vue";
 import DetailPageTable from "../DetailPageTable.vue";
+import ActionButton from "../ActionButton.vue";
 
 export default {
     name: "DetailPage",
     components: {
         DetailPageInfoPanel,
         DetailPageTable,
+        ActionButton,
     },
     computed: {
         instruction() {
             return this.$store.getters.getInstructionById(
                 this.$route.params.id
             );
+        },
+    },
+    methods: {
+        goToEdit() {
+            this.$router.push(`/edit/${this.instruction.id}`);
         },
     },
 };

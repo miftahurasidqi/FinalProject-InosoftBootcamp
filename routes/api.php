@@ -25,3 +25,4 @@ Route::get('/data3Party/open/search', 'Mocking\Controllers\InstructionsControlle
 Route::get('/data3Party/completed/search', 'Mocking\Controllers\InstructionsController@searchCompletedInstructions');
 
 Route::post('/postData', 'Mocking\Controllers\InstructionsController@postData');
+Route::patch('/patchData/{id}', 'Mocking\Controllers\InstructionsController@patchData');

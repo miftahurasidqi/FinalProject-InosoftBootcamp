@@ -34,7 +34,7 @@
         </div>
         <div>
             <p>Vendor Address</p>
-            <p>no data yet</p>
+            <p>{{ instruction.vendorAddress }}</p>
         </div>
     </div>
 </template>
