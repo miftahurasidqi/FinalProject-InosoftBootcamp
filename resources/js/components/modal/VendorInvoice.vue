@@ -155,8 +155,8 @@ export default {
 
 .buttons {
     display: flex;
-    justify-content: end;
-    align-items: end;
+    justify-content: flex-end;
+    align-items: flex-end;
     height: 100px;
 }
 

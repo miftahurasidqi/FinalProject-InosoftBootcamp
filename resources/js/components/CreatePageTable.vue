@@ -15,7 +15,7 @@
                 placeholder="Enter Qty"
                 class="table-input-large"
                 :value="qty"
-                @input="$emit('update:qty', $event.target.value)"
+                @input="updateQTY($event.target.value)"
             />
         </td>
         <td>
@@ -37,7 +37,7 @@
                 placeholder="Enter Unit Price"
                 class="table-input-large"
                 :value="unitPrice"
-                @input="$emit('update:unitPrice', $event.target.value)"
+                @input="updateUnitPrice($event.target.value)"
             />
         </td>
         <td>
@@ -45,7 +45,7 @@
                 type="number"
                 class="table-input-large"
                 :value="gst"
-                @input="$emit('update:gst', $event.target.value)"
+                @input="updateGST($event.target.value)"
             />
         </td>
         <td>
@@ -60,9 +60,15 @@
                 <option>SGD</option>
             </select>
         </td>
-        <td><p>0</p></td>
-        <td><p>0</p></td>
-        <td><p>0</p></td>
+        <td>
+            <p>{{ vatAmount }}</p>
+        </td>
+        <td>
+            <p>{{ subTotal }}</p>
+        </td>
+        <td>
+            <p>{{ total }}</p>
+        </td>
         <td>
             <select
                 class="form-select table-input"
@@ -76,7 +82,7 @@
             </select>
         </td>
         <td>
-            <button class="b-min">
+            <button class="b-min" @click.prevent="minCostDetail(this.index)">
                 <p style="transform: translateY(-4px)">_</p>
             </button>
         </td>
@@ -84,6 +90,7 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
 export default {
     name: "CreatePageTable",
     props: {
@@ -97,6 +104,7 @@ export default {
         subTotal: Number,
         total: Number,
         chargeTo: String,
+        index: Number,
     },
     emits: [
         "update:description",
@@ -110,6 +118,41 @@ export default {
         "update:total",
         "update:chargeTo",
     ],
+    methods: {
+        ...mapActions({
+            minCostDetail: "minCostDetail",
+        }),
+        calculate(qty, unitPrice, gst) {
+            const subTotal = qty * unitPrice;
+            const vatAmount = (subTotal * gst) / 100;
+            const total = subTotal + vatAmount;
+
+            this.$emit("update:subTotal", subTotal);
+            this.$emit("update:vatAmount", vatAmount);
+            this.$emit("update:total", total);
+        },
+        strToInt(str) {
+            return str === "" ? 0 : parseInt(str);
+        },
+        updateQTY(value) {
+            const qty = this.strToInt(value);
+
+            this.$emit("update:qty", qty);
+            this.calculate(qty, this.unitPrice, this.gst);
+        },
+        updateUnitPrice(value) {
+            const unitPrice = this.strToInt(value);
+
+            this.$emit("update:unitPrice", unitPrice);
+            this.calculate(this.qty, unitPrice, this.gst);
+        },
+        updateGST(value) {
+            const gst = this.strToInt(value);
+
+            this.$emit("update:gst", gst);
+            this.calculate(this.qty, this.unitPrice, gst);
+        },
+    },
 };
 </script>
 

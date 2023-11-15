@@ -53,6 +53,7 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from "vuex";
 import DetailPageInfoPanel from "../DetailPageInfoPanel.vue";
 import DetailPageTable from "../DetailPageTable.vue";
 
@@ -62,12 +63,23 @@ export default {
         DetailPageInfoPanel,
         DetailPageTable,
     },
+    mounted() {
+        this.getInstructionsById(this.$route.params.id);
+    },
     computed: {
-        instruction() {
-            return this.$store.getters.getInstructionById(
-                this.$route.params.id
-            );
-        },
+        ...mapGetters({
+            instruction: "instructionDetail",
+        }),
+        // instruction() {
+        //     return this.$store.getters.getInstructionById(
+        //         this.$route.params.id
+        //     );
+        // },
+    },
+    methods: {
+        ...mapActions({
+            getInstructionsById: "getInstructionsById",
+        }),
     },
 };
 </script>

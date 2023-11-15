@@ -1,14 +1,14 @@
 <template>
     <div id="page-body">
         <h1>3rd Party Instruction</h1>
-        <form @submit.prevent="submitForm" class="container-create">
+        <form class="container-create">
             <div id="info-panel">
                 <div class="d-flex justify-content-between h-pilihan">
                     <div class="pilihan-left">
                         <select
                             class="form-select info-top-panel bg-b"
                             aria-label="Select instruction type"
-                            v-model="formData.instructionType"
+                            v-model="newIstruction.instructionType"
                         >
                             <option>Service Instruction</option>
                             <option>Logistic Instruction</option>
@@ -22,6 +22,29 @@
                 <div class="container-content-1">
                     <div class="container-content-1-left">
                         <div class="content-1-top" style="margin-bottom: 1rem">
+                            <!--  -->
+                            <div class="pilihan" style="width: 190px">
+                                <label @click="toggleOptions">
+                                    > link To
+                                </label>
+                                <div>
+                                    <label
+                                        class="bg-b"
+                                        name="linkTo"
+                                        id="linkTo"
+                                        v-for="(item, index) in getLinkTo"
+                                        :key="index"
+                                    >
+                                        <input
+                                            type="checkbox"
+                                            v-model="newIstruction.linkTo"
+                                            :value="item"
+                                        />
+                                        {{ item }}
+                                    </label>
+                                </div>
+                            </div>
+
                             <div class="pilihan" style="width: 190px">
                                 <label for="assigned-vendor"
                                     >Assigned Vendor</label
@@ -30,7 +53,7 @@
                                     class="bg-b"
                                     name="assigned-vendor"
                                     id=""
-                                    v-model="formData.assignedVendor"
+                                    v-model="newIstruction.assignedVendor"
                                 >
                                     <option disabled value="">
                                         Enter Vendor
@@ -46,9 +69,11 @@
                                     name="attention-of"
                                     type="text"
                                     placeholder="Enter Attention Of"
-                                    v-model="formData.attentionOf"
+                                    v-model="newIstruction.attentionOf"
                                 />
                             </div>
+                        </div>
+                        <div class="content-1-top">
                             <div class="pilihan" style="width: 190px">
                                 <label for="quotation-no">Quotation No.</label>
                                 <input
@@ -56,7 +81,7 @@
                                     name="quotation-no"
                                     type="number"
                                     placeholder="Enter Quotation"
-                                    v-model="formData.quotationNo"
+                                    v-model="newIstruction.vendorQuotationNo"
                                 />
                             </div>
                             <div class="pilihan" style="width: 190px">
@@ -65,7 +90,7 @@
                                     class="bg-b"
                                     name="invoice-to"
                                     id=""
-                                    v-model="formData.invoiceTo"
+                                    v-model="newIstruction.invoiceTo"
                                 >
                                     <option disabled value="">
                                         Select an Option
@@ -74,16 +99,18 @@
                                     <option>Something</option>
                                 </select>
                             </div>
-                        </div>
-                        <div class="content-1-bot pilihan">
-                            <label for="vendor-address">Vendor Address</label>
-                            <input
-                                class="bg-b"
-                                name="vendor-address"
-                                type="text"
-                                placeholder="Enter Vendor Address"
-                                v-model="formData.vendorAddress"
-                            />
+                            <div class="pilihan" style="width: 190px">
+                                <label for="vendor-address"
+                                    >Vendor Address</label
+                                >
+                                <input
+                                    class="bg-b"
+                                    name="vendor-address"
+                                    type="text"
+                                    placeholder="Enter Vendor Address"
+                                    v-model="newIstruction.vendorAddress"
+                                />
+                            </div>
                         </div>
                     </div>
                     <div class="container-content-1-right">
@@ -91,7 +118,11 @@
                             <label for="customer-contract"
                                 >Customer - Contract</label
                             >
-                            <select name="customer-contract" class="bg-b">
+                            <select
+                                name="customer-contract"
+                                class="bg-b"
+                                v-model="newIstruction.customer"
+                            >
                                 <option disabled value="">
                                     Select customer
                                 </option>
@@ -106,6 +137,7 @@
                                 name="customerPO"
                                 type="text"
                                 placeholder="Enter Customer PO"
+                                v-model="newIstruction.NoCustomerPO"
                             />
                         </div>
                     </div>
@@ -139,23 +171,19 @@
                     </thead>
                     <tbody>
                         <CreatePageTable
-                            v-for="(costDetail, index) in formData.costDetails"
+                            v-for="(costDetail, index) in newCostDetail"
                             :key="index"
-                            v-model:description="
-                                formData.costDetails[index].description
-                            "
-                            v-model:qty="formData.costDetails[index].qty"
-                            v-model:uom="formData.costDetails[index].uom"
-                            v-model:unitPrice="
-                                formData.costDetails[index].unitPrice
-                            "
-                            v-model:gst="formData.costDetails[index].gst"
-                            v-model:currency="
-                                formData.costDetails[index].currency
-                            "
-                            v-model:chargeTo="
-                                formData.costDetails[index].chargeTo
-                            "
+                            v-model:description="costDetail.description"
+                            v-model:qty="costDetail.qty"
+                            v-model:uom="costDetail.uom"
+                            v-model:unitPrice="costDetail.unitPrice"
+                            v-model:gst="costDetail.gst"
+                            v-model:currency="costDetail.currency"
+                            v-model:vatAmount="costDetail.vatAmount"
+                            v-model:subTotal="costDetail.subTotal"
+                            v-model:total="costDetail.total"
+                            v-model:chargeTo="costDetail.chargeTo"
+                            :index="index"
                         />
                         <tr>
                             <td>
@@ -179,7 +207,8 @@
                 </table>
             </div>
             <div class="card">
-                <button type="submit">submit</button>
+                <button @click.prevent="saveAsDraft">Save as Daft</button>
+                <button @click.prevent="submit">submit</button>
             </div>
         </form>
 
@@ -193,6 +222,7 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from "vuex";
 import CreatePageTable from "../CreatePageTable.vue";
 import InternalNote from "../modal/InternalNote.vue";
 import VendorInvoice from "../modal/VendorInvoice.vue";
@@ -209,67 +239,26 @@ export default {
         AddInvoiceTarget,
         CreatePageTable,
     },
-    data() {
-        return {
-            formData: {
-                // bagian dari v-model
-                // sesuaikan dengan database
-                // formdata ini adalah object yang bakal didorong ke openInstructions
-                id: "5010",
-                instructionType: "",
-                assignedVendor: "",
-                attentionOf: "",
-                quotationNo: 0,
-                invoiceTo: "",
-                vendorAddress: "",
-                costDetails: [
-                    {
-                        description: "",
-                        qty: 0,
-                        uom: "",
-                        unitPrice: 0,
-                        gst: 0,
-                        currency: "",
-                        vatAmount: 0,
-                        subTotal: 0,
-                        total: 0,
-                        chargeTo: "",
-                    },
-                ],
-                status: "In Progress",
-            },
-        };
+    computed: {
+        ...mapGetters({
+            newIstruction: "newIstruction",
+            newCostDetail: "newCostDetail",
+            getLinkTo: "getLinkTo",
+            getAssignedVendor: "getAssignedVendor",
+            getCustomer: "getCustomer",
+            getInvoiceTo: "getInvoiceTo",
+        }),
     },
     methods: {
-        async submitForm() {
-            // pindahkan ke actions nanti
-            // berfungsi untuk menambah data ke openInstructions
-            try {
-                const response = await axios.post(
-                    "/api/postData",
-                    this.formData
-                );
-                console.log(response);
-            } catch (error) {
-                console.error(error);
-            }
+        ...mapActions({
+            saveNewInstruction: "saveNewInstruction",
+            addCostDetail: "addCostDetail",
+        }),
+        saveAsDraft() {
+            this.saveNewInstruction("draft");
         },
-        addCostDetail() {
-            // berfungsi untuk mendorong object ini
-            // biarin aja gini, udah dicoba dimasukin ke data
-            // hasilnya malah table 2 dan seterusnya sama
-            this.formData.costDetails.push({
-                description: "",
-                qty: 0,
-                uom: "",
-                unitPrice: 0,
-                gst: 0,
-                currency: "",
-                vatAmount: 0,
-                subTotal: 0,
-                total: 0,
-                chargeTo: "",
-            });
+        submit() {
+            this.saveNewInstruction("in progres");
         },
     },
 };
@@ -313,7 +302,7 @@ export default {
 }
 .pilihan-right {
     display: flex;
-    justify-content: end;
+    justify-content: flex-end;
 }
 .pilihan-right p {
     background: rgb(243, 243, 243);
@@ -332,8 +321,8 @@ export default {
     width: 80%;
     display: flex;
     flex-direction: column;
-    align-items: end;
-    padding-left: 16rem;
+    align-items: flex-end;
+    padding-left: 8rem;
     padding-right: 10px;
 }
 .content-1-top {

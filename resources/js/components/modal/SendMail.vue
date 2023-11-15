@@ -106,7 +106,7 @@ export default {
 
 .check {
     display: flex;
-    justify-content: end;
+    justify-content: flex-end;
     align-items: center;
     padding: 0px 10px;
     height: 35px;
@@ -140,8 +140,8 @@ export default {
 
 .buttons {
     display: flex;
-    justify-content: end;
-    align-items: end;
+    justify-content: flex-end;
+    align-items: flex-end;
     height: 100px;
     padding-left: 3rem;
     padding-right: 3rem;
