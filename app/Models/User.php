@@ -55,4 +55,9 @@ class User extends Authenticatable implements JWTSubject
     {
         return $this->getKey();
     }
+
+    public function third_party_instructions()
+    {
+        return $this->hasMany(ThirdPartyInstruction::class);
+    }
 }
