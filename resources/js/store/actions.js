@@ -17,24 +17,54 @@ export const getCompletedInstructions = async ({ commit }, currrentPage) => {
 // for Hompage end
 
 // for CreatePage start
-export const addCostDetail = async ({ commit }) => {
-    commit("setNewCostDetail");
+export const addCostItem = async ({ commit }) => {
+    commit("setNewCostItems");
+    commit("setGrandTotal");
 };
 
-export const minCostDetail = async ({ commit }, index) => {
-    commit("setNewCostDetail", index);
+export const minCostItem = async ({ commit }, index) => {
+    commit("setNewCostItems", index);
+    commit("setGrandTotal");
+};
+
+export const calculateCostItem = async ({ commit }, index) => {
+    commit("calculateNewCostItem", index);
+    commit("setGrandTotal");
+};
+
+export const calculateGrandTotal = async ({ commit }) => {
+    commit("setGrandTotal");
+};
+
+export const addAttacmentFile = async ({ commit }, file) => {
+    commit("addAttacmentFile", file);
+};
+export const minAttachmentFile = async ({ commit }, index) => {
+    commit("minAttacmentFile", index);
 };
 
 export const saveNewInstruction = async ({ commit, state }, status) => {
     state.newIstruction.status = status;
-    state.newIstruction.costDetail = state.newCostDetail;
-    console.log(state.newIstruction);
-    // try {
-    //     const response = await axios.post("/api/postData", this.formData);
-    //     // console.log(response);
-    // } catch (error) {
-    //     console.error(error);
-    // }
+    state.newIstruction.costDetail.costItems = state.newCostItems;
+    state.newIstruction.costDetail.grandTotal = state.newGrandTotal;
+    try {
+        const formData = new FormData();
+        formData.append("file", state.attacmentFile);
+        formData.append("dataObject", JSON.stringify(state.newIstruction));
+        console.log(formData);
+
+        // Mengirim data ke API menggunakan metode POST
+        const response = await axios.post("/api/newInstructions", formData, {
+            headers: {
+                "Content-Type": "multipart/form-data",
+            },
+        });
+
+        // Handle response jika diperlukan
+        console.log(response.data);
+    } catch (error) {
+        console.error("Error sending data to API:", error);
+    }
 };
 // for CreatePage end
 

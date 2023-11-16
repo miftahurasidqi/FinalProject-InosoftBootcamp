@@ -20,10 +20,9 @@ export const setInstructions = (state, response) => {
 // for Hompage end
 
 // for CreatePage start
-export const setNewCostDetail = (state, index) => {
-    console.log(index);
+export const setNewCostItems = (state, index) => {
     if (index === undefined) {
-        state.newCostDetail.push({
+        state.newCostItems.push({
             description: "",
             qty: 0,
             uom: "",
@@ -36,11 +35,64 @@ export const setNewCostDetail = (state, index) => {
             chargeTo: "",
         });
     } else {
-        state.newCostDetail.length == 1
-            ? console.log("minimal 1 data bang")
-            : state.newCostDetail.splice(index, 1);
+        state.newCostItems.length == 1
+            ? console.log("minimal 1 data")
+            : state.newCostItems.splice(index, 1);
     }
 };
+
+export const calculateNewCostItem = (state, index) => {
+    const item = state.newCostItems[index];
+
+    item.subTotal = item.qty * item.unitPrice;
+    item.vatAmount = (item.subTotal * item.gst) / 100;
+    item.total = item.subTotal + item.vatAmount;
+
+    state.newCostItems[index] = item;
+};
+
+export const setGrandTotal = (state) => {
+    const costItems = state.newCostItems;
+    const totalByCurrency = {};
+
+    costItems.forEach((item) => {
+        console.log(item);
+        const { currency, vatAmount, subTotal, total } = item;
+
+        // Mengecek apakah mata uang sudah ada dalam objek totalByCurrency
+        if (currency !== "") {
+            if (!totalByCurrency[currency]) {
+                totalByCurrency[currency] = {
+                    vatAmount: 0,
+                    subTotal: 0,
+                    total: 0,
+                };
+            }
+            // Menjumlahkan data berdasarkan mata uang
+            totalByCurrency[currency].vatAmount += vatAmount;
+            totalByCurrency[currency].subTotal += subTotal;
+            totalByCurrency[currency].total += total;
+        }
+    });
+
+    // Mengonversi objek totalByCurrency ke dalam bentuk array
+    state.newGrandTotal = Object.keys(totalByCurrency).map((currency) => ({
+        currency,
+        ...totalByCurrency[currency],
+    }));
+};
+export const addAttacmentFile = ({ attacmentFile }, file) => {
+    attacmentFile.push(file);
+};
+export const minAttacmentFile = ({ attacmentFile }, index) => {
+    console.log(attacmentFile[index]);
+    attacmentFile.splice(index, 1);
+};
+
+export const updateNewNote = ({ newIstruction }, note) => {
+    newIstruction.costDetail.notes = note;
+};
+
 // for CreatePage end
 
 // for Detailpage start

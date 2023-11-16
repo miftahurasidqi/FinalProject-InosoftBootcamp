@@ -18,9 +18,13 @@ export const state = {
         customer: "",
         NoCustomerPO: "",
         status: "",
-        costDetail: [],
+        costDetail: {
+            costItems: [],
+            grandTotal: [],
+            notes: "",
+        },
     },
-    newCostDetail: [
+    newCostItems: [
         {
             description: "",
             qty: 0,
@@ -34,6 +38,9 @@ export const state = {
             chargeTo: "",
         },
     ],
+    newGrandTotal: [],
+    attacmentFile: [],
+    // harusnya data ini dari BE
     pilihanInput: {
         linkTo: ["TRF-2020", "TRF-2021", "TRF-2022", "TRF-2023"],
         assignedVendor: [],

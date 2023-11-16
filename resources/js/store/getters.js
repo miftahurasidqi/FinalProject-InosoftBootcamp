@@ -12,9 +12,21 @@ export const pageInfo = (state) => {
 export const newIstruction = (state) => {
     return state.newIstruction;
 };
-export const newCostDetail = (state) => {
-    return state.newCostDetail;
+export const newCostItems = (state) => {
+    return state.newCostItems;
 };
+export const newGrandTotal = (state) => {
+    return state.newGrandTotal;
+};
+export const newAttacmentFile = ({ attacmentFile }) => {
+    console.log(attacmentFile);
+    return attacmentFile;
+};
+export const newNote = ({ newIstruction }) => {
+    console.log(newIstruction.costDetail.notes);
+    return newIstruction.costDetail.notes;
+};
+
 export const getLinkTo = ({ pilihanInput }) => {
     return pilihanInput.linkTo;
 };
