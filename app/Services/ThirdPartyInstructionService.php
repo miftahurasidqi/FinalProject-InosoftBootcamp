@@ -7,16 +7,16 @@ use Illuminate\Support\Facades\Validator;
 
 class ThirdPartyInstructionService
 {
-    protected $thirdpartyRepository;
+    protected $thirdPartyInstructionRepository;
     protected $vendoraddressService;
     protected $invoicetoService;
 
     public function __construct(
-        ThirdPartyInstructionRepository $thirdpartyRepository,
+        ThirdPartyInstructionRepository $thirdPartyInstructionRepository,
         VendorAddressService $vendoraddressService,
         InvoiceToService $invoicetoService
     ) {
-        $this->thirdpartyRepository = $thirdpartyRepository;
+        $this->thirdPartyInstructionRepository = $thirdPartyInstructionRepository;
         $this->vendoraddressService = $vendoraddressService;
         $this->invoicetoService = $invoicetoService;
     }
@@ -52,7 +52,6 @@ class ThirdPartyInstructionService
             'Attachment.*' => 'file|max:2048', // Validasi file, maksimum 2MB]);
         ]);
 
-
         if ($validator->fails()) {
             return response()->json(['error' => $validator->errors()], 400);
         }
@@ -67,8 +66,40 @@ class ThirdPartyInstructionService
         $data['vendorAddress'] = $vendorAddressData;
         $data['invoiceTo'] = $invoiceToData;
 
-        $result = $this->thirdpartyRepository->createInstructionRepository($data);
+        $result = $this->thirdPartyInstructionRepository->createInstructionRepository($data);
 
         return response()->json(['Create New Third Party Instruction Success' => true, 'data' => $result], 200);
     }
+
+
+    public function getOpenByUserId($user_id)
+    {
+        return $this->thirdPartyInstructionRepository->getOpenDatasByUserId($user_id);
+    }
+
+    public function getCompletedByUserId($user_id)
+    {
+        return $this->thirdPartyInstructionRepository->getCompletedDatasByUserId($user_id);
+    }
+
+    public function findOpen($user_id, $keyword)
+    {
+        return $this->thirdPartyInstructionRepository->findOpenTab($user_id, $keyword);
+    }
+
+    public function findCompleted($user_id, $keyword)
+    {
+        return $this->thirdPartyInstructionRepository->findCompletedTab($user_id, $keyword);
+    }
+
+    // public function store($data)
+    // {
+    //     return $this->todoRepository->store($data);
+    // }
+
+    // public function update($todo, $update)
+    // {
+    //     $updated = $todo->fill($update);
+    //     return $this->todoRepository->updated($updated);
+    // }
 }
