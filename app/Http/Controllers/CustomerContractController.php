@@ -30,6 +30,12 @@ class CustomerContractController extends Controller
         return $this->customercontractService->getOne($id);
     }
 
+    public function update($id, Request $request)
+    {
+        return $this->customercontractService->updateCustomerContract($id, $request->all());
+    }
+
+
     public function delete($id)
     {
         return $this->customercontractService->delete($id);

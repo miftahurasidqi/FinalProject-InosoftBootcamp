@@ -48,7 +48,7 @@ class CustomerContractService
         }
     }
 
-    public function update($id, $data)
+    public function updateCustomerContract($id, $data)
     {
         $validator = Validator::make($data, [
             'customerContract' => 'required|max:255',

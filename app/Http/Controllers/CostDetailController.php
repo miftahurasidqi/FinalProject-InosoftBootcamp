@@ -2,39 +2,37 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CustomerContract;
 use App\Services\CostDetailService;
+use App\Services\CustomerContractService;
 use Illuminate\Http\Request;
 
 class CostDetailController extends Controller
 {
-    protected $costdetailservice;
+    protected $costdetailService;
 
-    public function __construct(CostDetailService $costdetailservice)
+    public function __construct(CostDetailService $costdetailService)
     {
-        $this->costdetailservice = $costdetailservice;
+        $this->costdetailService = $costdetailService;
     }
 
-    public function create(Request $request)
+    public function store(Request $request)
     {
+        return $this->costdetailService->createCostDetail($request->all());
+    }
 
-        $data = $request->all();
+    public function getCostDetailList()
+    {
+        return $this->costdetailService->getAll();
+    }
 
-        // var_dump(($data));
-        // die();
-        $result = $this->costdetailservice->createInvoiceTo($data);
+    public function show($id)
+    {
+        return $this->costdetailService->getOne($id);
+    }
 
-        if ($result['success']) {
-            return response()->json([
-                'message' => 'Create Invoice To success',
-                'data' => [
-                    'invoiceTo' => $result['data']->invoiceToName,
-                ]
-            ]);
-        } else {
-            return response()->json([
-                'message' => 'Failed to create 3rd Party Instruction',
-                'errors' => $result['errors']
-            ], 422); // 422 Unprocessable Entity status code for validation errors
-        }
+    public function delete($id)
+    {
+        return $this->costdetailService->delete($id);
     }
 }

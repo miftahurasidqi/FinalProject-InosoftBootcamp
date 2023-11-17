@@ -17,24 +17,24 @@ class ThirdPartyInstructionController extends Controller
     public function store(Request $request)
     {
 
-        $data = $request->all();
+
 
         // var_dump(($data));
         // die();
-        $result = $this->thirdpartyinstructionservice->createInstruction($data);
+        $this->thirdpartyinstructionservice->createInstruction($request->all());
 
-        if ($result['success']) {
-            return response()->json([
-                'message' => 'Create New 3rd Party Instruction success',
-                'data' => [
-                    'id' => $result['data']->id,
-                ]
-            ]);
-        } else {
-            return response()->json([
-                'message' => 'Failed to create 3rd Party Instruction',
-                'errors' => $result['errors']
-            ], 422); // 422 Unprocessable Entity status code for validation errors
-        }
+        // if ($result['success']) {
+        //     return response()->json([
+        //         'message' => 'Create New 3rd Party Instruction success',
+        //         'data' => [
+        //             'id' => $result[$data]->id,
+        //         ]
+        //     ]);
+        // } else {
+        //     return response()->json([
+        //         'message' => 'Failed to create 3rd Party Instruction',
+        //         'errors' => $result['errors']
+        //     ], 422); // 422 Unprocessable Entity status code for validation errors
+        // }
     }
 }

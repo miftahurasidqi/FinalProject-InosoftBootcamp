@@ -3,7 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\CustomerContract;
-use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Request;
 
 class CustomerContractRepository
 {
@@ -44,11 +44,19 @@ class CustomerContractRepository
     /**
      * Untuk update customerContract
      */
-    public function update($id, $customerContract)
+    public function update(string $id, array $data)
     {
-        $customerContract = CustomerContract::find($id);
-        $customerContract->update($customerContract);
-        return $customerContract;
+        $customerContract = $this->customerContract->find($id);
+
+        if (!$customerContract) {
+            return null; // Atau Anda dapat melempar exception jika tidak ditemukan
+        }
+
+        $customerContract->update([
+            'customerContract' => $data['customerContract'],
+        ]);
+
+        return $customerContract->fresh();
     }
 
     /**

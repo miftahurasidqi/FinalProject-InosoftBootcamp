@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AssignedVendorController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CostDetailController;
 use App\Http\Controllers\CustomerContractController;
 use App\Http\Controllers\InvoiceToController;
 use App\Http\Controllers\LinkToController;
@@ -49,7 +50,7 @@ Route::group([
 
 ], function () {
     // Routes for Create Third Party Instruction
-    Route::post('/new3Party', [ThirdPartyInstructionController::class, 'store']);
+    Route::post('/newInstructions', [ThirdPartyInstructionController::class, 'store']);
     // Route::get('/', [TodoListController::class, 'getTodoList']);
     // Route::get('/{id}', [TodoListController::class, 'show']);
     // Route::put('/{id}', [TodoListController::class, 'update']);
@@ -100,3 +101,21 @@ Route::group(['prefix' => 'customerContract'], function () {
     Route::put('/{id}', [CustomerContractController::class, 'update']);
     Route::delete('/{id}', [CustomerContractController::class, 'delete']);
 });
+
+// Route Api For Customer Contract
+Route::group(['prefix' => 'costDetail'], function () {
+    Route::post('/', [CostDetailController::class, 'store']);
+    Route::get('/', [CostDetailController::class, 'getCostDetailList']);
+    Route::get('/{id}', [CostDetailController::class, 'show']);
+    Route::put('/{id}', [CostDetailController::class, 'update']);
+    Route::delete('/{id}', [CostDetailController::class, 'delete']);
+});
+
+// Route Api For Invoice
+// Route::group([], function () {
+//     Route::post('/', [CostDetailController::class, 'store']);
+//     Route::get('/', [CostDetailController::class, 'getCostDetailList']);
+//     Route::get('/{id}', [CostDetailController::class, 'show']);
+//     Route::put('/{id}', [CostDetailController::class, 'update']);
+//     Route::delete('/{id}', [CostDetailController::class, 'delete']);
+// });

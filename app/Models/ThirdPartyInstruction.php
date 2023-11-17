@@ -9,8 +9,11 @@ class ThirdPartyInstruction extends Eloquent
 {
     protected $connection = 'mongodb';
     protected $collection = 'third_party_instructions';
+    // protected $primaryKey = '_id';
+
 
     protected $fillable = [
+        'instractionType',
         'linkTo',
         'assignedVendor',
         'attentionOf',
@@ -23,11 +26,22 @@ class ThirdPartyInstruction extends Eloquent
     ];
 
     protected $casts = [
+
+        'instractionType' => 'array',
         'costDetail' => 'array'
     ];
 
-    public function invoiceTo()
+    // public function invoice_tos()
+    // {
+    //     return $this->hasMany(InvoiceTo::class, 'third_party_instruction_id', '_id');
+    // }
+
+    // public function costDetail()
+    // {
+    //     return $this->belongsTo(CostDetail::class, 'costDetail');
+    // }
+    public function costDetail()
     {
-        return $this->belongsTo(InvoiceTo::class, 'invoiceTo');
+        return $this->hasMany(CostDetail::class);
     }
 }
