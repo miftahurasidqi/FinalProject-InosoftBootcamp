@@ -49,8 +49,16 @@ export const instructionDetail = (state) => {
 export const inputStatusAttachmentFile = (state) => {
     return state.inputStatusAttachmentFile;
 };
-export const newInvoice = (state) => {
-    return state.newInvoice;
+export const newInvoiceNumber = (state) => {
+    return state.newInvoice.invoiceNumber;
+};
+
+export const newInvoiceAttachment = (state) => {
+    return state.newInvoice.invoiceAttachment;
+};
+
+export const newInvoiceSuportDoc = (state) => {
+    return state.newInvoice.suportingDocument;
 };
 
 // for Detailpage end

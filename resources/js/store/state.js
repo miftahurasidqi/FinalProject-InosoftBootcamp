@@ -64,7 +64,7 @@ export const state = {
     },
 
     // for Detailpage end
-    // for Editpage start
 
+    // for Editpage start
     // for EditPage end
 };
