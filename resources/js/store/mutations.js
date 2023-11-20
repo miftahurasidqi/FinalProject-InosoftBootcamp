@@ -96,8 +96,22 @@ export const updateNewNote = ({ newIstruction }, note) => {
 // for CreatePage end
 
 // for Detailpage start
-export const setInstructionDetail = (state) => {
-    console.log("mutation");
+export const setInstructionDetail = (state, response) => {
+    state.instructionDetail = response;
+};
+export const updateDescription = ({ inputStatusInfo }, description) => {
+    inputStatusInfo.description = description;
+    console.log(inputStatusInfo);
+};
+export const addAttacmentCancelFile = ({ inputStatusAttachmentFile }, file) => {
+    inputStatusAttachmentFile.push(file);
+};
+
+export const removeAttacmentCancelFile = (
+    { inputStatusAttachmentFile },
+    index
+) => {
+    inputStatusAttachmentFile.splice(index, 1);
 };
 
 // for Detailpage end

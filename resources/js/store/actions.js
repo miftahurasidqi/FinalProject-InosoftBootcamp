@@ -70,9 +70,60 @@ export const saveNewInstruction = async ({ commit, state }, status) => {
 
 // for Detailpage start
 export const getInstructionsById = async ({ commit }, id) => {
-    console.log(id);
+    const response = {
+        id: "1",
+        instructionId: "LI-2022-0",
+        linkTo: ["TRF-2022"],
+        instructionType: "LI",
+        assignedVendor: "Qube Logistic",
+        attentionOf: "Tina",
+        quotationNo: 1895,
+        customerPO: "foobar",
+        costDetails: [
+            {
+                description: "jh",
+                qty: 2,
+                uom: "TRP",
+                unitPrice: 120000,
+                discount: 0,
+                gst: 0,
+                currency: "AED",
+                vatAmount: 20,
+                subTotal: 120000,
+                total: 120000,
+                chargeTo: "Mitme",
+            },
+            {
+                description: "lk",
+                qty: 2,
+                uom: "TRP",
+                unitPrice: 120000,
+                discount: 0,
+                gst: 0,
+                currency: "AED",
+                vatAmount: 20,
+                subTotal: 120000,
+                total: 120000,
+                chargeTo: "Mitme",
+            },
+            {
+                description: "po",
+                qty: 0,
+                uom: null,
+                unitPrice: 0,
+                gst: 0,
+                currency: null,
+                vatAmount: 0,
+                subTotal: 0,
+                total: 0,
+                chargeTo: null,
+            },
+        ],
+        status: "In Progress",
+        // status: "Draft",
+    };
+    commit("setInstructionDetail", response);
     // const response = await axios.get(`api/data3Party/${id}`);
-    // commit("setInstructionDetail", response);
     // respons data: {
     //         id: "string",
     //         instructionID: "string",
@@ -138,29 +189,43 @@ export const getInstructionsById = async ({ commit }, id) => {
     //     }
 };
 
-export const deleteInstruction = async ({ commit }, id) => {
+export const deleteInstructionsById = async ({ commit }, id) => {
     console.log(id);
-    // const response = await axios.delete(`api/data3Party/${id}`);
-    // commit("setInstructionDetail", response);
-    // response {
-    //     message: "Delete 3rd Party Instruction success",
+    // try {
+    //     const response = await axios.delete(`/api/instruction/${id}`);
+
+    //     console.log(response);
+    //     if (response.message === "Delete 3rd Party Instruction success") {
+    //         return true;
+    //     }
+    // } catch (error) {
+    //     console.error("Error sending data to API:", error);
     // }
 };
 
-export const updateInstructionStatusToCancel = async ({ commit }, id) => {
-    console.log(id);
-    // request data: {
-    //     status: "string",                              // nilai harus "canceled"
-    //     statusInfo: {
-    //         canceledBy: "string",
-    //         description: "string",
-    //     }
+export const terminateInstructionsById = async ({ commit, state }, id) => {
+    console.log(state.inputStatusInfo);
+    console.log(state.inputStatusAttachmentFile);
+    const formData = new FormData();
+    formData.append("status", "Canceled");
+    formData.append("statusInfo", JSON.stringify(state.inputStatusInfo));
+    formData.append("statusAttachment", state.inputStatusAttachmentFile);
+    console.log(formData);
+    // try {
+
+    // // Mengirim data ke API menggunakan metode PATCH
+    // const response = await axios.patch(`/api/instruction/canceled/${id}`, formData, {
+    //     headers: {
+    //         "Content-Type": "multipart/form-data",
+    //     },
+    // });
+
+    // Handle response jika diperlukan
+    // commit("", response);
+    // console.log(response.data);
+    // } catch (error) {
+    //     console.error("Error sending data to API:", error);
     // }
-    // request file:{
-    //     statusAttachment: [file],             // array berisi file
-    // }
-    // const response = await axios.patch(`api/data3Party/canceled/${id}`);
-    // commit("setInstructionDetail", response);
 };
 
 export const addInvoice = async ({ commit }, id) => {
@@ -171,6 +236,22 @@ export const addInvoice = async ({ commit }, id) => {
     //     invoiceAttachment: file,
     //     suportingDocument: [file],          // array berisi file
     // }
+
+    // try {
+    // // Mengirim data ke API menggunakan metode POST
+    // const response = await axios.post(`/api/instruction/canceled/${id}`, formData, {
+    //     headers: {
+    //         "Content-Type": "multipart/form-data",
+    //     },
+    // });
+
+    // Handle response jika diperlukan
+    // commit("", response);
+    // console.log(response.data);
+    // } catch (error) {
+    //     console.error("Error sending data to API:", error);
+    // }
+
     console.log(id);
     const response = await axios.post(`api/addInvoice/${id}`);
     // commit("setInstructionDetail", response);
