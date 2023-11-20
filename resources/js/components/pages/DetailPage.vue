@@ -3,24 +3,9 @@
         <h1>3rd Party Instruction</h1>
         <div class="card">
             <h2>{{ instruction.instructionId }}</h2>
-            <div
-                id="top-panel"
-                class="flex-wrap d-flex justify-content-between"
-            >
-                <div>
-                    <p>Back</p>
-                </div>
-                <div
-                    class="d-flex fles-row"
-                    v-if="
-                        instruction.status === 'In Progress' ||
-                        instruction.status === 'Draft'
-                    "
-                >
-                    <ActionButton text="Terminate" />
-                    <ActionButton text="Modify" @click="goToEdit" />
-                </div>
-            </div>
+
+            <DetailTopPanel :status="instruction.status" :id="instruction.id" />
+
             <DetailPageInfoPanel :instruction="instruction" />
             <!-- <hr /> -->
             <div id="cost-detail-panel" class="card">
@@ -37,10 +22,9 @@
                     <textarea name="notes" id="" cols="10" rows="10"></textarea>
                 </div>
             </div>
-            <div id="vendor-invoice">
-                <h2>Vendor Invoice</h2>
-                <button>Add Vendor Invoice</button>
-            </div>
+            <!--  -->
+            <DetailPageVendorInvoice />
+            <!--  -->
             <div id="internal-panel-header">
                 <h2>For Internal Only</h2>
             </div>
@@ -60,8 +44,10 @@
 
 <script>
 import { mapGetters, mapActions } from "vuex";
+import DetailTopPanel from "../DetailTopPanel.vue";
 import DetailPageInfoPanel from "../DetailPageInfoPanel.vue";
 import DetailPageTable from "../DetailPageTable.vue";
+import DetailPageVendorInvoice from "../DetailPageVendorInvoice.vue";
 import ActionButton from "../ActionButton.vue";
 
 export default {
@@ -70,6 +56,8 @@ export default {
         DetailPageInfoPanel,
         DetailPageTable,
         ActionButton,
+        DetailTopPanel,
+        DetailPageVendorInvoice,
     },
     mounted() {
         this.getInstructionsById(this.$route.params.id);
@@ -78,21 +66,11 @@ export default {
         ...mapGetters({
             instruction: "instructionDetail",
         }),
-        // instruction() {
-        //     return this.$store.getters.getInstructionById(
-        //         this.$route.params.id
-        //     );
-        // },
     },
     methods: {
         ...mapActions({
             getInstructionsById: "getInstructionsById",
         }),
-    },
-    methods: {
-        goToEdit() {
-            this.$router.push(`/edit/${this.instruction.id}`);
-        },
     },
 };
 </script>
