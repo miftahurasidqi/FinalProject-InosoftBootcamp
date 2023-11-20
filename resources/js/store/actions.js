@@ -228,33 +228,30 @@ export const terminateInstructionsById = async ({ commit, state }, id) => {
     // }
 };
 
-export const addInvoice = async ({ commit }, id) => {
-    //     request data: {
-    //         invoiceNumber: "srting",
-    // }
-    // request file: {
-    //     invoiceAttachment: file,
-    //     suportingDocument: [file],          // array berisi file
-    // }
+export const saveNewInvoice = async ({ commit, state }, id) => {
+    console.log(state.newInvoice);
 
-    // try {
-    // // Mengirim data ke API menggunakan metode POST
-    // const response = await axios.post(`/api/instruction/canceled/${id}`, formData, {
-    //     headers: {
-    //         "Content-Type": "multipart/form-data",
-    //     },
-    // });
+    state.newInvoice.invoiceAttachment;
+    state.newInvoice.suportingDocument;
+    const formData = new FormData();
+    formData.append("invoiceNumber", state.newInvoice.invoiceNumber);
+    formData.append("invoiceAttachment", state.newInvoice.invoiceAttachment);
+    formData.append("suportingDocument", state.newInvoice.suportingDocument);
+    console.log(formData);
+    try {
+        // Mengirim data ke API menggunakan metode POST
+        const response = await axios.post(`/api/addInvoice/${id}`, formData, {
+            headers: {
+                "Content-Type": "multipart/form-data",
+            },
+        });
 
-    // Handle response jika diperlukan
-    // commit("", response);
-    // console.log(response.data);
-    // } catch (error) {
-    //     console.error("Error sending data to API:", error);
-    // }
-
-    console.log(id);
-    const response = await axios.post(`api/addInvoice/${id}`);
-    // commit("setInstructionDetail", response);
+        // Handle response jika diperlukan
+        // commit("", response);
+        console.log(response.data);
+    } catch (error) {
+        console.error("Error sending data to API:", error);
+    }
     // response: {
     //     message: "add Invoice success",
     //     data: [

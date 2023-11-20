@@ -25,30 +25,21 @@
             <!--  -->
             <DetailPageVendorInvoice />
             <!--  -->
-            <div id="internal-panel-header">
-                <h2>For Internal Only</h2>
-            </div>
-            <div id="internal-panel" class="d-flex">
-                <div>
-                    <h3>Attachment</h3>
-                    <button>Add Attachments</button>
-                </div>
-                <div>
-                    <h3>Internal Notes</h3>
-                    <button>Add Internal Note</button>
-                </div>
-            </div>
+            <DetailPageInternalPanel />
+            <!--  -->
         </div>
     </div>
 </template>
 
 <script>
 import { mapGetters, mapActions } from "vuex";
+import ActionButton from "../ActionButton.vue";
+
 import DetailTopPanel from "../DetailTopPanel.vue";
 import DetailPageInfoPanel from "../DetailPageInfoPanel.vue";
 import DetailPageTable from "../DetailPageTable.vue";
 import DetailPageVendorInvoice from "../DetailPageVendorInvoice.vue";
-import ActionButton from "../ActionButton.vue";
+import DetailPageInternalPanel from "../DetailPageInternalPanel.vue";
 
 export default {
     name: "DetailPage",
@@ -58,6 +49,7 @@ export default {
         ActionButton,
         DetailTopPanel,
         DetailPageVendorInvoice,
+        DetailPageInternalPanel,
     },
     mounted() {
         this.getInstructionsById(this.$route.params.id);

@@ -114,6 +114,26 @@ export const removeAttacmentCancelFile = (
     inputStatusAttachmentFile.splice(index, 1);
 };
 
+export const updateInvoiceNumber = ({ newInvoice }, value) => {
+    newInvoice.invoiceNumber = value;
+};
+export const handleInputInvoiceAttachment = ({ newInvoice }, file) => {
+    newInvoice.invoiceAttachment = file;
+};
+export const deleteInvoiceAttachment = ({ newInvoice }) => {
+    newInvoice.invoiceAttachment = {};
+};
+export const handleInputSuportDoc = ({ newInvoice }, files) => {
+    let suportDoc = [];
+    for (let i = 0; i < files.length; i++) {
+        suportDoc.push(files[i]);
+    }
+    newInvoice.suportingDocument =
+        newInvoice.suportingDocument.concat(suportDoc);
+};
+export const deleteSuportDoc = ({ newInvoice }, index) => {
+    newInvoice.suportingDocument.splice(index, 1);
+};
 // for Detailpage end
 
 // for Editpage start
