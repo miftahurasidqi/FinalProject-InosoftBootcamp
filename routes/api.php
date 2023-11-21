@@ -1,14 +1,12 @@
 <?php
 
 use App\Http\Controllers\AssignedVendorController;
-use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CostDetailController;
 use App\Http\Controllers\CustomerContractController;
 use App\Http\Controllers\InvoiceToController;
 use App\Http\Controllers\LinkToController;
 use App\Http\Controllers\ThirdPartyInstructionController;
 use App\Http\Controllers\VendorAddressController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,26 +18,26 @@ use Illuminate\Support\Facades\Route;
 | routes are loaded by the RouteServiceProvider within a group which
 | is assigned the "api" middleware group. Enjoy building your API!
 |
-*/
+ */
 
 // Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //     return $request->user();
 // });
 
 // Route Api For Auth User
-Route::group([
+// Route::group([
 
-    'middleware' => 'api',
-    'prefix' => 'auth'
+//     'middleware' => 'api',
+//     'prefix' => 'auth'
 
-], function () {
-    Route::post('/register', [AuthController::class, 'register'])->name('register');
-    Route::post('/login', [AuthController::class, 'login'])->name('login');
-    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
-    Route::post('/refresh', [AuthController::class, 'refresh'])->name('refresh');
-    Route::post('/me', [AuthController::class, 'me'])->name('me');
-    Route::post('/profile',  [AuthController::class, 'getAuthenticatedUser'])->name('getAuthenticatedUser');
-});
+// ], function () {
+//     Route::post('/register', [AuthController::class, 'register'])->name('register');
+//     Route::post('/login', [AuthController::class, 'login'])->name('login');
+//     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+//     Route::post('/refresh', [AuthController::class, 'refresh'])->name('refresh');
+//     Route::post('/me', [AuthController::class, 'me'])->name('me');
+//     Route::post('/profile',  [AuthController::class, 'getAuthenticatedUser'])->name('getAuthenticatedUser');
+// });
 
 // Route::get('/data3Party/open', 'Mocking\Controllers\InstructionsController@getOpenInstructions');
 // Route::get('/data3Party/completed', 'Mocking\Controllers\InstructionsController@getCompletedInstructions');
@@ -57,9 +55,12 @@ Route::group([
     // 'prefix' => 'api'
 
 ], function () {
-    // Routes for Create Third Party Instruction
+    // Routes for Third Party Instruction
     Route::post('/newInstructions', [ThirdPartyInstructionController::class, 'store']);
-    // Route::get('/', [TodoListController::class, 'getTodoList']);
+    Route::get('/instructions/open', [ThirdPartyInstructionController::class, 'getOpenInstructions']);
+    Route::get('/instructions/completed', [ThirdPartyInstructionController::class, 'getCompletedInstructions']);
+    Route::get('/instructions/open/search', [ThirdPartyInstructionController::class, 'searchOpenInstructions']);
+    Route::get('/instructions/completed/search', [ThirdPartyInstructionController::class, 'searchCompletedInstructions']);
     // Route::get('/{id}', [TodoListController::class, 'show']);
     // Route::put('/{id}', [TodoListController::class, 'update']);
     // Route::delete('/{id}', [TodoListController::class, 'destroy']);
@@ -83,7 +84,7 @@ Route::group(['prefix' => 'assignedVendor'], function () {
     Route::delete('/{id}', [AssignedVendorController::class, 'delete']);
 });
 
-// Route Api For Vendor Address 
+// Route Api For Vendor Address
 Route::group(['prefix' => 'vendorAddress'], function () {
     Route::post('/', [VendorAddressController::class, 'store']);
     Route::get('/', [VendorAddressController::class, 'getVendorAddressList']);
@@ -92,7 +93,7 @@ Route::group(['prefix' => 'vendorAddress'], function () {
     Route::delete('/{id}', [VendorAddressController::class, 'delete']);
 });
 
-// Route Api For InvoiceTo 
+// Route Api For InvoiceTo
 Route::group(['prefix' => 'invoiceTo'], function () {
     Route::post('/', [InvoiceToController::class, 'store']);
     Route::get('/', [InvoiceToController::class, 'getInvoiceToList']);

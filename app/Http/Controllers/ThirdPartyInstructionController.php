@@ -16,64 +16,79 @@ class ThirdPartyInstructionController extends Controller
 
     public function store(Request $request)
     {
+        // Menangkap data JSON
+        $jsonData = json_decode($request->input('data'), true);
+        // Menangkap file []
+        $files = $request->file('attachment');
+        $attachment = [];
 
+        // Mengiterasi setiap file yang diunggah
+        if ($files) {
+            foreach ($files as $index => $file) {
+                // Lakukan sesuatu dengan setiap file, misalnya menyimpannya ke direktori
+                $fileName = time() . '_' . $file->getClientOriginalName();
+                $file->move(public_path('uploads'), $fileName);
+                $attachment[] = $fileName;
+            }
+        }
 
+        $costDetail = $jsonData['costDetail'];
+        $costDetail['attachment'] = $attachment;
+        $jsonData['costDetail'] = $costDetail;
+        $linkToJson = $jsonData['linkTo'];
+        // $linkTo = json_decode($linkToJson, true);
+        $jsonData['linkTo'] = ['mifta', 'dani'];
 
-        // var_dump(($data));
-        // die();
-        $this->thirdpartyinstructionservice->createInstruction($request->all());
+        // return response()->json([$linkToJson]);
 
-        // if ($result['success']) {
+        return $this->thirdpartyinstructionservice->createInstruction($jsonData);
+    }
+
+    public function getOpenInstructions(Request $request)
+    {
+        $page = $request->input('page', '');
+        $pageInt = intval($page);
+        $status = ['draft', 'in progres'];
+
+        return $this->thirdpartyinstructionservice->getInstructions($pageInt, $status);
+    }
+
+    public function getCompletedInstructions(Request $request)
+    {
+        $page = $request->input('page', '');
+        $pageInt = intval($page);
+        $status = ['cancelled', 'completed'];
+
+        return $this->thirdpartyinstructionservice->getInstructions($pageInt, $status);
+    }
+    // ===
+
+    public function searchOpenInstructions(Request $request)
+    {
+        $page = $request->input('page', '');
+        $pageInt = intval($page);
+        $status = ['draft', 'in progres'];
+        $keyword = $request->input('keyword', ''); // Mendapatkan nilai query string 'q' (default: '')
+
+        return $thirdPartyInstruction = $this->thirdpartyinstructionservice->searchInstructions($pageInt, $status, $keyword);
+    }
+
+    public function searchCompletedInstructions(Request $request)
+    {
+        $page = $request->input('page', '');
+        $pageInt = intval($page);
+        $status = ['cancelled', 'completed'];
+        $keyword = $request->input('keyword', ''); // Mendapatkan nilai query string 'q' (default: '')
+
+        return $thirdPartyInstruction = $this->thirdpartyinstructionservice->searchInstructions($pageInt, $status, $keyword);
+
+        // $thirdPartyInstruction = $this->thirdpartyinstructionservice->findCompleted($user_id, $keyword);
+        // if (!$thirdPartyInstruction) {
         //     return response()->json([
-        //         'message' => 'Create New 3rd Party Instruction success',
-        //         'data' => [
-        //             'id' => $result[$data]->id,
-        //         ]
+        //         'success' => false,
+        //         'message' => 'Sorry, ' . $keyword . ' can not be found in User ' . $user_id . '`s Vendor Management for status Canceled and Completed.',
         //     ]);
-        // } else {
-        //     return response()->json([
-        //         'message' => 'Failed to create 3rd Party Instruction',
-        //         'errors' => $result['errors']
-        //     ], 422); // 422 Unprocessable Entity status code for validation errors
         // }
-
-    }
-
-    public function indexOpen()
-    {
-        return $this->thirdpartyinstructionservice->getOpenByUserIdtoArray();
-    }
-
-    public function indexCompleted()
-    {
-        return $this->thirdpartyinstructionservice->getCompletedByUserIdtoArray();
-    }
-
-    public function showOpen(Request $keyword,  $user_id)
-    {
-        $thirdPartyInstruction = $this->thirdpartyinstructionservice->findOpen($user_id, $keyword);
-
-        if (!$thirdPartyInstruction) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Sorry, ' . $keyword . ' can not be found in User ' . $user_id . '`s Vendor Management for status Draft and In Progress.',
-            ]);
-        }
-
-        return $thirdPartyInstruction;
-    }
-
-    public function showCompleted(Request $keyword,  $user_id)
-    {
-        $thirdPartyInstruction = $this->thirdpartyinstructionservice->findCompleted($user_id, $keyword);
-
-        if (!$thirdPartyInstruction) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Sorry, ' . $keyword . ' can not be found in User ' . $user_id . '`s Vendor Management for status Canceled and Completed.',
-            ]);
-        }
-
-        return $thirdPartyInstruction;
+        // return $thirdPartyInstruction;
     }
 }

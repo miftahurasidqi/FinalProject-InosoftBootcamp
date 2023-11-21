@@ -1,7 +1,7 @@
 // for Hompage start
 export const getOpenInstructions = async ({ commit }, currrentPage) => {
     const page = currrentPage + 1;
-    const response = await axios.get(`api/data3Party/open?page=${page}`);
+    const response = await axios.get(`api/instructions/open?page=${page}`);
 
     console.log(response.data);
     commit("setInstructions", response); // menjalankan function setInstructions() yg ada pada file mutations.js
@@ -9,7 +9,7 @@ export const getOpenInstructions = async ({ commit }, currrentPage) => {
 
 export const getCompletedInstructions = async ({ commit }, currrentPage) => {
     const page = currrentPage + 1;
-    const response = await axios.get(`api/data3Party/completed?page=${page}`);
+    const response = await axios.get(`api/instructions/completed?page=${page}`);
 
     console.log(response.data);
     commit("setInstructions", response); // menjalankan function setInstructions() yg ada pada file mutations.js
@@ -49,9 +49,12 @@ export const saveNewInstruction = async ({ commit, state }, status) => {
     state.newIstruction.costDetail.grandTotal = state.newGrandTotal;
     try {
         const formData = new FormData();
-        formData.append("file", state.attacmentFile);
-        formData.append("dataObject", JSON.stringify(state.newIstruction));
-        console.log(formData);
+        formData.append("data", JSON.stringify(state.newIstruction));
+        // Iterasi melalui setiap file dalam array attachmentFile
+        state.attacmentFile.forEach((file, i) => {
+            formData.append(`attachment[${i}]`, file);
+        });
+        console.log(state.newIstruction);
 
         // Mengirim data ke API menggunakan metode POST
         const response = await axios.post("/api/newInstructions", formData, {
@@ -61,7 +64,7 @@ export const saveNewInstruction = async ({ commit, state }, status) => {
         });
 
         // Handle response jika diperlukan
-        console.log(response.data);
+        console.log(response);
     } catch (error) {
         console.error("Error sending data to API:", error);
     }

@@ -70,7 +70,7 @@
                         <input
                             class="bg-b"
                             name="quotation-no"
-                            type="number"
+                            type="text"
                             placeholder="Enter Quotation"
                             v-model="newIstruction.vendorQuotationNo"
                         />

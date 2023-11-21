@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Models\CostDetail;
 use App\Models\ThirdPartyInstruction;
 
 class ThirdPartyInstructionRepository
@@ -15,13 +16,31 @@ class ThirdPartyInstructionRepository
 
     public function createInstructionRepository(array $data): array
     {
+        $costDetail = $data['costDetail'];
+
+        unset($data['costDetail']);
+        if ($data['instructionType'] == 'Service Instruction') {
+            $data['instructionID'] = 'SI-' . time();
+        } else {
+            $data['instructionID'] = 'LI-' . time();
+        }
+
         try {
             $newData = new $this->thirdpartyinstruction($data);
             $newData->save();
 
+            $newData->costDetail()->create([
+                'costItems' => $costDetail['costItems'],
+                'grandTotal' => $costDetail['grandTotal'],
+                'attachment' => $costDetail['attachment'],
+                'notes' => $costDetail['notes'],
+            ]);
+
             return [
                 'success' => true,
                 'data' => $newData->fresh(), // Gunakan fresh() untuk mendapatkan entitas yang baru diperbarui dari database
+                // 'costDetail' => $costItems, // Gunakan fresh() untuk mendapatkan entitas yang baru diperbarui dari database
+
             ];
         } catch (\Exception $e) {
             return [
@@ -30,17 +49,47 @@ class ThirdPartyInstructionRepository
             ];
         }
     }
-    public function getOpenDatasByUserId($user_id): Object
-    {
-        return $this->thirdpartyinstruction->where('user_id', $user_id)->where('status', 'Draft' && 'In Progress')->get(['instructionID', 'linkTo', 'instructionType', 'assignedVendor', 'attentionOf', 'quotationNo', 'customerPO', 'status']);
-    }
 
-    public function getCompletedDatasByUserId($user_id): Object
+    public function getByStatus($page, $status)
     {
-        return $this->thirdpartyinstruction->where('user_id', $user_id)->where('status', 'Canceled' && 'Completed')->get(['instructionID', 'linkTo', 'instructionType', 'assignedVendor', 'attentionOf', 'quotationNo', 'customerPO', 'status']);
-    }
 
-    public function findOpenTab($user_id, $keyword)
+        $perPage = 10;
+        $skip = ($page - 1) * $perPage;
+
+        $instructions = ThirdPartyInstruction::whereIn('status', $status)
+            ->skip($skip)
+            ->limit($perPage)
+            ->get([
+                'instructionID',
+                'linkTo',
+                'instructionType',
+                'assignedVendor',
+                'attentionOf',
+                'vendorAddress',
+                'invoiceTo',
+                'vendorQuotationNo',
+                'customerContract',
+                'NoCustomerPO',
+                'status']);
+
+        $size = count($instructions);
+        $totalData = ThirdPartyInstruction::whereIn('status', $status)->count();
+        $totalPages = ceil($totalData / $perPage);
+
+        $response = [
+            'instructions' => $instructions,
+            'page' => [
+                'size' => $size,
+                'totalData' => $totalData,
+                'totalPages' => $totalPages,
+                'currrentPage' => $page,
+            ],
+        ];
+
+        return response()->json($response);
+    }
+// ====
+    public function searchInstruction($user_id, $keyword)
     {
         return $this->thirdpartyinstruction->where('user_id', $user_id)->where('status', 'Draft' && 'In Progress')->where('keyword', $keyword)->first();
     }
@@ -49,16 +98,6 @@ class ThirdPartyInstructionRepository
     {
         return $this->thirdpartyinstruction->where('user_id', $user_id)->where('status', 'Canceled' && 'Completed')->where('keyword', $keyword)->first();
     }
-
-    // public function store($data)
-    // {
-    //     $newData = new $this->todo;
-    //     $newData->title = $data['title'];
-    //     $newData->description = $data['description'];
-    //     $newData->user_id = $data['user_id'];
-    //     $newData->save();
-    //     return $newData->fresh();
-    // }
 
     public function updated($updated)
     {
