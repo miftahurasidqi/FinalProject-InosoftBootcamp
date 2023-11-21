@@ -106,7 +106,7 @@
                     <select
                         name="customer-contract"
                         class="bg-b"
-                        v-model="newIstruction.customer"
+                        v-model="newIstruction.customerContract"
                     >
                         <option disabled value="">Select customer</option>
                         <option>Customer 1</option>

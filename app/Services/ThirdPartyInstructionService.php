@@ -32,7 +32,7 @@ class ThirdPartyInstructionService
             'assignedVendor' => 'required|string',
             'vendorAddress' => 'required|string',
             'vendorQuotationNo' => 'required|string',
-            'customer' => 'required|string',
+            'customerContract' => 'required|string',
             'NoCustomerPO' => 'required|string',
             'status' => 'required|string',
             'costDetail' => 'required|array',
@@ -55,9 +55,7 @@ class ThirdPartyInstructionService
             return response()->json(['error' => $validator->errors()], 400);
         }
         $result = $this->thirdPartyInstructionRepository->createInstructionRepository($data);
-        return response()->json([
-            'data' => $result,
-        ]);
+        return response()->json($result);
     }
 
     public function getInstructions($page, $status)

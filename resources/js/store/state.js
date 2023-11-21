@@ -15,7 +15,7 @@ export const state = {
         assignedVendor: "",
         vendorAddress: "",
         vendorQuotationNo: "",
-        customer: "",
+        customerContract: "",
         NoCustomerPO: "",
         status: "",
         costDetail: {

@@ -55,16 +55,15 @@ export const saveNewInstruction = async ({ commit, state }, status) => {
             formData.append(`attachment[${i}]`, file);
         });
         console.log(state.newIstruction);
-
         // Mengirim data ke API menggunakan metode POST
         const response = await axios.post("/api/newInstructions", formData, {
             headers: {
                 "Content-Type": "multipart/form-data",
             },
         });
-
-        // Handle response jika diperlukan
+        // Handle response
         console.log(response);
+        return response.data.id;
     } catch (error) {
         console.error("Error sending data to API:", error);
     }

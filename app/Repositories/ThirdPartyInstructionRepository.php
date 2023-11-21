@@ -35,10 +35,11 @@ class ThirdPartyInstructionRepository
                 'attachment' => $costDetail['attachment'],
                 'notes' => $costDetail['notes'],
             ]);
+            $newInstruction = $newData->fresh();
 
             return [
                 'success' => true,
-                'data' => $newData->fresh(), // Gunakan fresh() untuk mendapatkan entitas yang baru diperbarui dari database
+                'id' => $newInstruction['_id'], // Gunakan fresh() untuk mendapatkan entitas yang baru diperbarui dari database
                 // 'costDetail' => $costItems, // Gunakan fresh() untuk mendapatkan entitas yang baru diperbarui dari database
 
             ];

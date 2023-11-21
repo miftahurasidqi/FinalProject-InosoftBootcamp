@@ -37,7 +37,7 @@ class ThirdPartyInstructionController extends Controller
         $jsonData['costDetail'] = $costDetail;
         $linkToJson = $jsonData['linkTo'];
         // $linkTo = json_decode($linkToJson, true);
-        $jsonData['linkTo'] = ['mifta', 'dani'];
+        // $jsonData['linkTo'] = ['mifta', 'dani'];
 
         // return response()->json([$linkToJson]);
 
