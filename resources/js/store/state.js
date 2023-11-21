@@ -15,7 +15,7 @@ export const state = {
         assignedVendor: "",
         vendorAddress: "",
         vendorQuotationNo: "",
-        customer: "",
+        customerContract: "",
         NoCustomerPO: "",
         status: "",
         costDetail: {
@@ -51,9 +51,20 @@ export const state = {
 
     // for Detailpage start
     instructionDetail: {},
+    inputStatusInfo: {
+        canceledBy: "User 1",
+        description: "",
+    },
+    inputStatusAttachmentFile: [],
+    // ====
+    newInvoice: {
+        invoiceNumber: "",
+        invoiceAttachment: {},
+        suportingDocument: [],
+    },
 
     // for Detailpage end
-    // for Editpage start
 
+    // for Editpage start
     // for EditPage end
 };
