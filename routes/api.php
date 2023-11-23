@@ -7,6 +7,7 @@ use App\Http\Controllers\InvoiceToController;
 use App\Http\Controllers\LinkToController;
 use App\Http\Controllers\ThirdPartyInstructionController;
 use App\Http\Controllers\VendorAddressController;
+use App\Http\Controllers\VendorInvoiceController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -26,10 +27,8 @@ use Illuminate\Support\Facades\Route;
 
 // Route Api For Auth User
 // Route::group([
-
 //     'middleware' => 'api',
 //     'prefix' => 'auth'
-
 // ], function () {
 //     Route::post('/register', [AuthController::class, 'register'])->name('register');
 //     Route::post('/login', [AuthController::class, 'login'])->name('login');
@@ -39,31 +38,31 @@ use Illuminate\Support\Facades\Route;
 //     Route::post('/profile',  [AuthController::class, 'getAuthenticatedUser'])->name('getAuthenticatedUser');
 // });
 
-// Route::get('/data3Party/open', 'Mocking\Controllers\InstructionsController@getOpenInstructions');
-// Route::get('/data3Party/completed', 'Mocking\Controllers\InstructionsController@getCompletedInstructions');
-
-// Route::get('/data3Party/open/search', 'Mocking\Controllers\InstructionsController@searchOpenInstructions');
-// Route::get('/data3Party/completed/search', 'Mocking\Controllers\InstructionsController@searchCompletedInstructions');
-
-// Route::post('/postData', 'Mocking\Controllers\InstructionsController@postData');
-// Route::patch('/patchData/{id}', 'Mocking\Controllers\InstructionsController@patchData');
-
 // Routes Api for Create Third Party Instruction
 Route::group([
-
     // 'middleware' => 'todo.auth',
     // 'prefix' => 'api'
-
 ], function () {
     // Routes for Third Party Instruction
     Route::post('/newInstructions', [ThirdPartyInstructionController::class, 'store']);
     Route::get('/instructions/open', [ThirdPartyInstructionController::class, 'getOpenInstructions']);
     Route::get('/instructions/completed', [ThirdPartyInstructionController::class, 'getCompletedInstructions']);
+    Route::get('/instruction/{id}', [ThirdPartyInstructionController::class, 'getInstructionById']);
+    Route::delete('/instruction/{id}', [ThirdPartyInstructionController::class, 'destroy']);
+    Route::post('/instruction/canceled/{id}', [ThirdPartyInstructionController::class, 'setInstructionToCanceled']);
+    //== belum
     Route::get('/instructions/open/search', [ThirdPartyInstructionController::class, 'searchOpenInstructions']);
     Route::get('/instructions/completed/search', [ThirdPartyInstructionController::class, 'searchCompletedInstructions']);
-    // Route::get('/{id}', [TodoListController::class, 'show']);
-    // Route::put('/{id}', [TodoListController::class, 'update']);
-    // Route::delete('/{id}', [TodoListController::class, 'destroy']);
+    Route::patch('/instruction/completed/{id}', [ThirdPartyInstructionController::class, 'setInstructionToCompleted']);
+});
+
+// Route Api For VendorInvoice  Controller
+Route::group([], function () {
+    Route::post('/addInvoice/{id}', [VendorInvoiceController::class, 'store']);
+    Route::delete('/deleteInvoice/{id}', [VendorInvoiceController::class, 'delete']);
+    Route::put('/editInvoice{id}', [VendorInvoiceController::class, 'update']);
+    // Route::get('/{id}', [LinkToController::class, 'show']);
+    // Route::get('/', [LinkToController::class, 'getLinkToList']);
 });
 
 // Route Api For Link To
@@ -119,12 +118,3 @@ Route::group(['prefix' => 'costDetail'], function () {
     Route::put('/{id}', [CostDetailController::class, 'update']);
     Route::delete('/{id}', [CostDetailController::class, 'delete']);
 });
-
-// Route Api For Invoice
-// Route::group([], function () {
-//     Route::post('/', [CostDetailController::class, 'store']);
-//     Route::get('/', [CostDetailController::class, 'getCostDetailList']);
-//     Route::get('/{id}', [CostDetailController::class, 'show']);
-//     Route::put('/{id}', [CostDetailController::class, 'update']);
-//     Route::delete('/{id}', [CostDetailController::class, 'delete']);
-// });

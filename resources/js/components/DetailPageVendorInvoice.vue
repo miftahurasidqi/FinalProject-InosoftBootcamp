@@ -58,7 +58,7 @@
 
             <div>
                 <ActionButton text="Cancel" @click="closeFormAddInvoice" />
-                <ActionButton text="Confirm" @click="saveNewInvoice" />
+                <ActionButton text="Confirm" @click="save" />
                 <!-- @click.prevent="deleteInstruction" -->
             </div>
         </Popup>
@@ -124,6 +124,9 @@ export default {
         },
         deleteSuportDoc(index) {
             this.$store.commit("deleteSuportDoc", index);
+        },
+        save() {
+            this.saveNewInvoice(this.$route.params.id);
         },
     },
 };
