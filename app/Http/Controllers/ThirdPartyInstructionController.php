@@ -25,7 +25,7 @@ class ThirdPartyInstructionController extends Controller
         // Mengiterasi setiap file yang diunggah
         if ($files) {
             foreach ($files as $index => $file) {
-                // Lakukan sesuatu dengan setiap file, misalnya menyimpannya ke direktori
+                // Lakukan sesuatu dengan setiap file
                 $fileName = time() . '_' . $file->getClientOriginalName();
                 $file->move(public_path('uploads'), $fileName);
                 $attachment[] = $fileName;
@@ -35,11 +35,6 @@ class ThirdPartyInstructionController extends Controller
         $costDetail = $jsonData['costDetail'];
         $costDetail['attachment'] = $attachment;
         $jsonData['costDetail'] = $costDetail;
-        $linkToJson = $jsonData['linkTo'];
-        // $linkTo = json_decode($linkToJson, true);
-        // $jsonData['linkTo'] = ['mifta', 'dani'];
-
-        // return response()->json([$linkToJson]);
 
         return $this->thirdpartyinstructionservice->createInstruction($jsonData);
     }
@@ -61,14 +56,14 @@ class ThirdPartyInstructionController extends Controller
 
         return $this->thirdpartyinstructionservice->getInstructions($pageInt, $status);
     }
-    // ===
 
+    // belum
     public function searchOpenInstructions(Request $request)
     {
         $page = $request->input('page', '');
         $pageInt = intval($page);
         $status = ['draft', 'in progres'];
-        $keyword = $request->input('keyword', ''); // Mendapatkan nilai query string 'q' (default: '')
+        $keyword = $request->input('keyword', '');
 
         return $thirdPartyInstruction = $this->thirdpartyinstructionservice->searchInstructions($request, $pageInt, $status, $keyword);
     }
@@ -78,17 +73,39 @@ class ThirdPartyInstructionController extends Controller
         $page = $request->input('page', '');
         $pageInt = intval($page);
         $status = ['cancelled', 'completed'];
-        $keyword = $request->input('keyword', ''); // Mendapatkan nilai query string 'q' (default: '')
+        $keyword = $request->input('keyword', '');
 
-        return $thirdPartyInstruction = $this->thirdpartyinstructionservice->searchInstructions($request, $pageInt, $status, $keyword);
+        return $thirdPartyInstruction = $this->thirdpartyinstructionservice->searchInstructions($pageInt, $status, $keyword);
+    }
+    public function getInstructionById(Request $request, $id)
+    {
+        return $thirdPartyInstruction = $this->thirdpartyinstructionservice->getInstructionById($id);
+    }
+    public function destroy(Request $request, $id)
+    {
+        return $thirdPartyInstruction = $this->thirdpartyinstructionservice->deleteById($id);
+    }
+    public function setInstructionToCanceled(Request $request, $id)
+    {
+        $statusInfo = json_decode($request->input('statusInfo'), true);
+        $files = $request->file('statusAttachment');
+        $attachment = [];
 
-        // $thirdPartyInstruction = $this->thirdpartyinstructionservice->findCompleted($user_id, $keyword);
-        // if (!$thirdPartyInstruction) {
-        //     return response()->json([
-        //         'success' => false,
-        //         'message' => 'Sorry, ' . $keyword . ' can not be found in User ' . $user_id . '`s Vendor Management for status Canceled and Completed.',
-        //     ]);
-        // }
-        // return $thirdPartyInstruction;
+        // Mengiterasi setiap file yang diunggah
+        if ($files) {
+            foreach ($files as $index => $file) {
+                // Lakukan sesuatu dengan setiap file menyimpannya ke direktori
+                $fileName = time() . '_' . $file->getClientOriginalName();
+                $file->move(public_path('uploads/cencel'), $fileName);
+                $attachment[] = $fileName;
+            }
+        }
+        $statusInfo['canceledAttachment'] = $attachment;
+        return $thirdPartyInstruction = $this->thirdpartyinstructionservice->setToCanceled($id, $statusInfo);
+    }
+    public function setInstructionToCompleted(Request $request, $id)
+    {
+        return response()->json($id);
+        // return $thirdPartyInstruction = $this->thirdpartyinstructionservice->setToCompleted($id)
     }
 }

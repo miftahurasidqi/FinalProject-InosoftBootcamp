@@ -54,17 +54,47 @@ class ThirdPartyInstructionService
         if ($validator->fails()) {
             return response()->json(['error' => $validator->errors()], 400);
         }
+
         $result = $this->thirdPartyInstructionRepository->createInstructionRepository($data);
         return response()->json($result);
     }
 
     public function getInstructions($page, $status)
     {
-        return $this->thirdPartyInstructionRepository->getByStatus($page, $status);
+        $result = $this->thirdPartyInstructionRepository->getByStatus($page, $status);
+        return response()->json($result);
     }
 
-    public function searchInstructions($user_id, $page, $status, $keyword)
+    //  ===
+    public function searchInstructions($page, $status, $keyword)
     {
-        return $this->thirdPartyInstructionRepository->searchInstruction($user_id, $keyword);
+        return $this->thirdPartyInstructionRepository->searchInstructions($page, $status, $keyword);
+    }
+
+    public function getInstructionById($id)
+    {
+        return $this->thirdPartyInstructionRepository->getInstructionById($id);
+    }
+    public function deleteById($id)
+    {
+        return $this->thirdPartyInstructionRepository->deleteById($id);
+    }
+    public function setToCanceled($id, $statusInfo)
+    {
+        $validator = Validator::make($statusInfo, [
+            'canceledBy' => 'required|string',
+            'description' => 'required|string',
+            'canceledAttachment' => 'array',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['error' => $validator->errors()], 400);
+        }
+
+        return $this->thirdPartyInstructionRepository->setToCanceled($id, $statusInfo);
+    }
+    public function setToCompleted($id)
+    {
+        return $this->thirdPartyInstructionRepository->setToCompleted($id);
     }
 }
