@@ -43,10 +43,10 @@ class CostDetailService
     }
 
 
-    public function getGrandTotal()
-    {
-        return $this->costdetailRepository->getGrandTotal();
-    }
+    // public function getGrandTotal()
+    // {
+    //     return $this->costdetailRepository->getGrandTotal();
+    // }
     public function getAll()
     {
         return $this->costdetailRepository->all();
@@ -81,6 +81,12 @@ class CostDetailService
                 return response()->json(['error' => 'Cost Detail not found.'], 404);
             }
         }
+
+        // return $validator->fails()
+        //     ? response()->json(['error' => $validator->errors()], 400)
+        //     : (($result = $this->costdetailRepository->update($id, $data))
+        //         ? response()->json(['Update Cost Detail Success' => true, 'data' => $result], 200)
+        //         : response()->json(['error' => 'Cost Detail not found.'], 404));
     }
 
     public function delete($id)

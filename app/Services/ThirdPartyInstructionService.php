@@ -63,9 +63,8 @@ class ThirdPartyInstructionService
         return $this->thirdPartyInstructionRepository->getByStatus($page, $status);
     }
 
-    public function searchInstructions($page, $status, $keyword)
+    public function searchInstructions($user_id, $page, $status, $keyword)
     {
         return $this->thirdPartyInstructionRepository->searchInstruction($user_id, $keyword);
     }
-
 }

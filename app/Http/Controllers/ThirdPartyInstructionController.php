@@ -70,7 +70,7 @@ class ThirdPartyInstructionController extends Controller
         $status = ['draft', 'in progres'];
         $keyword = $request->input('keyword', ''); // Mendapatkan nilai query string 'q' (default: '')
 
-        return $thirdPartyInstruction = $this->thirdpartyinstructionservice->searchInstructions($pageInt, $status, $keyword);
+        return $thirdPartyInstruction = $this->thirdpartyinstructionservice->searchInstructions($request, $pageInt, $status, $keyword);
     }
 
     public function searchCompletedInstructions(Request $request)
@@ -80,7 +80,7 @@ class ThirdPartyInstructionController extends Controller
         $status = ['cancelled', 'completed'];
         $keyword = $request->input('keyword', ''); // Mendapatkan nilai query string 'q' (default: '')
 
-        return $thirdPartyInstruction = $this->thirdpartyinstructionservice->searchInstructions($pageInt, $status, $keyword);
+        return $thirdPartyInstruction = $this->thirdpartyinstructionservice->searchInstructions($request, $pageInt, $status, $keyword);
 
         // $thirdPartyInstruction = $this->thirdpartyinstructionservice->findCompleted($user_id, $keyword);
         // if (!$thirdPartyInstruction) {
