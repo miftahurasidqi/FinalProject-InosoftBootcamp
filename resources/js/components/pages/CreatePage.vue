@@ -64,16 +64,29 @@ export default {
         ...mapActions({
             saveNewInstruction: "saveNewInstruction",
         }),
-        async saveAsDraft() {
-            const response = await this.saveNewInstruction("draft");
-            await this.$router.push(`/detail/${response}`);
+        saveAsDraft() {
+            this.saveNewInstruction("draft");
         },
-        async submit() {
-            const response = await this.saveNewInstruction("in progres");
-            await this.$router.push(`/detail/${response}`);
+        submit() {
+            this.saveNewInstruction("in progres");
         },
     },
 };
+// import InternalNote from "../modal/InternalNote.vue";
+// import VendorInvoice from "../modal/VendorInvoice.vue";
+// import ReasonCancellation from "../modal/ReasonCancellation.vue";
+// import SendMail from "../modal/SendMail.vue";
+// import AddInvoiceTarget from "../modal/AddInvoiceTarget.vue";
+// export default {
+//     name: "CreatePage",
+//     components: {
+//         InternalNote,
+//         VendorInvoice,
+//         ReasonCancellation,
+//         SendMail,
+//         AddInvoiceTarget,
+//     },
+// };
 </script>
 
 <style scoped>

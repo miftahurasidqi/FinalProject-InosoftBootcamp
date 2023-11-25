@@ -1,20 +1,7 @@
-<!-- 
-NoCustomerPO
-assignedVendor
-attentionOf
-instructionID
-instructionType
-invoiceTo
-linkTo
-status
-vendorAddress
-vendorQuotationNo
-_id
--->
 <template>
     <tr @click="goToDetail" class="container-tb">
         <td>
-            <p>{{ instruction.instructionID }}</p>
+            <p>{{ instruction.instructionId }}</p>
         </td>
         <td>
             <p v-for="item in instruction.linkTo">
@@ -38,10 +25,10 @@ _id
             <p>{{ instruction.attentionOf }}</p>
         </td>
         <td>
-            <p>{{ instruction.vendorQuotationNo }}</p>
+            <p>{{ instruction.quotationNo }}</p>
         </td>
         <td>
-            <p>{{ instruction.customerContract }}</p>
+            <p>{{ instruction.customerPO }}</p>
         </td>
         <td class="i-status">
             <p>{{ instruction.status }}</p>
@@ -59,7 +46,7 @@ export default {
     },
     methods: {
         goToDetail() {
-            this.$router.push(`/detail/${this.instruction._id}`);
+            this.$router.push(`/detail/${this.instruction.id}`);
         },
     },
 };
