@@ -6,7 +6,7 @@
         </div>
         <div>
             <p>LI No.</p>
-            <p>{{ instruction.instructionId }}</p>
+            <p>{{ instruction.instructionID }}</p>
         </div>
         <div>
             <p>Transfer No.</p>
@@ -14,11 +14,11 @@
         </div>
         <div>
             <p>Customer</p>
-            <p>no data yet</p>
+            <p>{{ instruction.customerContract }}</p>
         </div>
         <div>
             <p>Customer PO</p>
-            <p>{{ instruction.customerPO }}</p>
+            <p>{{ instruction.NoCustomerPO }}</p>
         </div>
         <div>
             <p>Statsu</p>
