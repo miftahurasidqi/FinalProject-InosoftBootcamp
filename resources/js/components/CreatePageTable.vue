@@ -286,7 +286,7 @@ export default {
 
 .file-item {
     background: rgb(223, 223, 223);
-    padding: 5px;
+    padding: 50px;
 }
 
 .add-file {

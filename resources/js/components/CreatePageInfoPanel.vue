@@ -70,7 +70,7 @@
                         <input
                             class="bg-b"
                             name="quotation-no"
-                            type="text"
+                            type="number"
                             placeholder="Enter Quotation"
                             v-model="newIstruction.vendorQuotationNo"
                         />
@@ -106,7 +106,7 @@
                     <select
                         name="customer-contract"
                         class="bg-b"
-                        v-model="newIstruction.customerContract"
+                        v-model="newIstruction.customer"
                     >
                         <option disabled value="">Select customer</option>
                         <option>Customer 1</option>
