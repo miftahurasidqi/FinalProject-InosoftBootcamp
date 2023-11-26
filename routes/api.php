@@ -65,6 +65,12 @@ Route::group([], function () {
     // Route::get('/', [LinkToController::class, 'getLinkToList']);
 });
 
+// Route Api For Internal Only
+Route::group([], function () {
+    Route::post('/addInternalOnly', [LinkToController::class, 'store']);
+    Route::delete('/deleteInternalOnly/{id}', [LinkToController::class, 'delete']);
+    Route::put('/editInternalOnly/{id}', [LinkToController::class, 'update']);
+});
 // Route Api For Link To
 Route::group(['prefix' => 'linkTo'], function () {
     Route::post('/', [LinkToController::class, 'store']);
