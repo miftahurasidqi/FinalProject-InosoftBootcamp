@@ -4,6 +4,8 @@
 /public/storage
 /storage/*.key
 /vendor
+/public/js
+/public/uploads
 .env
 .env.backup
 .env.production
@@ -16,4 +18,3 @@ yarn-error.log
 /.fleet
 /.idea
 /.vscode
-public/js/app.js

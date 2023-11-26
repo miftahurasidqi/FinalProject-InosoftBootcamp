@@ -4,13 +4,16 @@
         <div class="card">
             <h2>{{ instruction.instructionId }}</h2>
 
-            <DetailTopPanel :status="instruction.status" :id="instruction.id" />
+            <DetailTopPanel
+                :status="instruction.status"
+                :id="instruction._id"
+            />
 
             <DetailPageInfoPanel :instruction="instruction" />
             <!-- <hr /> -->
             <div id="cost-detail-panel" class="card">
                 <h2>Cost Detail</h2>
-                <DetailPageTable :instruction="instruction" />
+                <DetailPageTable />
             </div>
             <div id="attachment-panel" class="d-flex justify-content-between">
                 <div>

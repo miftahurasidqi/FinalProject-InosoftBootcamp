@@ -137,4 +137,7 @@ export const deleteSuportDoc = ({ newInvoice }, index) => {
 // for Detailpage end
 
 // for Editpage start
+export const setInstructionEdit = (state, response) => {
+    state.editIstruction = response;
+};
 // for EditPage end

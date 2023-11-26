@@ -1,6 +1,6 @@
 <template>
     <div id="page-body">
-        <h1>{{ formData.id }}</h1>
+        <h1>{{ instruction.id }}</h1>
         <form @submit.prevent="submitForm">
             <div class="card">
                 <div id="info-panel">
@@ -8,7 +8,7 @@
                         <select
                             class="form-select info-top-panel"
                             aria-label="Select instruction type"
-                            v-model="formData.instructionType"
+                            v-model="instruction.instructionType"
                             disabled
                         >
                             <option>
@@ -25,7 +25,7 @@
                             <select
                                 name="assigned-vendor"
                                 id=""
-                                v-model="formData.assignedVendor"
+                                v-model="instruction.assignedVendor"
                             >
                                 <option disabled value="">Enter Vendor</option>
                                 <option>Machine Shop</option>
@@ -38,16 +38,16 @@
                                 name="attention-of"
                                 type="text"
                                 placeholder="Enter Attention Of"
-                                v-model="formData.attentionOf"
+                                v-model="instruction.attentionOf"
                             />
                         </div>
                         <div>
                             <label for="quotation-no">Quotation No.</label>
                             <input
                                 name="quotation-no"
-                                type="number"
+                                type="text"
                                 placeholder="Enter Quotation"
-                                v-model="formData.quotationNo"
+                                v-model="instruction.vendorQuotationNo"
                             />
                         </div>
                         <div>
@@ -55,7 +55,7 @@
                             <select
                                 name="invoice-to"
                                 id=""
-                                v-model="formData.invoiceTo"
+                                v-model="instruction.invoiceTo"
                             >
                                 <option disabled value="">
                                     Select an Option
@@ -70,7 +70,7 @@
                                 name="vendor-address"
                                 type="text"
                                 placeholder="Enter Vendor Address"
-                                v-model="formData.vendorAddress"
+                                v-model="instruction.vendorAddress"
                             />
                         </div>
                     </div>
@@ -94,25 +94,15 @@
                         </thead>
                         <tbody>
                             <EditPageTable
-                                v-for="(
-                                    costDetail, index
-                                ) in formData.costDetails"
+                                v-for="(item, index) in costItem"
                                 :key="index"
-                                v-model:description="
-                                    formData.costDetails[index].description
-                                "
-                                v-model:qty="formData.costDetails[index].qty"
-                                v-model:uom="formData.costDetails[index].uom"
-                                v-model:unitPrice="
-                                    formData.costDetails[index].unitPrice
-                                "
-                                v-model:gst="formData.costDetails[index].gst"
-                                v-model:currency="
-                                    formData.costDetails[index].currency
-                                "
-                                v-model:chargeTo="
-                                    formData.costDetails[index].chargeTo
-                                "
+                                v-model:description="item.description"
+                                v-model:qty="item.qty"
+                                v-model:uom="item.uom"
+                                v-model:unitPrice="item.unitPrice"
+                                v-model:gst="item.gst"
+                                v-model:currency="item.currency"
+                                v-model:chargeTo="item.chargeTo"
                             />
                             <tr>
                                 <td>
@@ -136,8 +126,9 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from "vuex";
 import EditPageTable from "../EditPageTable.vue";
-
+import ActionButton from "../ActionButton.vue";
 export default {
     name: "EditPage",
     components: {
@@ -145,73 +136,36 @@ export default {
     },
     data() {
         return {
-            formData: {
-                id: "",
-                instructionType: "",
-                assignedVendor: "",
-                attentionOf: "",
-                quotationNo: 0,
-                invoiceTo: "",
-                vendorAddress: "",
-                costDetails: [
-                    {
-                        description: "",
-                        qty: 0,
-                        uom: "",
-                        unitPrice: 0,
-                        gst: 0,
-                        currency: "",
-                        vatAmount: 0,
-                        subTotal: 0,
-                        total: 0,
-                        chargeTo: "",
-                    },
-                ],
-                status: "In Progress",
-            },
+            // costItems: this.instruction.costDetail.costItems,
+            // grandTotal: this.instruction.costDetail.grandtotal,
         };
     },
     computed: {
-        instruction() {
-            return this.$store.getters.getInstructionById(
-                this.$route.params.id,
-            );
-        },
+        ...mapGetters({
+            instruction: "editIstruction",
+            costItem: "editCostItem",
+            grandTotal: "editGrandTotal",
+        }),
     },
     mounted() {
-        // menginput data dari computed ke formData
-        this.formData = { ...this.instruction };
+        this.getInstructionsById(this.$route.params.id);
     },
     methods: {
+        ...mapActions({
+            getInstructionsById: "getInstructionsById",
+        }),
         async submitForm() {
             // pindahkan ke actions nanti
             // berfungsi untuk mengubah data di openInstructions sesuai id
             try {
                 const response = await axios.patch(
                     `/api/patchData/${this.formData.id}`,
-                    this.formData,
+                    this.formData
                 );
                 console.log(response);
             } catch (error) {
                 console.error(error);
             }
-        },
-        addCostDetail() {
-            // berfungsi untuk mendorong object ini
-            // biarin aja gini, udah dicoba dimasukin ke data
-            // hasilnya malah table 2 dan seterusnya sama
-            this.formData.costDetails.push({
-                description: "",
-                qty: 0,
-                uom: "",
-                unitPrice: 0,
-                gst: 0,
-                currency: "",
-                vatAmount: 0,
-                subTotal: 0,
-                total: 0,
-                chargeTo: "",
-            });
         },
     },
 };
