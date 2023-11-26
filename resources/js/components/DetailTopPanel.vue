@@ -1,16 +1,28 @@
 <template>
-    <div id="top-panel" class="flex-wrap d-flex justify-content-between">
+    <div
+        id="top-panel"
+        class="flex-wrap d-flex justify-content-between"
+        style="margin: 0rem 1.5rem"
+    >
         <div>
-            <p>Back</p>
+            <p class="font-style">Back</p>
         </div>
         <div class="d-flex fles-row" v-if="status === 'draft'">
-            <ActionButton text="Delete" @click.prevent="showDelete" />
-            <ActionButton text="Modify" @click="goToEdit" />
+            <ActionButton
+                text="Delete"
+                @click.prevent="showDelete"
+                class="font-style"
+            />
+            <ActionButton text="Modify" @click="goToEdit" class="font-style" />
         </div>
 
         <div class="d-flex fles-row" v-else-if="status === 'in progres'">
-            <ActionButton text="Terminate" @click.prevent="showTerminate" />
-            <ActionButton text="Modify" @click="goToEdit" />
+            <ActionButton
+                text="Terminate"
+                @click.prevent="showTerminate"
+                class="font-style"
+            />
+            <ActionButton text="Modify" @click="goToEdit" class="font-style" />
         </div>
     </div>
 
@@ -151,6 +163,10 @@ export default {
 <style scoped>
 textarea {
     max-height: 50%;
+}
+.font-style {
+    font-size: medium;
+    font-weight: 600;
 }
 .add-file {
     background: rgb(95, 190, 155);
