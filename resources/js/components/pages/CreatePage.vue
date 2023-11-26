@@ -1,7 +1,7 @@
 <template>
     <div id="page-body">
-        <h1>3rd Party Instruction</h1>
-        <form class="container-create">
+        <h1 style="margin-bottom: 8px">3rd Party Instruction</h1>
+        <form class="card" style="padding-bottom: 2rem">
             <CreatePageInfoPanel
                 :newIstruction="newIstruction"
                 :getLinkTo="getLinkTo"
@@ -13,12 +13,12 @@
                 :newCostItems="newCostItems"
                 :newGrandTotal="newGrandTotal"
             />
-
-            <div class="card">
-                <button @click.prevent="saveAsDraft">Save as Daft</button>
-                <button @click.prevent="submit">submit</button>
-            </div>
         </form>
+        <div class="container-button-bottom">
+            <button>Cancel</button>
+            <button @click.prevent="saveAsDraft">Save as Daft</button>
+            <button @click.prevent="submit">Submit</button>
+        </div>
 
         <!-- <div> -->
         <!-- <SendMail />
@@ -81,11 +81,35 @@ export default {
     padding: 0;
     margin: 0;
 }
-.container-create {
-    background: white;
-    box-shadow: 0px 0px 10px -5px black;
-    border-radius: 10px;
-    overflow: hidden;
+
+.container-button-bottom {
+    display: flex;
+    justify-content: end;
+    margin-top: 2rem;
+    margin-right: 2rem;
+}
+
+.container-button-bottom button:nth-child(1) {
+    padding: 0.4rem 2rem;
+    border: none;
+    border-radius: 5px;
+    font-weight: 600;
+}
+.container-button-bottom button:nth-child(2) {
+    padding: 0.4rem 2rem;
+    margin-left: 1rem;
+    border: 0.6px solid black;
+    border-radius: 5px;
+    font-weight: 600;
+}
+.container-button-bottom button:nth-child(3) {
+    padding: 0.4rem 4rem;
+    margin-left: 1rem;
+    border-radius: 5px;
+    font-weight: 600;
+    border: none;
+    background: rgb(0, 162, 162);
+    color: white;
 }
 
 #page-body {

@@ -63,16 +63,17 @@
             </div>
         </Popup>
 
-        <div>
-            <h2>Vendor Invoice</h2>
+        <div class="panel-top">
+            <p>Vendor Invoice</p>
             <ActionButton
                 text="Add Vendor Invoice"
+                class="buttons"
                 @click.prevent="showFormAddInvoice"
             />
         </div>
 
         <div id="vendor_invoice_list">
-            <table>
+            <table class="table">
                 <thead>
                     <tr>
                         <td>Invoice Number</td>
@@ -86,6 +87,21 @@
                     <td>{{ invoice.suportingDocument }}</td>
                 </tr>
             </table>
+            <!-- Ketika tidak ada data -->
+            <div
+                style="
+                    width: 100%;
+                    display: flex;
+                    justify-content: center;
+                    height: 35px;
+                    align-items: center;
+                    font-size: small;
+                    font-weight: 600;
+                    color: rgb(120, 120, 120);
+                "
+            >
+                <p>No Data</p>
+            </div>
         </div>
     </div>
 </template>
@@ -149,12 +165,46 @@ export default {
 </script>
 
 <style scoped>
-.add-file {
+* {
+    padding: 0;
+    margin: 0;
+}
+.panel-top {
+    display: flex;
+    justify-content: space-between;
+    margin: 1.5rem;
+}
+.panel-top p {
+    display: inline;
+    height: 40px;
+    line-height: 40px;
+    font-weight: 600;
+}
+.buttons {
+    background: rgb(0, 162, 162);
+    padding: 0.3rem 2rem;
+    border: none;
+    border-radius: 4px;
+    color: white;
+    font-weight: 600;
+}
+#vendor_invoice_list {
+    margin: 0rem 1.5rem;
+    border: 1px solid rgb(189, 189, 189);
+}
+#vendor_invoice_list thead tr td {
+    border: none;
+    font-size: small;
+    font-weight: 600;
+    color: white;
+    background: rgb(165, 165, 165);
+}
+/* .panel-top actionb .add-file {
     background: rgb(95, 190, 155);
     color: white;
-}
-.file-item {
+} */
+/* .file-item {
     background: rgb(223, 223, 223);
     padding: 5px;
-}
+} */
 </style>

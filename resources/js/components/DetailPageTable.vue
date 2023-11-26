@@ -1,6 +1,6 @@
 <template>
     <table class="table">
-        <thead>
+        <thead class="table-head">
             <tr>
                 <th>Description</th>
                 <th>QTY</th>
@@ -14,7 +14,7 @@
                 <th>Charge To</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody class="table-body">
             <tr v-for="(detail, index) in costDetail.costItems" :key="index">
                 <td>{{ detail.description }}</td>
                 <td>{{ detail.qty }}</td>
@@ -27,11 +27,15 @@
                 <td>{{ detail.total }}</td>
                 <td>{{ detail.chargeTo }}</td>
             </tr>
-            <tr v-for="(detail, index) in costDetail.grandTotal" :key="index">
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
+            <tr
+                v-for="(detail, index) in costDetail.grandTotal"
+                :key="index"
+                class="table-body-2"
+            >
+                <td class="bg-white"></td>
+                <td class="bg-white"></td>
+                <td class="bg-white"></td>
+                <td class="bg-white"></td>
                 <td>Grand Total</td>
                 <td>{{ detail.currency }}</td>
                 <td>{{ detail.vatAmount }}</td>
@@ -60,3 +64,21 @@ export default {
     },
 };
 </script>
+
+<style scoped>
+.table-head tr th {
+    background: rgb(165, 165, 165);
+    color: white;
+    font-size: small;
+}
+
+.table-body tr td {
+    font-size: small;
+    font-weight: 600;
+    color: rgb(120, 120, 120);
+    background: rgb(250, 250, 250);
+}
+.table-body-2 td {
+    border: none;
+}
+</style>

@@ -19,11 +19,28 @@
         <div class="container-content-1">
             <div class="container-content-1-left">
                 <div class="content-1-top" style="margin-bottom: 1rem">
-                    <!--  -->
-                    <div class="pilihan" style="width: 190px">
-                        <label @click="toggleOptions"> > link To </label>
-                        <div>
-                            <label
+                    <div>
+                        <label @click="toggleOptions">Link To </label>
+                        <div class="pilihan">
+                            <select
+                                name="linkTo"
+                                id="linkTo"
+                                style="width: 260px"
+                                class="bg-b"
+                            >
+                                <option
+                                    v-for="(item, index) in getLinkTo"
+                                    :key="index"
+                                >
+                                    <input
+                                        type="checkbox"
+                                        v-model="newIstruction.linkTo"
+                                        :value="item"
+                                    />
+                                    {{ item }}
+                                </option>
+                            </select>
+                            <!-- <label
                                 class="bg-b"
                                 name="linkTo"
                                 id="linkTo"
@@ -36,11 +53,11 @@
                                     :value="item"
                                 />
                                 {{ item }}
-                            </label>
+                            </label> -->
                         </div>
                     </div>
 
-                    <div class="pilihan" style="width: 190px">
+                    <div class="pilihan" style="width: 260px">
                         <label for="assigned-vendor">Assigned Vendor</label>
                         <select
                             class="bg-b"
@@ -53,7 +70,7 @@
                             <option>Symons Group</option>
                         </select>
                     </div>
-                    <div class="pilihan" style="width: 190px">
+                    <div class="pilihan" style="width: 260px">
                         <label for="attention-of">Attention Of</label>
                         <input
                             class="bg-b"
@@ -65,7 +82,7 @@
                     </div>
                 </div>
                 <div class="content-1-top">
-                    <div class="pilihan" style="width: 190px">
+                    <div class="pilihan" style="width: 260px">
                         <label for="quotation-no">Quotation No.</label>
                         <input
                             class="bg-b"
@@ -75,7 +92,7 @@
                             v-model="newIstruction.vendorQuotationNo"
                         />
                     </div>
-                    <div class="pilihan" style="width: 190px">
+                    <div class="pilihan" style="width: 260px">
                         <label for="invoice-to">Invoice To</label>
                         <select
                             class="bg-b"
@@ -88,7 +105,7 @@
                             <option>Something</option>
                         </select>
                     </div>
-                    <div class="pilihan" style="width: 190px">
+                    <div class="pilihan" style="width: 260px">
                         <label for="vendor-address">Vendor Address</label>
                         <input
                             class="bg-b"
@@ -187,8 +204,7 @@ export default {
     width: 80%;
     display: flex;
     flex-direction: column;
-    align-items: flex-end;
-    padding-left: 8rem;
+    padding-left: 16rem;
     padding-right: 10px;
 }
 .content-1-top {

@@ -8,7 +8,7 @@
     >
         <h6>Cost Detail</h6>
     </div>
-    <div id="create-cost-detail" style="margin: 0rem 2rem">
+    <div id="create-cost-detail">
         <table class="table">
             <thead>
                 <tr>
@@ -21,7 +21,8 @@
                     <th>Vat Amount</th>
                     <th>Sub Total</th>
                     <th>Total</th>
-                    <th>Charge To</th>
+                    <!-- <th>Charge To</th> -->
+                    <th></th>
                     <th></th>
                 </tr>
             </thead>
@@ -94,7 +95,7 @@
                     <td>
                         <p>{{ costItem.total }}</p>
                     </td>
-                    <td>
+                    <!-- <td>
                         <select
                             class="form-select table-input"
                             aria-label="Select an option"
@@ -104,18 +105,23 @@
                             <option>2</option>
                             <option>3</option>
                         </select>
-                    </td>
-                    <td>
+                    </td> -->
+                    <td style="width: 40px">
                         <button
                             class="b-min"
                             @click.prevent="minCostItem(index)"
                         >
-                            <p style="transform: translateY(-4px)">_</p>
+                            <p
+                                style="
+                                    transform: translateY(-12px);
+                                    font-weight: 800;
+                                "
+                            >
+                                _
+                            </p>
                         </button>
                     </td>
-                </tr>
-                <tr>
-                    <td>
+                    <td style="width: 40px">
                         <button
                             type="button"
                             @click="addCostItem"
@@ -131,6 +137,24 @@
                             </p>
                         </button>
                     </td>
+                </tr>
+                <tr>
+                    <!-- <td>
+                        <button
+                            type="button"
+                            @click="addCostItem"
+                            class="b-plus"
+                        >
+                            <p
+                                style="
+                                    transform: translateY(-3px);
+                                    font-weight: 700;
+                                "
+                            >
+                                +
+                            </p>
+                        </button>
+                    </td> -->
                 </tr>
                 <tr v-for="(grandTotal, index) in newGrandTotal" :key="index">
                     <td></td>
@@ -155,9 +179,9 @@
                 </tr>
             </tbody>
         </table>
-        <div id="attachment-panel" class="d-flex justify-content-between">
-            <div>
-                <h2>Attachment</h2>
+        <div id="attachment-panel" class="container-a">
+            <div class="a-l">
+                <p>Attachment</p>
                 <div
                     v-for="(file, index) in newAttacmentFile"
                     class="file-item"
@@ -168,8 +192,8 @@
                         Remove
                     </button>
                 </div>
-                <label for="add-attachment-file" class="add-file"
-                    >Add Attachment</label
+                <label for="add-attachment-file" class="buttons"
+                    >+ Add Attachment</label
                 >
                 <input
                     hidden
@@ -178,15 +202,13 @@
                     @change="handleInputFile"
                 />
             </div>
-            <div>
+            <div class="a-r">
                 <label for="notes">Notes</label>
                 <textarea
                     v-model="newNote"
                     @input="updateNewNote"
                     name="notes"
                     id="notes"
-                    cols="10"
-                    rows="10"
                 ></textarea>
             </div>
         </div>
@@ -250,6 +272,15 @@ export default {
 </script>
 
 <style scoped>
+* {
+    padding: 0px;
+    margin: 0px;
+}
+#create-cost-detail {
+    margin: 0rem 2rem;
+    border: 1px solid rgb(165, 165, 165);
+}
+
 .table-input-large {
     max-width: 150px;
 }
@@ -266,8 +297,9 @@ export default {
 }
 .table thead tr th {
     font-size: small;
+    line-height: 26px;
     padding: 5px;
-    background: slategray;
+    background: rgb(165, 165, 165);
     color: white;
 }
 
@@ -284,20 +316,43 @@ export default {
     color: white;
 }
 
-.file-item {
-    background: rgb(223, 223, 223);
-    padding: 5px;
+.container-a {
+    display: flex;
+    margin: 2rem 10px;
 }
-
-.add-file {
-    background: rgb(95, 190, 155);
+.buttons {
+    background: rgb(0, 162, 162);
+    padding: 0.3rem 2rem;
+    border: none;
+    border-radius: 4px;
     color: white;
-}
-#attachment-panel {
-    height: 300px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 1rem;
 }
 
-textarea {
-    max-height: 50%;
+.a-l {
+    width: 40%;
+}
+.a-l p {
+    font-weight: 500;
+    color: rgb(98, 98, 98);
+}
+.a-r {
+    display: flex;
+    flex-direction: column;
+    width: 60%;
+}
+
+.a-r label {
+    font-size: medium;
+    font-weight: 500;
+    color: rgb(98, 98, 98);
+}
+
+.a-r textarea {
+    border: none;
+    height: 100px;
+    background: rgb(245, 245, 245);
 }
 </style>

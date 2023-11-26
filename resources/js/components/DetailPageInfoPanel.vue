@@ -85,7 +85,9 @@ export default {
 }
 
 .isi-status {
-    display: inline;
+    display: flex;
+    width: 110px;
+    justify-content: center;
     background: rgb(229, 235, 255);
     padding: 0px 20px;
     padding-bottom: 3px;
@@ -111,6 +113,8 @@ export default {
     width: 40%;
     flex-direction: row;
     justify-content: start;
+    border-left: 1px dashed rgb(191, 191, 191);
+    padding-left: 10px;
 }
 .detail {
     width: 25%;
