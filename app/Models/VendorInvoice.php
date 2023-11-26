@@ -10,13 +10,17 @@ class VendorInvoice extends Eloquent
     protected $collection = 'vendor_infoice';
 
     protected $fillable = [
+        'third_party_instruction_id',
         'invoiceNumber',
         'invoiceAttachment',
-        'suportingDocument'
-        
+        'suportingDocument',
     ];
 
     protected $casts = [
-        'suportingDocument' => 'array'
+        'suportingDocument' => 'array',
     ];
+    public function thirdPartyInstruction()
+    {
+        return $this->belongsTo(ThirdPartyInstruction::class, 'third_party_instruction_id');
+    }
 }

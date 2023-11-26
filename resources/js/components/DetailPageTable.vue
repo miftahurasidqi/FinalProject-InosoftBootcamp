@@ -6,7 +6,6 @@
                 <th>QTY</th>
                 <th>UOM</th>
                 <th>Unit Price</th>
-                <th>Discount</th>
                 <th>GST(%)</th>
                 <th>Currency</th>
                 <th>Vat Amount</th>
@@ -16,13 +15,24 @@
             </tr>
         </thead>
         <tbody>
-            <tr v-for="(detail, index) in instruction.costDetails" :key="index">
+            <tr v-for="(detail, index) in costDetail.costItems" :key="index">
                 <td>{{ detail.description }}</td>
                 <td>{{ detail.qty }}</td>
                 <td>{{ detail.uom }}</td>
                 <td>{{ detail.unitPrice }}</td>
-                <td>{{ detail.discount }}</td>
                 <td>{{ detail.gst }}</td>
+                <td>{{ detail.currency }}</td>
+                <td>{{ detail.vatAmount }}</td>
+                <td>{{ detail.subTotal }}</td>
+                <td>{{ detail.total }}</td>
+                <td>{{ detail.chargeTo }}</td>
+            </tr>
+            <tr v-for="(detail, index) in costDetail.grandTotal" :key="index">
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>Grand Total</td>
                 <td>{{ detail.currency }}</td>
                 <td>{{ detail.vatAmount }}</td>
                 <td>{{ detail.subTotal }}</td>
@@ -34,12 +44,19 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from "vuex";
+
 export default {
     name: "DetailPageTable",
-    props: {
-        instruction: {
-            type: Object,
-        },
+    computed: {
+        ...mapGetters({
+            costDetail: "costDetail",
+        }),
+    },
+    methods: {
+        ...mapActions({
+            getInstructionsById: "getInstructionsById",
+        }),
     },
 };
 </script>

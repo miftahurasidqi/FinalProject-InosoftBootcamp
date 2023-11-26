@@ -40,6 +40,7 @@ export const state = {
     ],
     newGrandTotal: [],
     attacmentFile: [],
+
     // harusnya data ini dari BE
     pilihanInput: {
         linkTo: ["TRF-2020", "TRF-2021", "TRF-2022", "TRF-2023"],
@@ -50,7 +51,14 @@ export const state = {
     // for CreatePage end
 
     // for Detailpage start
-    instructionDetail: {},
+    instructionDetail: {
+        costDetail: {
+            costItems: [],
+            grandTotal: [],
+            notes: "",
+        },
+        vendor_invoice: [],
+    },
     inputStatusInfo: {
         canceledBy: "User 1",
         description: "",
@@ -66,5 +74,29 @@ export const state = {
     // for Detailpage end
 
     // for Editpage start
+    editIstruction: {
+        costDetail: {
+            costItems: [],
+            grandTotal: [],
+            notes: "",
+        },
+    },
+    // editCostItems: [
+    //     {
+    //         description: "",
+    //         qty: 0,
+    //         uom: "",
+    //         unitPrice: 0,
+    //         gst: 0,
+    //         currency: "",
+    //         vatAmount: 0,
+    //         subTotal: 0,
+    //         total: 0,
+    //         chargeTo: "",
+    //     },
+    // ],
+    // editGrandTotal: [],
+    // editAttacmentFile: [],
+
     // for EditPage end
 };

@@ -3,12 +3,12 @@
         <div>
             <p>Back</p>
         </div>
-        <div class="d-flex fles-row" v-if="status === 'Draft'">
+        <div class="d-flex fles-row" v-if="status === 'draft'">
             <ActionButton text="Delete" @click.prevent="showDelete" />
             <ActionButton text="Modify" @click="goToEdit" />
         </div>
 
-        <div class="d-flex fles-row" v-else-if="status === 'In Progress'">
+        <div class="d-flex fles-row" v-else-if="status === 'in progres'">
             <ActionButton text="Terminate" @click.prevent="showTerminate" />
             <ActionButton text="Modify" @click="goToEdit" />
         </div>
@@ -135,8 +135,9 @@ export default {
         removeAttacmentCancelFile(index) {
             this.$store.commit("removeAttacmentCancelFile", index);
         },
-        deleteInstruction() {
-            if (this.deleteInstructionsById(this.id)) {
+        async deleteInstruction() {
+            const res = await this.deleteInstructionsById(this.id);
+            if (res) {
                 this.$router.push(`/`);
             }
         },

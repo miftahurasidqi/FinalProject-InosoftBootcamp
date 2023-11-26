@@ -19,7 +19,13 @@
                         </div>
 
                         <div class="container-s-e">
-                            <ActionButton text="Search" class="border mx-2" />
+                            <input
+                                name="attention-of"
+                                type="text"
+                                placeholder="Search Instruction"
+                                v-model="searchKeyword"
+                                @input="search"
+                            />
                             <ActionButton text="Export" class="border" />
                         </div>
                     </div>
@@ -90,11 +96,14 @@ export default {
         return {
             isOpen: true, // Secara default menunjukkan halaman 'Open'
             isListOpen: false,
+            searchKeyword: "",
+            loading: false,
         };
     },
     mounted() {
         // menjalankan function saat renderan awal
         this.getOpenInstructions(0);
+        window.addEventListener("scroll", this.handleScroll);
     },
     computed: {
         ...mapGetters({
@@ -110,6 +119,7 @@ export default {
         ...mapActions({
             getOpenInstructions: "getOpenInstructions",
             getCompletedInstructions: "getCompletedInstructions",
+            searchInstructions: "searchInstructions",
         }),
         isOpenSwitcher() {
             this.isOpen = true;
@@ -119,15 +129,61 @@ export default {
             this.isOpen = false;
             this.getCompletedInstructions(0);
         },
-        loadNextInstructions() {
-            // memeriksa tab apakah open atau completed
-            if (this.pageInfo.currrentPage === this.pageInfo.totalPages) {
-                console.log("semua data telah diambil");
+        search() {
+            let status = this.isOpen ? "open" : "completed";
+            const reqData = {
+                status,
+                keyWord: this.searchKeyword,
+                currrentPage: 0,
+            };
+            if (this.searchKeyword) {
+                console.log(reqData);
+                this.searchInstructions(reqData);
             } else {
-                if (this.isOpen) {
-                    this.getOpenInstructions(this.pageInfo.currrentPage);
+                console.log(status, "str 0");
+                this.isOpen
+                    ? this.getOpenInstructions(0)
+                    : this.getCompletedInstructions(0);
+            }
+        },
+
+        loadNextInstructions() {
+            if (this.loading) return;
+            this.loading = true;
+
+            // memeriksa tab apakah open atau completed
+            if (this.pageInfo.currrentPage !== this.pageInfo.totalPages) {
+                let status = this.isOpen ? "open" : "completed";
+                const reqData = {
+                    status,
+                    keyWord: this.searchKeyword,
+                    currrentPage: this.pageInfo.currrentPage,
+                };
+                if (this.searchKeyword) {
+                    console.log(reqData);
+                    this.searchInstructions(reqData);
                 } else {
-                    this.getCompletedInstructions(this.pageInfo.currrentPage);
+                    console.log(status, "str 0");
+
+                    this.isOpen
+                        ? this.getOpenInstructions(this.pageInfo.currrentPage)
+                        : this.getCompletedInstructions(
+                              this.pageInfo.currrentPage
+                          );
+                }
+            } else {
+                console.log("semua data telah diambil");
+            }
+            this.loading = false;
+        },
+        handleScroll() {
+            // Jika pengguna telah mencapai bagian bawah
+            if (
+                window.innerHeight + window.scrollY >=
+                document.body.offsetHeight
+            ) {
+                if (this.$route.fullPath === "/") {
+                    this.loadNextInstructions();
                 }
             }
         },
