@@ -22,13 +22,12 @@
                     <div>
                         <label @click="toggleOptions">Link To </label>
                         <div class="pilihan">
-                            <select
-                                name="linkTo"
-                                id="linkTo"
-                                style="width: 260px"
-                                class="bg-b"
-                            >
-                                <option
+                            <label @click="toggleOptions"> > link To </label>
+                            <div>
+                                <label
+                                    class="bg-b"
+                                    name="linkTo"
+                                    id="linkTo"
                                     v-for="(item, index) in getLinkTo"
                                     :key="index"
                                 >
@@ -38,8 +37,8 @@
                                         :value="item"
                                     />
                                     {{ item }}
-                                </option>
-                            </select>
+                                </label>
+                            </div>
                             <!-- <label
                                 class="bg-b"
                                 name="linkTo"
@@ -78,6 +77,7 @@
                             type="text"
                             placeholder="Enter Attention Of"
                             v-model="newIstruction.attentionOf"
+                            required
                         />
                     </div>
                 </div>

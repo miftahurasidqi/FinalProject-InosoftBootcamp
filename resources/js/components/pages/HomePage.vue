@@ -42,10 +42,16 @@
                                 class="b-intruction"
                             />
                             <div :class="listClass" style="transition: 0.3s">
-                                <button class="logistic">
+                                <button
+                                    class="logistic"
+                                    @click="goCreateLogistic"
+                                >
                                     Logistic Instruction
                                 </button>
-                                <button class="service">
+                                <button
+                                    class="service"
+                                    @click="goCreateService"
+                                >
                                     Service Intruction
                                 </button>
                             </div>
@@ -116,6 +122,12 @@ export default {
     },
     methods: {
         // mengakses function dari store  (store/actions.js)
+        goCreateService() {
+            this.$router.push("/create");
+        },
+        goCreateLogistic() {
+            this.$router.push("/create");
+        },
         ...mapActions({
             getOpenInstructions: "getOpenInstructions",
             getCompletedInstructions: "getCompletedInstructions",
@@ -168,7 +180,7 @@ export default {
                     this.isOpen
                         ? this.getOpenInstructions(this.pageInfo.currrentPage)
                         : this.getCompletedInstructions(
-                              this.pageInfo.currrentPage
+                              this.pageInfo.currrentPage,
                           );
                 }
             } else {
