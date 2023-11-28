@@ -23460,18 +23460,18 @@ var saveNewInstruction = /*#__PURE__*/function () {
             }
           });
         case 10:
-<<<<<<< HEAD
-          response = _context9.sent;
+          response = _context10.sent;
           // Handle response
           console.log(response);
+          return _context10.abrupt("return", response.data.id);
         case 15:
           _context10.prev = 15;
           _context10.t0 = _context10["catch"](4);
           console.error("Error sending data to API:", _context10.t0);
->>>>>>> 5d4bc9ad7a62b868faea37eb57db21626735040c
         case 18:
         case "end":
           return _context10.stop();
+      }
     }, _callee10, null, [[4, 15]]);
   }));
   return function saveNewInstruction(_x17, _x18) {
@@ -23640,7 +23640,11 @@ var saveNewInvoice = /*#__PURE__*/function () {
 var editInvoice = /*#__PURE__*/function () {
   var _ref30 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee15(_ref29, id) {
     var commit;
+    return _regeneratorRuntime().wrap(function _callee15$(_context15) {
+      while (1) switch (_context15.prev = _context15.next) {
+        case 0:
           commit = _ref29.commit;
+          console.log(id);
           // request data: {
           //                invoiceNumber: "string",
           //                deleteFile: [fileName],          // array berisi Nama File yg dihapus
