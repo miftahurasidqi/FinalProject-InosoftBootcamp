@@ -84,7 +84,7 @@ export default {
 
 .container-button-bottom {
     display: flex;
-    justify-content: end;
+    justify-content: flex-end;
     margin-top: 2rem;
     margin-right: 2rem;
 }

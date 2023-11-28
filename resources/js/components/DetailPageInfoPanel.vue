@@ -101,7 +101,7 @@ export default {
     display: flex;
     width: 60%;
     flex-direction: column;
-    justify-content: start;
+    justify-content: flex-start;
 }
 .container-detail {
     display: flex;
@@ -112,7 +112,7 @@ export default {
     display: flex;
     width: 40%;
     flex-direction: row;
-    justify-content: start;
+    justify-content: flex-start;
     border-left: 1px dashed rgb(191, 191, 191);
     padding-left: 10px;
 }

@@ -19,41 +19,39 @@
         <div class="container-content-1">
             <div class="container-content-1-left">
                 <div class="content-1-top" style="margin-bottom: 1rem">
-                    <div>
-                        <label @click="toggleOptions">Link To </label>
-                        <div class="pilihan">
-                            <select
-                                name="linkTo"
-                                id="linkTo"
-                                style="width: 260px"
-                                class="bg-b"
-                            >
-                                <option
-                                    v-for="(item, index) in getLinkTo"
-                                    :key="index"
+                    <div class="pilihan" style="width: 260px">
+                        <label>Link To </label>
+                        <div @click.prevent="toggleOptions" class="bg-b">
+                            <p v-if="newIstruction.linkTo.length == 0">
+                                Enter Link To
+                            </p>
+                            <p v-else class="overflow-h">
+                                <span
+                                    v-for="(item, i) in newIstruction.linkTo"
+                                    :key="i"
                                 >
-                                    <input
-                                        type="checkbox"
-                                        v-model="newIstruction.linkTo"
-                                        :value="item"
-                                    />
-                                    {{ item }}
-                                </option>
-                            </select>
-                            <!-- <label
-                                class="bg-b"
+                                    <span>{{ item }}</span
+                                    >,
+                                </span>
+                            </p>
+                        </div>
+                        <div v-if="isShowLinkTo" class="absolute">
+                            <label
+                                class="flex"
                                 name="linkTo"
                                 id="linkTo"
                                 v-for="(item, index) in getLinkTo"
                                 :key="index"
                             >
+                                <p>
+                                    {{ item }}
+                                </p>
                                 <input
                                     type="checkbox"
                                     v-model="newIstruction.linkTo"
                                     :value="item"
                                 />
-                                {{ item }}
-                            </label> -->
+                            </label>
                         </div>
                     </div>
 
@@ -165,6 +163,16 @@ export default {
             type: Array,
         },
     },
+    data() {
+        return {
+            isShowLinkTo: false,
+        };
+    },
+    methods: {
+        toggleOptions() {
+            this.isShowLinkTo = !this.isShowLinkTo;
+        },
+    },
 };
 </script>
 
@@ -234,5 +242,35 @@ export default {
     font-weight: 600;
     padding: 4px 6px;
     border: 1px solid rgb(75, 75, 75);
+    width: 190px;
+}
+.flex {
+    display: flex;
+    justify-content: space-between;
+    /* width: 1; */
+    border: 1px solid rgb(75, 75, 75);
+    padding: 4px 6px;
+}
+
+.absolute {
+    position: absolute;
+    border: 1px solid rgb(75, 75, 75);
+    background: rgb(243, 243, 243);
+    color: rgb(75, 75, 75);
+    font-size: small;
+    font-weight: 600;
+    width: 190px;
+    margin-top: 55px;
+    max-height: 400px;
+    overflow-y: scroll;
+}
+
+.is-close {
+    display: none;
+}
+
+.overflow-h {
+    height: 20px;
+    overflow: hidden;
 }
 </style>
