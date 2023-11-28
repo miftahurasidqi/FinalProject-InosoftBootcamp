@@ -2,19 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Services\FileService;
-use App\Services\VendorInvoiceService;
+use App\Services\InternalOnly;
 use Illuminate\Http\Request;
 
+// InternalOnly
 class VendorInvoiceController extends Controller
 {
-    protected $vendorInvoiceService;
-    protected $fileService;
+    protected $internalOnly;
 
-    public function __construct(VendorInvoiceService $vendorInvoiceService, FileService $fileService)
+    public function __construct(InternalOnly $internalOnly)
     {
-        $this->vendorInvoiceService = $vendorInvoiceService;
-        $this->fileService = $fileService;
+        $this->internalOnly = $internalOnly;
     }
 
     public function store(Request $request, $id)
@@ -24,14 +22,19 @@ class VendorInvoiceController extends Controller
         $files = $request->file('suportingDocument');
         $suportingDocument = [];
 
-        $invoiceAttachment = $this->fileService->handleSinggelFile($file);
+        $file->move(public_path('uploads'), time() . '_' . $file->getClientOriginalName());
 
         if ($files) {
-            $suportingDocument = $this->fileService->handleMultipleFile($files);
+            // Lakukan sesuatu dengan setiap file
+            foreach ($files as $index => $file) {
+                $fileName = time() . '_' . $file->getClientOriginalName();
+                $file->move(public_path('uploads'), $fileName);
+                $suportingDocument[] = $fileName;
+            }
         }
         $invoiceData = [
             'invoiceNumber' => $invoiceNumber,
-            'invoiceAttachment' => $invoiceAttachment,
+            'invoiceAttachment' => $file,
             'suportingDocument' => $suportingDocument,
         ];
         return $this->vendorInvoiceService->createInvoice($id, $invoiceData);
@@ -40,9 +43,11 @@ class VendorInvoiceController extends Controller
     public function deleteInvoice($id)
     {
         return $this->vendorInvoiceService->deleteInvoice($id);
+
     }
-    public function updateInvoice(Request $request, $id, $invoiceData)
+    public function updateInvoice(Request $request, $id)
     {
         return $this->vendorInvoiceService->updateInvoice($id, $invoiceData);
+
     }
 }

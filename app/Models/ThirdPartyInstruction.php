@@ -44,6 +44,16 @@ class ThirdPartyInstruction extends Eloquent
         return $this->hasMany(VendorInvoice::class);
     }
 
+    public function vendorAddress()
+    {
+        return $this->belongsTo(VendorAddress::class);
+    }
+
+    public function invoiceTo()
+    {
+        return $this->belongsTo(InvoiceTo::class);
+    }
+
     public function forInternalOnly()
     {
         return $this->hasMany(ForInternalOnly::class);
