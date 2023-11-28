@@ -1,108 +1,67 @@
 <template>
-    <div id="vendor-invoice">
-        <Popup v-if="isAddInvoice" @close="closeFormAddInvoice">
-            <div>
-                <label for="invoice-num">Vendor Invoice No</label>
-                <input
-                    id="invoice-num"
-                    type="text"
-                    v-model="invoiceNumber"
-                    @input="updateInvoiceNumber"
-                />
-            </div>
-
-            <div>
-                <p>Invoice Attachment</p>
-                <div v-if="newInvoiceAttachment.name" class="file-item">
-                    <p>{{ newInvoiceAttachment.name }}</p>
-                    <p>by user 13/11/2023</p>
-                    <button @click.prevent="deleteInvoiceAttachment">
-                        Remove
-                    </button>
-                </div>
-                <label v-else for="add-attachment-file" class="add-file"
-                    >Add Attachment</label
-                >
-                <input
-                    hidden
-                    id="add-attachment-file"
-                    type="file"
-                    @change="handleInputInvoiceAttachment"
-                />
-            </div>
-            <div>
-                <p>Suporting Document</p>
-
-                <div
-                    v-for="(file, index) in newInvoiceSuportDoc"
-                    class="file-item"
-                >
-                    <p>{{ file.name }}</p>
-                    <p>by user 13/11/2023</p>
-                    <button @click.prevent="deleteSuportDoc(index)">
-                        Remove
-                    </button>
-                </div>
-
-                <label for="add-suport-file" class="add-file"
-                    >Add Suport Document</label
-                >
-                <input
-                    hidden
-                    id="add-suport-file"
-                    type="file"
-                    @change="handleInputSuportDoc"
-                    multiple
-                />
-            </div>
-
-            <div>
-                <ActionButton text="Cancel" @click="closeFormAddInvoice" />
-                <ActionButton text="Confirm" @click="save" />
-                <!-- @click.prevent="deleteInstruction" -->
-            </div>
-        </Popup>
-
-        <div class="panel-top">
-            <p>Vendor Invoice</p>
-            <ActionButton
-                text="Add Vendor Invoice"
-                class="buttons"
-                @click.prevent="showFormAddInvoice"
+    <!-- form add invoice -->
+    <Popup v-if="isAddInvoice" @close="closeFormAddInvoice">
+        <div>
+            <label for="invoice-num">Vendor Invoice No</label>
+            <input
+                id="invoice-num"
+                type="text"
+                v-model="invoiceNumber"
+                @input="updateInvoiceNumber"
             />
         </div>
 
-        <div id="vendor_invoice_list">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <td>Invoice Number</td>
-                        <td>Attachment</td>
-                        <td>Suporting Document</td>
-                    </tr>
-                </thead>
-                <tr v-for="(invoice, i) in vendor_invoice" :key="i">
-                    <td>{{ invoice.invoiceNumber }}</td>
-                    <td>{{ invoice.invoiceAttachment }}</td>
-                    <td>{{ invoice.suportingDocument }}</td>
-                </tr>
-            </table>
-            <!-- Ketika tidak ada data -->
-            <div
-                style="
-                    width: 100%;
-                    display: flex;
-                    justify-content: center;
-                    height: 35px;
-                    align-items: center;
-                    font-size: small;
-                    font-weight: 600;
-                    color: rgb(120, 120, 120);
-                "
-            >
-                <p>No Data</p>
+        <div>
+            <p>Invoice Attachment</p>
+            <div v-if="newInvoiceAttachment.name" class="file-item">
+                <p>{{ newInvoiceAttachment.name }}</p>
+                <p>by user 13/11/2023</p>
+                <button @click.prevent="deleteInvoiceAttachment">Remove</button>
             </div>
+            <label v-else for="add-attachment-file" class="add-file"
+                >Add Attachment</label
+            >
+            <input
+                hidden
+                id="add-attachment-file"
+                type="file"
+                @change="handleInputInvoiceAttachment"
+            />
         </div>
+        <div>
+            <p>Suporting Document</p>
+
+            <div v-for="(file, index) in newInvoiceSuportDoc" class="file-item">
+                <p>{{ file.name }}</p>
+                <p>by user 13/11/2023</p>
+                <button @click.prevent="deleteSuportDoc(index)">Remove</button>
+            </div>
+
+            <label for="add-suport-file" class="add-file"
+                >Add Suport Document</label
+            >
+            <input
+                hidden
+                id="add-suport-file"
+                type="file"
+                @change="handleInputSuportDoc"
+                multiple
+            />
+        </div>
+
+        <div>
+            <ActionButton text="Cancel" @click="closeFormAddInvoice" />
+            <ActionButton text="Confirm" @click="save" />
+            <!-- @click.prevent="deleteInstruction" -->
+        </div>
+    </Popup>
+    <div class="panel-top">
+        <p>Vendor Invoice</p>
+        <ActionButton
+            text="Add Vendor Invoice"
+            class="buttons"
+            @click.prevent="showFormAddInvoice"
+        />
     </div>
 </template>
 <script>
@@ -143,6 +102,7 @@ export default {
             this.$store.commit("updateInvoiceNumber", this.invoiceNumber);
         },
         handleInputInvoiceAttachment(e) {
+            console.log(e.target.files[0]);
             this.$store.commit(
                 "handleInputInvoiceAttachment",
                 e.target.files[0]

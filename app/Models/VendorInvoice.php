@@ -7,7 +7,7 @@ use Jenssegers\Mongodb\Eloquent\Model as Eloquent;
 class VendorInvoice extends Eloquent
 {
     protected $connection = 'mongodb';
-    protected $collection = 'vendor_infoice';
+    protected $collection = 'vendor_invoice';
 
     protected $fillable = [
         'third_party_instruction_id',

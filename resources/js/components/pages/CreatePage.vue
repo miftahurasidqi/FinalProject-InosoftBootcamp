@@ -57,8 +57,7 @@ export default {
     },
     data() {
         return {
-            forDraft: false,
-            forSubmit: false,
+            status: "",
         };
     },
     computed: {
@@ -80,26 +79,14 @@ export default {
             this.$router.push("/");
         },
         handleForDraft() {
-            this.forDraft = true;
+            this.status = "draft";
         },
         handleForSubmit() {
-            this.forSubmit = true;
+            this.status = "in progres";
         },
-
-        async saveAsDraft() {
-            const response = await this.saveNewInstruction("draft");
+        async handleSubmit() {
+            const response = await this.saveNewInstruction(this.status);
             await this.$router.push(`/detail/${response}`);
-        },
-        async submit() {
-            const response = await this.saveNewInstruction("in progres");
-            await this.$router.push(`/detail/${response}`);
-        },
-        handleSubmit() {
-            if ((this.forDraft = true)) {
-                this.saveAsDraft();
-            } else if ((this.forSubmit = true)) {
-                this.submit();
-            }
         },
     },
 };
@@ -113,7 +100,7 @@ export default {
 
 .container-button-bottom {
     display: flex;
-    justify-content: end;
+    justify-content: flex-end;
     margin-top: 2rem;
     margin-right: 2rem;
 }

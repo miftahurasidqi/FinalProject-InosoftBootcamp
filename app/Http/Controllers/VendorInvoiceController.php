@@ -2,16 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\FileService;
 use App\Services\VendorInvoiceService;
 use Illuminate\Http\Request;
 
 class VendorInvoiceController extends Controller
 {
     protected $vendorInvoiceService;
+    protected $fileService;
 
-    public function __construct(VendorInvoiceService $vendorInvoiceService)
+    public function __construct(VendorInvoiceService $vendorInvoiceService, FileService $fileService)
     {
         $this->vendorInvoiceService = $vendorInvoiceService;
+        $this->fileService = $fileService;
     }
 
     public function store(Request $request, $id)
@@ -21,19 +24,14 @@ class VendorInvoiceController extends Controller
         $files = $request->file('suportingDocument');
         $suportingDocument = [];
 
-        $file->move(public_path('uploads'), time() . '_' . $file->getClientOriginalName());
+        $invoiceAttachment = $this->fileService->handleSinggelFile($file);
 
         if ($files) {
-            // Lakukan sesuatu dengan setiap file
-            foreach ($files as $index => $file) {
-                $fileName = time() . '_' . $file->getClientOriginalName();
-                $file->move(public_path('uploads'), $fileName);
-                $suportingDocument[] = $fileName;
-            }
+            $suportingDocument = $this->fileService->handleMultipleFile($files);
         }
         $invoiceData = [
             'invoiceNumber' => $invoiceNumber,
-            'invoiceAttachment' => $file,
+            'invoiceAttachment' => $invoiceAttachment,
             'suportingDocument' => $suportingDocument,
         ];
         return $this->vendorInvoiceService->createInvoice($id, $invoiceData);
