@@ -42,11 +42,9 @@ class VendorInvoiceController extends Controller
     public function deleteInvoice($id)
     {
         return $this->vendorInvoiceService->deleteInvoice($id);
-
     }
-    public function updateInvoice(Request $request, $id)
+    public function updateInvoice(Request $request, $id, $invoiceData)
     {
         return $this->vendorInvoiceService->updateInvoice($id, $invoiceData);
-
     }
 }

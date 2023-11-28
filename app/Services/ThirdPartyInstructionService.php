@@ -21,6 +21,8 @@ class ThirdPartyInstructionService
         $this->invoicetoService = $invoicetoService;
     }
 
+
+    // Create Instrunction Service
     public function createInstruction(array $data)
     {
 
@@ -59,11 +61,11 @@ class ThirdPartyInstructionService
         return response()->json($result);
     }
 
+
     public function getInstructions($page, $status)
     {
         $result = $this->thirdPartyInstructionRepository->getByStatus($page, $status);
         return response()->json($result);
-
     }
 
     //  ===
@@ -99,4 +101,10 @@ class ThirdPartyInstructionService
         return $this->thirdPartyInstructionRepository->setToCompleted($id);
     }
 
+
+    // Get Instruction By Id
+    public function getInstructionByIdService($id)
+    {
+        return $this->thirdPartyInstructionRepository->getInstructionByIdRepo($id);
+    }
 }

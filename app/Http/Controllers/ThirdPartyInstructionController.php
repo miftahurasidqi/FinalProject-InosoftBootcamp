@@ -57,7 +57,6 @@ class ThirdPartyInstructionController extends Controller
         return $this->thirdpartyinstructionservice->getInstructions($pageInt, $status);
     }
 
-    // belum
     public function searchOpenInstructions(Request $request)
     {
         $page = $request->input('page', '');
@@ -65,7 +64,7 @@ class ThirdPartyInstructionController extends Controller
         $status = ['draft', 'in progres'];
         $keyword = $request->input('keyword', '');
 
-        return $thirdPartyInstruction = $this->thirdpartyinstructionservice->searchInstructions($pageInt, $status, $keyword);
+        return $this->thirdpartyinstructionservice->searchInstructions($pageInt, $status, $keyword);
     }
 
     public function searchCompletedInstructions(Request $request)
@@ -77,14 +76,17 @@ class ThirdPartyInstructionController extends Controller
 
         return $thirdPartyInstruction = $this->thirdpartyinstructionservice->searchInstructions($pageInt, $status, $keyword);
     }
+
     public function getInstructionById(Request $request, $id)
     {
         return $thirdPartyInstruction = $this->thirdpartyinstructionservice->getInstructionById($id);
     }
+
     public function destroy(Request $request, $id)
     {
         return $thirdPartyInstruction = $this->thirdpartyinstructionservice->deleteById($id);
     }
+
     public function setInstructionToCanceled(Request $request, $id)
     {
         $statusInfo = json_decode($request->input('statusInfo'), true);
@@ -103,6 +105,7 @@ class ThirdPartyInstructionController extends Controller
         $statusInfo['canceledAttachment'] = $attachment;
         return $thirdPartyInstruction = $this->thirdpartyinstructionservice->setToCanceled($id, $statusInfo);
     }
+
     public function setInstructionToCompleted(Request $request, $id)
     {
         return response()->json($id);

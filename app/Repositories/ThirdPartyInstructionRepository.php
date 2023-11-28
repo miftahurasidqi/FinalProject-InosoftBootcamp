@@ -68,7 +68,8 @@ class ThirdPartyInstructionRepository
                     'vendorQuotationNo',
                     'customerContract',
                     'NoCustomerPO',
-                    'status']);
+                    'status'
+                ]);
 
             $size = count($instructions);
             $totalData = ThirdPartyInstruction::whereIn('status', $status)->count();
@@ -90,7 +91,6 @@ class ThirdPartyInstructionRepository
                 'errors' => $e->getMessage(),
             ];
         }
-
     }
     // belum
     public function searchInstructions($page, $status, $keyword)
@@ -128,7 +128,6 @@ class ThirdPartyInstructionRepository
         } else {
             return response()->json(['message' => 'Data not found'], 404);
         }
-
     }
     public function setToCanceled($id, $statusInfo)
     {
