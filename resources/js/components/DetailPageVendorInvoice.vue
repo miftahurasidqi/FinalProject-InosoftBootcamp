@@ -70,7 +70,23 @@
                 @click.prevent="showFormAddInvoice"
             />
         </div>
-        <div></div>
+
+        <div id="vendor_invoice_list">
+            <table>
+                <thead>
+                    <tr>
+                        <td>Invoice Number</td>
+                        <td>Attachment</td>
+                        <td>Suporting Document</td>
+                    </tr>
+                </thead>
+                <tr v-for="(invoice, i) in vendor_invoice" :key="i">
+                    <td>{{ invoice.invoiceNumber }}</td>
+                    <td>{{ invoice.invoiceAttachment }}</td>
+                    <td>{{ invoice.suportingDocument }}</td>
+                </tr>
+            </table>
+        </div>
     </div>
 </template>
 <script>
@@ -92,7 +108,7 @@ export default {
     },
     computed: {
         ...mapGetters({
-            invoiceNumbers: "newInvoiceNumber",
+            vendor_invoice: "vendor_invoice",
             newInvoiceAttachment: "newInvoiceAttachment",
             newInvoiceSuportDoc: "newInvoiceSuportDoc",
         }),

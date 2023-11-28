@@ -50,6 +50,7 @@ Route::group([
     Route::get('/instruction/{id}', [ThirdPartyInstructionController::class, 'getInstructionById']);
     Route::delete('/instruction/{id}', [ThirdPartyInstructionController::class, 'destroy']);
     Route::post('/instruction/canceled/{id}', [ThirdPartyInstructionController::class, 'setInstructionToCanceled']);
+    //== belum
     Route::get('/instructions/open/search', [ThirdPartyInstructionController::class, 'searchOpenInstructions']);
     Route::get('/instructions/completed/search', [ThirdPartyInstructionController::class, 'searchCompletedInstructions']);
     Route::patch('/instruction/completed/{id}', [ThirdPartyInstructionController::class, 'setInstructionToCompleted']);

@@ -68,39 +68,22 @@ class ThirdPartyInstructionService
         return response()->json($result);
     }
 
+    //  ===
     public function searchInstructions($page, $status, $keyword)
     {
         return $this->thirdPartyInstructionRepository->searchInstructions($page, $status, $keyword);
     }
 
-    public function setToCompleted($id)
+    public function getInstructionById($id)
     {
-        return $this->thirdPartyInstructionRepository->setToCompleted($id);
+        return $this->thirdPartyInstructionRepository->getInstructionById($id);
     }
-
-    // Get Instruction By Id
-    public function getInstructionByIdService($id)
+    public function deleteById($id)
     {
-        return $this->thirdPartyInstructionRepository->getInstructionByIdRepo($id);
+        return $this->thirdPartyInstructionRepository->deleteById($id);
     }
-
-    public function setToCanceled($request, $id, $statusInfo)
+    public function setToCanceled($id, $statusInfo)
     {
-
-        $statusInfo = json_decode($request->input('statusInfo'), true);
-        $files = $request->file('statusAttachment');
-        $attachment = [];
-
-        // Mengiterasi setiap file yang diunggah
-        if ($files) {
-            foreach ($files as $index => $file) {
-                // Lakukan sesuatu dengan setiap file menyimpannya ke direktori
-                $fileName = time() . '_' . $file->getClientOriginalName();
-                $file->move(public_path('uploads/cancel'), $fileName);
-                $attachment[] = $fileName;
-            }
-        }
-        $statusInfo['canceledAttachment'] = $attachment;
         $validator = Validator::make($statusInfo, [
             'canceledBy' => 'required|string',
             'description' => 'required|string',
@@ -113,9 +96,15 @@ class ThirdPartyInstructionService
 
         return $this->thirdPartyInstructionRepository->setToCanceled($id, $statusInfo);
     }
-
-    public function deleteById($id)
+    public function setToCompleted($id)
     {
-        return $this->thirdPartyInstructionRepository->deleteById($id);
+        return $this->thirdPartyInstructionRepository->setToCompleted($id);
+    }
+
+
+    // Get Instruction By Id
+    public function getInstructionByIdService($id)
+    {
+        return $this->thirdPartyInstructionRepository->getInstructionByIdRepo($id);
     }
 }

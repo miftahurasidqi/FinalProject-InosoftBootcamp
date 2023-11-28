@@ -31,18 +31,20 @@ class VendorInvoiceController extends Controller
                 $suportingDocument[] = $fileName;
             }
         }
-        $invoiceData = [$invoiceNumber, $file, $suportingDocument];
+        $invoiceData = [
+            'invoiceNumber' => $invoiceNumber,
+            'invoiceAttachment' => $file,
+            'suportingDocument' => $suportingDocument,
+        ];
         return $this->vendorInvoiceService->createInvoice($id, $invoiceData);
     }
 
     public function deleteInvoice($id)
     {
         return $this->vendorInvoiceService->deleteInvoice($id);
-
     }
-    public function updateInvoice(Request $request, $id)
+    public function updateInvoice(Request $request, $id, $invoiceData)
     {
         return $this->vendorInvoiceService->updateInvoice($id, $invoiceData);
-
     }
 }

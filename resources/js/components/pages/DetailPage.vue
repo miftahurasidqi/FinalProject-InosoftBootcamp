@@ -13,7 +13,7 @@
             <!-- <hr /> -->
             <div id="cost-detail-panel" class="card">
                 <h2>Cost Detail</h2>
-                <DetailPageTable :instruction="instruction" />
+                <DetailPageTable />
             </div>
             <div id="attachment-panel" class="d-flex justify-content-between">
                 <div>

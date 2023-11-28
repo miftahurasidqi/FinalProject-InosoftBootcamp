@@ -61,7 +61,7 @@ class ThirdPartyInstructionController extends Controller
     {
         $page = $request->input('page', '');
         $pageInt = intval($page);
-        $status = ['draft', 'in progress'];
+        $status = ['draft', 'in progres'];
         $keyword = $request->input('keyword', '');
 
         return $this->thirdpartyinstructionservice->searchInstructions($pageInt, $status, $keyword);
@@ -74,29 +74,41 @@ class ThirdPartyInstructionController extends Controller
         $status = ['cancelled', 'completed'];
         $keyword = $request->input('keyword', '');
 
-        return $this->thirdpartyinstructionservice->searchInstructions($pageInt, $status, $keyword);
+        return $thirdPartyInstruction = $this->thirdpartyinstructionservice->searchInstructions($pageInt, $status, $keyword);
     }
 
-    public function setInstructionToCompleted($id)
+    public function getInstructionById(Request $request, $id)
     {
-        // return response()->json($id);
-        return $this->thirdpartyinstructionservice->setToCompleted($id);
+        return $thirdPartyInstruction = $this->thirdpartyinstructionservice->getInstructionById($id);
     }
 
-    public function getInstructionById($id)
+    public function destroy(Request $request, $id)
     {
-        return $this->thirdpartyinstructionservice->getInstructionByIdService($id);
+        return $thirdPartyInstruction = $this->thirdpartyinstructionservice->deleteById($id);
     }
 
-
-    public function setInstructionToCanceled(Request $request, $id, $statusInfo)
+    public function setInstructionToCanceled(Request $request, $id)
     {
+        $statusInfo = json_decode($request->input('statusInfo'), true);
+        $files = $request->file('statusAttachment');
+        $attachment = [];
 
-        return $this->thirdpartyinstructionservice->setToCanceled($request, $id, $statusInfo);
+        // Mengiterasi setiap file yang diunggah
+        if ($files) {
+            foreach ($files as $index => $file) {
+                // Lakukan sesuatu dengan setiap file menyimpannya ke direktori
+                $fileName = time() . '_' . $file->getClientOriginalName();
+                $file->move(public_path('uploads/cencel'), $fileName);
+                $attachment[] = $fileName;
+            }
+        }
+        $statusInfo['canceledAttachment'] = $attachment;
+        return $thirdPartyInstruction = $this->thirdpartyinstructionservice->setToCanceled($id, $statusInfo);
     }
 
-    public function destroy($id)
+    public function setInstructionToCompleted(Request $request, $id)
     {
-        return $this->thirdpartyinstructionservice->deleteById($id);
+        return response()->json($id);
+        // return $thirdPartyInstruction = $this->thirdpartyinstructionservice->setToCompleted($id)
     }
 }

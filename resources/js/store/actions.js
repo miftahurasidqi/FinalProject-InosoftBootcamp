@@ -14,6 +14,18 @@ export const getCompletedInstructions = async ({ commit }, currrentPage) => {
     console.log(response.data);
     commit("setInstructions", response); // menjalankan function setInstructions() yg ada pada file mutations.js
 };
+
+export const searchInstructions = async ({ commit }, reqData) => {
+    const { status, keyWord, currrentPage } = reqData;
+    const page = currrentPage + 1;
+    const response = await axios.get(
+        `api/instructions/${status}/search?page=${page}?keyword=${keyWord}`
+    );
+
+    console.log(response.data);
+    // commit("setInstructions", response); // menjalankan function setInstructions() yg ada pada file mutations.js
+};
+
 // for Hompage end
 
 // for CreatePage start
@@ -76,6 +88,7 @@ export const getInstructionsById = async ({ commit }, id) => {
         const response = await axios.get(`/api/instruction/${id}`);
         console.log(response);
         commit("setInstructionDetail", response.data);
+        commit("setInstructionEdit", response.data);
     } catch (error) {
         console.error("Error getInstruction data to API:", error);
     }
