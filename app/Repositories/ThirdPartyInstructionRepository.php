@@ -68,7 +68,8 @@ class ThirdPartyInstructionRepository
                     'vendorQuotationNo',
                     'customerContract',
                     'NoCustomerPO',
-                    'status']);
+                    'status'
+                ]);
 
             $size = count($instructions);
             $totalData = ThirdPartyInstruction::whereIn('status', $status)->count();
@@ -90,25 +91,9 @@ class ThirdPartyInstructionRepository
                 'errors' => $e->getMessage(),
             ];
         }
-
-    }
-    // belum
-    public function searchInstructions($page, $status, $keyword)
-    {
-
-        // Melakukan pencarian menggunakan filter regex
-        $instruction = ThirdPartyInstruction::where('status', $status)
-            ->where(function ($k) use ($keyword) {
-                $k->where('field1', 'like', '%' . $keyword . '%')
-                    ->orWhere('field2', 'like', '%' . $keyword . '%')
-                    ->orWhere('field3', 'like', '%' . $keyword . '%');
-            })
-            ->get();
-
-        return response()->json($instruction);
     }
 
-    public function getInstructionById($id)
+    public function getInstructionByIdRepo($id)
     {
         $instruction = ThirdPartyInstruction::with('vendorInvoice')->find($id);
 
@@ -128,8 +113,23 @@ class ThirdPartyInstructionRepository
         } else {
             return response()->json(['message' => 'Data not found'], 404);
         }
-
     }
+
+    public function searchInstructions($page, $status, $keyword)
+    {
+
+        // Melakukan pencarian menggunakan filter regex
+        $instruction = ThirdPartyInstruction::where('status', $status)
+            ->where(function ($query) use ($keyword) {
+                $query->where('field1', 'like', '%' . $keyword . '%')
+                    ->orWhere('field2', 'like', '%' . $keyword . '%')
+                    ->orWhere('field3', 'like', '%' . $keyword . '%');
+            })
+            ->get();
+
+        return response()->json($instruction);
+    }
+
     public function setToCanceled($id, $statusInfo)
     {
         $instruction = ThirdPartyInstruction::find($id);

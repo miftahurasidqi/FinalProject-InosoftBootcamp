@@ -21,6 +21,8 @@ class ThirdPartyInstructionService
         $this->invoicetoService = $invoicetoService;
     }
 
+
+    // Create Instrunction Service
     public function createInstruction(array $data)
     {
 
@@ -59,28 +61,46 @@ class ThirdPartyInstructionService
         return response()->json($result);
     }
 
+
     public function getInstructions($page, $status)
     {
         $result = $this->thirdPartyInstructionRepository->getByStatus($page, $status);
         return response()->json($result);
     }
 
-    //  ===
     public function searchInstructions($page, $status, $keyword)
     {
         return $this->thirdPartyInstructionRepository->searchInstructions($page, $status, $keyword);
     }
 
-    public function getInstructionById($id)
+    public function setToCompleted($id)
     {
-        return $this->thirdPartyInstructionRepository->getInstructionById($id);
+        return $this->thirdPartyInstructionRepository->setToCompleted($id);
     }
-    public function deleteById($id)
+
+    // Get Instruction By Id
+    public function getInstructionByIdService($id)
     {
-        return $this->thirdPartyInstructionRepository->deleteById($id);
+        return $this->thirdPartyInstructionRepository->getInstructionByIdRepo($id);
     }
-    public function setToCanceled($id, $statusInfo)
+
+    public function setToCanceled($request, $id, $statusInfo)
     {
+
+        $statusInfo = json_decode($request->input('statusInfo'), true);
+        $files = $request->file('statusAttachment');
+        $attachment = [];
+
+        // Mengiterasi setiap file yang diunggah
+        if ($files) {
+            foreach ($files as $index => $file) {
+                // Lakukan sesuatu dengan setiap file menyimpannya ke direktori
+                $fileName = time() . '_' . $file->getClientOriginalName();
+                $file->move(public_path('uploads/cancel'), $fileName);
+                $attachment[] = $fileName;
+            }
+        }
+        $statusInfo['canceledAttachment'] = $attachment;
         $validator = Validator::make($statusInfo, [
             'canceledBy' => 'required|string',
             'description' => 'required|string',
@@ -93,8 +113,9 @@ class ThirdPartyInstructionService
 
         return $this->thirdPartyInstructionRepository->setToCanceled($id, $statusInfo);
     }
-    public function setToCompleted($id)
+
+    public function deleteById($id)
     {
-        return $this->thirdPartyInstructionRepository->setToCompleted($id);
+        return $this->thirdPartyInstructionRepository->deleteById($id);
     }
 }
