@@ -1,6 +1,6 @@
 <template>
     <div id="page-body">
-        <h1>Home</h1>
+        <h1 style="margin-bottom: 8px">Home</h1>
         <div class="card card-styling">
             <div class="card-body">
                 <div id="card-header">
@@ -17,7 +17,6 @@
                                 class="b-completed"
                             />
                         </div>
-
                         <div class="container-s-e">
                             <input
                                 name="attention-of"
@@ -26,7 +25,7 @@
                                 v-model="searchKeyword"
                                 @input="search"
                             />
-                            <ActionButton text="Export" class="border" />
+                            <ActionButton text="Export" class="export" />
                         </div>
                     </div>
                     <div class="conatiner-b-intruction">
@@ -57,7 +56,7 @@
             <table class="table my-4">
                 <thead class="table-h">
                     <tr>
-                        <th>Instruction ID</th>
+                        <th><p>Instruction ID</p></th>
                         <th>Link To</th>
                         <th>Instruction Type</th>
                         <th>Assigned Vendor</th>
@@ -195,12 +194,26 @@ export default {
 </script>
 
 <style scoped>
+* {
+    padding: 0;
+    margin: 0;
+}
+
 #page-body {
     margin: 2rem;
 }
 
 .card-styling {
-    box-shadow: 0px 0px 10px -5px black;
+    padding: 1.5rem;
+}
+
+.export {
+    padding: 3px 1rem;
+    border: 1px solid black;
+    border-radius: 4px;
+    margin-left: 1rem;
+    font-size: small;
+    font-weight: 600;
 }
 
 .container-card-top {
@@ -220,14 +233,15 @@ export default {
     font-size: 1.2rem;
     height: calc(100% + 3px);
     color: gray;
+    padding: 0rem 1rem;
     border-radius: 0;
     box-sizing: border-box;
 }
 .b-open:hover,
 .b-completed:hover {
     background: none;
-    color: rgb(95, 190, 155);
-    border-bottom: 3px solid rgb(95, 190, 155);
+    color: rgb(0, 190, 190);
+    border-bottom: 3px solid rgb(0, 190, 190);
 }
 
 .conatiner-b-intruction {
@@ -263,9 +277,11 @@ export default {
 } */
 .logistic,
 .service {
-    width: 216px;
+    width: 194px;
     height: 36px;
     border: none;
+    font-size: small;
+    font-weight: 600;
     border-radius: 4px;
     color: black;
     background: rgb(244, 244, 244);
@@ -277,11 +293,15 @@ export default {
     transition: 0.3s;
 }
 .b-intruction {
-    background: rgb(95, 190, 155);
+    background: rgb(0, 190, 190);
     color: white;
+    font-size: small;
+    font-weight: 600;
+    height: 35px;
+    padding: 0rem 1rem;
 }
 .b-intruction:hover {
-    background: rgb(70, 140, 115);
+    background: rgb(0, 170, 170);
     transition: 0.3s;
 }
 
@@ -295,17 +315,12 @@ export default {
 }
 
 .table-h tr th {
-    background: slategray;
+    background: rgb(170, 170, 170);
+    height: 35px;
     color: white;
     font-weight: 500;
 }
 
 .table-b {
-}
-
-.th-status {
-    display: flex;
-    justify-content: center;
-    align-items: center;
 }
 </style>

@@ -51,7 +51,7 @@ export default {
 }
 
 .container-a-i button {
-    background: rgb(0, 162, 162);
+    background: rgb(0, 190, 190);
     padding: 0.3rem 2rem;
     border: none;
     border-radius: 4px;

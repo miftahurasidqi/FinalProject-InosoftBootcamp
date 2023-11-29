@@ -181,7 +181,7 @@ export default {
     font-weight: 600;
 }
 .buttons {
-    background: rgb(0, 162, 162);
+    background: rgb(0, 190, 190);
     padding: 0.3rem 2rem;
     border: none;
     border-radius: 4px;
