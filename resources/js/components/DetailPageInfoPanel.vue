@@ -1,7 +1,7 @@
 <template>
     <div
         id="info-panel"
-        class="flex-row card d-flex justify-content-evenly m-4 p-3"
+        class="flex-row p-3 m-4 card d-flex justify-content-evenly"
     >
         <div class="container-detail-left">
             <div class="container-detail">
@@ -51,7 +51,7 @@
                 </div>
             </div>
             <div class="status">
-                <p class="head-d-s">Statsu</p>
+                <p class="head-d-s">Status</p>
                 <p class="isi-status">{{ instruction.status }}</p>
             </div>
         </div>

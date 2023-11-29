@@ -1,79 +1,10 @@
 <template>
     <!-- form add invoice -->
-    <!-- <Popup v-if="isAddInvoice" @close="closeFormAddInvoice"> -->
-    <!--     <div> -->
-    <!--         <label for="invoice-num">Vendor Invoice No</label> -->
-    <!--         <input -->
-    <!--             id="invoice-num" -->
-    <!--             type="text" -->
-    <!--             v-model="invoiceNumber" -->
-    <!--             @input="updateInvoiceNumber" -->
-    <!--         /> -->
-    <!--     </div> -->
-    <!---->
-    <!--     <div> -->
-    <!--         <p>Invoice Attachment</p> -->
-    <!--         <div v-if="newInvoiceAttachment.name" class="file-item"> -->
-    <!--             <p>{{ newInvoiceAttachment.name }}</p> -->
-    <!--             <p>by user 13/11/2023</p> -->
-    <!--             <button @click.prevent="deleteInvoiceAttachment">Remove</button> -->
-    <!--         </div> -->
-    <!--         <label v-else for="add-attachment-file" class="add-file" -->
-    <!--             >Add Attachment</label -->
-    <!--         > -->
-    <!--         <input -->
-    <!--             id="add-attachment-file" -->
-    <!--             type="file" -->
-    <!--             @change="handleInputInvoiceAttachment" -->
-    <!--         /> -->
-    <!--     </div> -->
-    <!--     <div> -->
-    <!--         <p>Suporting Document</p> -->
-    <!---->
-    <!--         <div v-for="(file, index) in newInvoiceSuportDoc" class="file-item"> -->
-    <!--             <p>{{ file.name }}</p> -->
-    <!--             <p>by user 13/11/2023</p> -->
-    <!--             <button @click.prevent="deleteSuportDoc(index)">Remove</button> -->
-    <!--         </div> -->
-    <!---->
-    <!--         <label for="add-suport-file" class="add-file" -->
-    <!--             >Add Suport Document</label -->
-    <!--         > -->
-    <!--         <input -->
-    <!--             id="add-suport-file" -->
-    <!--             type="file" -->
-    <!--             @change="handleInputSuportDoc" -->
-    <!--             multiple -->
-    <!--         /> -->
-    <!--     </div> -->
-    <!---->
-    <!--     <div> -->
-    <!--         <ActionButton -->
-    <!--             class="btn-light" -->
-    <!--             text="Cancel" -->
-    <!--             @click="closeFormAddInvoice" -->
-    <!--         /> -->
-    <!--         <ActionButton class="btn-light" text="Confirm" @click="save" /> -->
-    <!-- @click.prevent="deleteInstruction" -->
-
-    <!--     </div> -->
-    <!-- </Popup> -->
-    <div class="panel-top">
-        <p>Vendor Invoice</p>
-        <!-- <ActionButton -->
-        <!--     text="Add Vendor Invoice" -->
-        <!--     class="buttons" -->
-        <!--     @click.prevent="showFormAddInvoice" -->
-        <!-- /> -->
-        <ActionButton
-            type="button"
-            class="buttons"
-            data-bs-toggle="modal"
-            data-bs-target="#add-vendor-invoice-modal"
-            text="Add Vendor Invoice"
-        />
-    </div>
-    <AddVendorInvoice>
+    <Popup
+        v-if="isAddInvoice"
+        @close="closeFormAddInvoice"
+        title="Add Vendor Invoice"
+    >
         <div class="modal-body">
             <div>
                 <label for="invoice-num" class="me-5">Vendor Invoice No</label>
@@ -139,32 +70,41 @@
             </div>
         </div>
         <div class="modal-footer">
-            <button
+            <ActionButton
                 type="button"
-                class="btn btn-secondary"
-                data-bs-dismiss="modal"
-            >
-                Close
-            </button>
-            <button type="button" class="btn btn-primary" @click="save">
-                Save changes
-            </button>
+                class="buttons me-2"
+                @click="closeFormAddInvoice"
+                text="Cancel"
+            />
+            <ActionButton
+                type="button"
+                class="buttons"
+                @click="save"
+                text="Submit"
+            />
         </div>
-    </AddVendorInvoice>
+    </Popup>
+
+    <div class="panel-top">
+        <p>Vendor Invoice</p>
+        <ActionButton
+            text="Add Vendor Invoice"
+            class="buttons"
+            @click.prevent="showFormAddInvoice"
+        />
+    </div>
 </template>
 
 <script>
 import { mapGetters, mapActions } from "vuex";
 import ActionButton from "./ActionButton.vue";
 import Popup from "./Popup.vue";
-import AddVendorInvoice from "./modal/AddVendorInvoice.vue";
 
 export default {
     name: "DetailPageVendorInvoice",
     components: {
         ActionButton,
         Popup,
-        AddVendorInvoice,
     },
     data() {
         return {
@@ -185,9 +125,11 @@ export default {
         }),
         showFormAddInvoice() {
             this.isAddInvoice = true;
+            document.body.style.overflow = "hidden";
         },
         closeFormAddInvoice() {
             this.isAddInvoice = false;
+            document.body.style.overflow = "";
         },
         updateInvoiceNumber() {
             this.$store.commit("updateInvoiceNumber", this.invoiceNumber);
@@ -252,6 +194,7 @@ export default {
 }
 .modal-body {
     max-height: 20rem;
+    overflow-y: auto;
 }
 .add-file {
     background: rgb(0, 162, 162);

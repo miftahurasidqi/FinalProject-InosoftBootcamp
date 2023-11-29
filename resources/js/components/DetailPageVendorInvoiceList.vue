@@ -113,14 +113,14 @@
                     </div>
                 </td>
                 <td>
-                    <span
+                    <ActionButton
                         @click.prevent="showConfirmDeleteInvoice(invoice._id)"
-                    >
-                        delete</span
-                    >
-                    <span @click.prevent="showFormEditInvoice(index)"
-                        >edit</span
-                    >
+                        text="Delete"
+                    />
+                    <ActionButton
+                        @click.prevent="showFormEditInvoice(index)"
+                        text="Edit"
+                    />
                 </td>
             </tr>
         </table>
