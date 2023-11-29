@@ -11,26 +11,14 @@
 
             <DetailPageInfoPanel :instruction="instruction" />
             <!-- <hr /> -->
-            <div id="cost-detail-panel" class="card container-cd">
-                <div>
-                    <p>Cost Detail</p>
-                </div>
-                <div class="container-table-cd">
-                    <DetailPageTable />
-                    <div id="attachment-panel">
-                        <div class="a-l">
-                            <p>Attachment</p>
-                            <button>Add Attachment</button>
-                        </div>
-                        <div class="a-r">
-                            <label for="notes">Notes</label>
-                            <textarea name="notes" id=""></textarea>
-                        </div>
-                    </div>
-                </div>
-            </div>
+
+            <DetailPageTable />
+
             <!--  -->
-            <DetailPageVendorInvoice />
+            <div id="vendor-invoice">
+                <DetailPageVendorInvoice />
+                <DetailPageVendorInvoiceList />
+            </div>
             <!--  -->
             <DetailPageInternalPanel />
             <!--  -->
@@ -46,6 +34,7 @@ import DetailTopPanel from "../DetailTopPanel.vue";
 import DetailPageInfoPanel from "../DetailPageInfoPanel.vue";
 import DetailPageTable from "../DetailPageTable.vue";
 import DetailPageVendorInvoice from "../DetailPageVendorInvoice.vue";
+import DetailPageVendorInvoiceList from "../DetailPageVendorInvoiceList.vue";
 import DetailPageInternalPanel from "../DetailPageInternalPanel.vue";
 
 export default {
@@ -56,6 +45,7 @@ export default {
         ActionButton,
         DetailTopPanel,
         DetailPageVendorInvoice,
+        DetailPageVendorInvoiceList,
         DetailPageInternalPanel,
     },
     mounted() {

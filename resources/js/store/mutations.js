@@ -12,7 +12,7 @@ export const setInstructions = (state, response) => {
             response.data.instructions
         );
         state.instructions.page.currrentPage = response.data.page.currrentPage;
-
+        state.instructions.page.totalPages = response.data.page.totalPages;
         state.instructions.page.size =
             state.instructions.page.size + response.data.page.size;
     }

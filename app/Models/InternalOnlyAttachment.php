@@ -4,23 +4,19 @@ namespace App\Models;
 
 use Jenssegers\Mongodb\Eloquent\Model as Eloquent;
 
-class VendorInvoice extends Eloquent
+class InternalOnlyAttachment extends Eloquent
 {
     protected $connection = 'mongodb';
-    protected $collection = 'vendor_invoice';
+    protected $collection = 'internal_only_attachment';
 
     protected $fillable = [
-        'third_party_instruction_id',
-        'invoiceNumber',
-        'invoiceAttachment',
-        'suportingDocument',
-    ];
-
-    protected $casts = [
-        'suportingDocument' => 'array',
+        'uploadBy',
+        'time',
+        'file',
     ];
     public function thirdPartyInstruction()
     {
         return $this->belongsTo(ThirdPartyInstruction::class, 'third_party_instruction_id');
     }
+
 }

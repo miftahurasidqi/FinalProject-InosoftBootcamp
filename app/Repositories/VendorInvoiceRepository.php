@@ -33,13 +33,16 @@ class VendorInvoiceRepository
             ];
         }
     }
-    public function deleteVendorInvoice($id, $invoiceData)
+    public function deleteVendorInvoice($id)
     {
         try {
             $invoice = VendorInvoice::find($id);
             if ($invoice) {
                 $invoice->delete();
-                return response()->json(['message' => 'Deleted successfully']);
+                return [
+                    'message' => 'Deleted successfully',
+                    'status' => 200,
+                ];
             } else {
                 return response()->json(['message' => 'Data not found'], 404);
             }

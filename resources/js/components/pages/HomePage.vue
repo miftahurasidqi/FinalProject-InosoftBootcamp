@@ -41,10 +41,16 @@
                                 class="b-intruction"
                             />
                             <div :class="listClass" style="transition: 0.3s">
-                                <button class="logistic">
+                                <button
+                                    class="logistic"
+                                    @click="goCreateLogistic"
+                                >
                                     Logistic Instruction
                                 </button>
-                                <button class="service">
+                                <button
+                                    class="service"
+                                    @click="goCreateService"
+                                >
                                     Service Intruction
                                 </button>
                             </div>
@@ -74,7 +80,6 @@
                     />
                 </tbody>
             </table>
-
             <ActionButton @click="loadNextInstructions" text="Load Next Data" />
         </div>
     </div>
@@ -93,14 +98,13 @@ export default {
     },
     data() {
         return {
-            isOpen: true, // Secara default menunjukkan halaman 'Open'
+            isOpen: true,
             isListOpen: false,
             searchKeyword: "",
             loading: false,
         };
     },
     mounted() {
-        // menjalankan function saat renderan awal
         this.getOpenInstructions(0);
         window.addEventListener("scroll", this.handleScroll);
     },
@@ -114,12 +118,17 @@ export default {
         },
     },
     methods: {
-        // mengakses function dari store  (store/actions.js)
         ...mapActions({
             getOpenInstructions: "getOpenInstructions",
             getCompletedInstructions: "getCompletedInstructions",
             searchInstructions: "searchInstructions",
         }),
+        goCreateService() {
+            this.$router.push("/create");
+        },
+        goCreateLogistic() {
+            this.$router.push("/create");
+        },
         isOpenSwitcher() {
             this.isOpen = true;
             this.getOpenInstructions(0);
@@ -145,13 +154,12 @@ export default {
                     : this.getCompletedInstructions(0);
             }
         },
-
         loadNextInstructions() {
             if (this.loading) return;
             this.loading = true;
 
             // memeriksa tab apakah open atau completed
-            if (this.pageInfo.currrentPage !== this.pageInfo.totalPages) {
+            if (this.pageInfo.currrentPage < this.pageInfo.totalPages) {
                 let status = this.isOpen ? "open" : "completed";
                 const reqData = {
                     status,
@@ -159,11 +167,8 @@ export default {
                     currrentPage: this.pageInfo.currrentPage,
                 };
                 if (this.searchKeyword) {
-                    console.log(reqData);
                     this.searchInstructions(reqData);
                 } else {
-                    console.log(status, "str 0");
-
                     this.isOpen
                         ? this.getOpenInstructions(this.pageInfo.currrentPage)
                         : this.getCompletedInstructions(
@@ -176,7 +181,6 @@ export default {
             this.loading = false;
         },
         handleScroll() {
-            // Jika pengguna telah mencapai bagian bawah
             if (
                 window.innerHeight + window.scrollY >=
                 document.body.offsetHeight
@@ -270,11 +274,6 @@ export default {
     display: flex;
     flex-direction: column;
 }
-
-/* .open-intruction:hover {
-    height: 72px;
-    transition: 0.3s;
-} */
 .logistic,
 .service {
     width: 194px;

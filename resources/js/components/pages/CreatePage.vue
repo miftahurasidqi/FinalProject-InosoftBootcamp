@@ -1,7 +1,11 @@
 <template>
     <div id="page-body">
         <h1 style="margin-bottom: 8px">3rd Party Instruction</h1>
-        <form class="card" style="padding-bottom: 2rem">
+        <form
+            class="card"
+            style="padding-bottom: 2rem"
+            @submit.prevent="handleSubmit"
+        >
             <CreatePageInfoPanel
                 :newIstruction="newIstruction"
                 :getLinkTo="getLinkTo"
@@ -13,13 +17,14 @@
                 :newCostItems="newCostItems"
                 :newGrandTotal="newGrandTotal"
             />
+            <div class="container-button-bottom">
+                <button type="button" @click="handleCancel">Cancel</button>
+                <button type="submit" @click="handleForDraft">
+                    Save as Daft
+                </button>
+                <button type="submit" @click="handleForSubmit">Submit</button>
+            </div>
         </form>
-        <div class="container-button-bottom">
-            <button>Cancel</button>
-            <button @click.prevent="saveAsDraft">Save as Daft</button>
-            <button @click.prevent="submit">Submit</button>
-        </div>
-
         <!-- <div> -->
         <!-- <SendMail />
         <InternalNote />
@@ -38,6 +43,7 @@ import VendorInvoice from "../modal/VendorInvoice.vue";
 import ReasonCancellation from "../modal/ReasonCancellation.vue";
 import SendMail from "../modal/SendMail.vue";
 import AddInvoiceTarget from "../modal/AddInvoiceTarget.vue";
+
 export default {
     name: "CreatePage",
     components: {
@@ -48,6 +54,11 @@ export default {
         ReasonCancellation,
         SendMail,
         AddInvoiceTarget,
+    },
+    data() {
+        return {
+            status: "",
+        };
     },
     computed: {
         ...mapGetters({
@@ -64,12 +75,17 @@ export default {
         ...mapActions({
             saveNewInstruction: "saveNewInstruction",
         }),
-        async saveAsDraft() {
-            const response = await this.saveNewInstruction("draft");
-            await this.$router.push(`/detail/${response}`);
+        handleCancel() {
+            this.$router.push("/");
         },
-        async submit() {
-            const response = await this.saveNewInstruction("in progres");
+        handleForDraft() {
+            this.status = "draft";
+        },
+        handleForSubmit() {
+            this.status = "in progres";
+        },
+        async handleSubmit() {
+            const response = await this.saveNewInstruction(this.status);
             await this.$router.push(`/detail/${response}`);
         },
     },
@@ -84,7 +100,7 @@ export default {
 
 .container-button-bottom {
     display: flex;
-    justify-content: end;
+    justify-content: flex-end;
     margin-top: 2rem;
     margin-right: 2rem;
 }

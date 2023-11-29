@@ -12,6 +12,11 @@ class ActivityLog extends Eloquent
     protected $fillable = [
         'activityName',
         'user',
-        'date'       
+        'date',
     ];
+
+    public function thirdPartyInstruction()
+    {
+        return $this->belongsTo(ThirdPartyInstruction::class, 'third_party_instruction_id');
+    }
 }

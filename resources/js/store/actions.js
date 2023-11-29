@@ -16,14 +16,20 @@ export const getCompletedInstructions = async ({ commit }, currrentPage) => {
 };
 
 export const searchInstructions = async ({ commit }, reqData) => {
+    console.log(reqData);
     const { status, keyWord, currrentPage } = reqData;
     const page = currrentPage + 1;
-    const response = await axios.get(
-        `api/instructions/${status}/search?page=${page}?keyword=${keyWord}`
-    );
+    const queryParameters = {
+        keyWord,
+        status,
+        page,
+    };
+    const response = await axios.get(`api/instructions/search`, {
+        params: queryParameters,
+    });
 
     console.log(response.data);
-    // commit("setInstructions", response); // menjalankan function setInstructions() yg ada pada file mutations.js
+    commit("setInstructions", response); // menjalankan function setInstructions() yg ada pada file mutations.js
 };
 
 // for Hompage end
@@ -137,11 +143,6 @@ export const terminateInstructionsById = async ({ commit, state }, id) => {
 
 export const saveNewInvoice = async ({ commit, state }, id) => {
     console.log(id);
-
-    // console.log(state.newInvoice);
-    // state.newInvoice.invoiceAttachment;
-    // state.newInvoice.suportingDocument;
-
     const formData = new FormData();
     formData.append("invoiceNumber", state.newInvoice.invoiceNumber);
     formData.append("invoiceAttachment", state.newInvoice.invoiceAttachment);
@@ -177,79 +178,79 @@ export const saveNewInvoice = async ({ commit, state }, id) => {
     // }
 };
 
-export const editInvoice = async ({ commit }, id) => {
-    console.log(id);
-    // request data: {
-    //                invoiceNumber: "string",
-    //                deleteFile: [fileName],          // array berisi Nama File yg dihapus
-    //         }
-    // request file: {
-    //             invoiceAttachment: file,
-    //             suportingDocument: [file],          // array berisi file
-    //         }
+export const saveEditInvoice = async ({ commit }, editData) => {
+    console.log(editData);
+    const { id, invoiceNumber, deleteFile, addFile } = editData;
+    const formData = new FormData();
 
-    // const response = await axios.patch(`api/editInvoice/${id}`);
-    // commit("setInstructionDetail", response);
+    formData.append("invoiceNumber", invoiceNumber);
+    formData.append("deleteFile", deleteFile);
 
-    // response: {
-    //     message: "Edit Invoice success",
-    //     data: [
-    //             {
-    //                 id: "string"
-    //                 invoiceNumber: "srting",
-    //                 invoiceAttachment: file,
-    //                 suportingDocument: [file],      // array berisi file
-    //             }
-    //     ]
-    // }
+    if (addFile.invoiceAttachment.name) {
+        formData.append("invoiceAttachment", addFile.invoiceAttachment);
+    }
+    if (addFile.suportingDocument.length !== 0) {
+        addFile.suportingDocument.forEach((file, i) => {
+            formData.append(`suportingDocument[${i}]`, file);
+        });
+    }
+    try {
+        const response = await axios.post(`/api/editInvoice/${id}`, formData, {
+            headers: {
+                "Content-Type": "multipart/form-data",
+            },
+        });
+        console.log(response);
+    } catch (error) {
+        console.error("Error :", error);
+    }
 };
 
 export const deleteInvoice = async ({ commit }, id) => {
     console.log(id);
-
-    // const response = await axios.delete(`api/deleteInvoice/${id}`);
-    // commit("setInstructionDetail", response);
-
-    //  response {
-    //     message: "Delete Invoice success",
-    //     data: [
-    //             {
-    //                 id: "string"
-    //                 invoiceNumber: "srting",
-    //                 invoiceAttachment: file,
-    //                 suportingDocument: [file],      // array berisi file
-    //             }
-    //     ]
-    // }
+    try {
+        const response = await axios.delete(`/api/deleteInvoice/${id}`);
+        console.log(response);
+        // commit("setInstructionDetail", response);
+    } catch (error) {
+        console.error("Error :", error);
+    }
 };
-export const updateInstructionStatusToComplete = async ({ commit }, id) => {
+export const setInstructionToCompleted = async ({ commit }, id) => {
     console.log(id);
-    // request data: {
-    //     status: "completed",                              // nilai harus "completed"
-    // }
-
-    // const response = await axios.patch(`api/data3Party/completed/${id}`);
-    // commit("setInstructionDetail", response);
+    try {
+        const response = await axios.patch(`/api/instruction/completed/${id}`);
+        console.log(response.data);
+        commit("setInstructionDetail", response.data.instruction);
+    } catch (error) {
+        console.log(error);
+    }
 };
 
-export const addAttachmentForInternalOnly = async ({ commit }, id) => {
-    console.log(id);
-    //     request file: {
-    //         internalAttachment: file,
-    //     }
+export const addInternalAttachment = async ({ commit }, reqData) => {
+    console.log(reqData);
 
-    // const response = await axios.post(`api/forInternalOnly/attachment/${id}`);
-    // commit("setInstructionDetail", response);
+    const { id, files } = reqData;
+    const formData = new FormData();
 
-    // response: {
-    // message: "Upload Attachment success",
-    // data: [
-    //         {
-    //             id: "string",
-    //             internalAttachment: "string",           // berisi nama file
-    //         }
-    // ]
-    // }
+    files.forEach((file, i) => {
+        formData.append(`internalAttachment[${i}]`, file);
+    });
+    try {
+        const response = await axios.post(
+            `/api/internalOnly/attachment/add/${id}`,
+            formData,
+            {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                },
+            }
+        );
+        console.log(response);
+        // commit("setInstructionDetail", response);
+    } catch (error) {
+        console.error("Error :", error);
+    }
 };
 
 export const deleteAttachmentForInternalOnly = async ({ commit }, id) => {

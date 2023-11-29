@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Models\CostDetail;
 use App\Models\ThirdPartyInstruction;
+use App\Models\VendorInvoice;
 
 class ThirdPartyInstructionRepository
 {
@@ -68,7 +69,8 @@ class ThirdPartyInstructionRepository
                     'vendorQuotationNo',
                     'customerContract',
                     'NoCustomerPO',
-                    'status']);
+                    'status',
+                ]);
 
             $size = count($instructions);
             $totalData = ThirdPartyInstruction::whereIn('status', $status)->count();
@@ -90,22 +92,70 @@ class ThirdPartyInstructionRepository
                 'errors' => $e->getMessage(),
             ];
         }
-
     }
     // belum
     public function searchInstructions($page, $status, $keyword)
     {
+        try {
+            $perPage = 10;
+            $skip = ($page - 1) * $perPage;
 
-        // Melakukan pencarian menggunakan filter regex
-        $instruction = ThirdPartyInstruction::where('status', $status)
-            ->where(function ($k) use ($keyword) {
-                $k->where('field1', 'like', '%' . $keyword . '%')
-                    ->orWhere('field2', 'like', '%' . $keyword . '%')
-                    ->orWhere('field3', 'like', '%' . $keyword . '%');
-            })
-            ->get();
+            $instructions = ThirdPartyInstruction::whereIn('status', $status)
+                ->where(function ($k) use ($keyword) {
+                    $k->where('linkTo', 'like', '%' . $keyword . '%')
+                        ->orWhere('instructionType', 'like', '%' . $keyword . '%')
+                        ->orWhere('vendorQuotationNo', 'like', '%' . $keyword . '%')
+                        ->orWhere('assignedVendor', 'like', '%' . $keyword . '%')
+                        ->orWhere('attentionOf', 'like', '%' . $keyword . '%')
+                        ->orWhere('instructionID', 'like', '%' . $keyword . '%')
+                        ->orWhere('customerContract', 'like', '%' . $keyword . '%');
+                })
+                ->skip($skip)
+                ->limit($perPage)
+                ->get([
+                    'instructionID',
+                    'linkTo',
+                    'instructionType',
+                    'assignedVendor',
+                    'attentionOf',
+                    'vendorAddress',
+                    'invoiceTo',
+                    'vendorQuotationNo',
+                    'customerContract',
+                    'NoCustomerPO',
+                    'status',
+                ]);
 
-        return response()->json($instruction);
+            $totalData = ThirdPartyInstruction::whereIn('status', $status)
+                ->where(function ($k) use ($keyword) {
+                    $k->where('linkTo', 'like', '%' . $keyword . '%')
+                        ->orWhere('instructionType', 'like', '%' . $keyword . '%')
+                        ->orWhere('vendorQuotationNo', 'like', '%' . $keyword . '%')
+                        ->orWhere('assignedVendor', 'like', '%' . $keyword . '%')
+                        ->orWhere('attentionOf', 'like', '%' . $keyword . '%')
+                        ->orWhere('instructionID', 'like', '%' . $keyword . '%')
+                        ->orWhere('customerContract', 'like', '%' . $keyword . '%');
+                })->count();
+
+            $size = count($instructions);
+            $totalPages = ceil($totalData / $perPage);
+
+            return [
+                'success' => true,
+                'instructions' => $instructions,
+                'page' => [
+                    'size' => $size,
+                    'totalData' => $totalData,
+                    'totalPages' => $totalPages,
+                    'currrentPage' => $page,
+                ],
+            ];
+        } catch (\Exception $e) {
+            return [
+                'success' => false,
+                'errors' => $e->getMessage(),
+            ];
+        }
     }
 
     public function getInstructionById($id)
@@ -128,25 +178,59 @@ class ThirdPartyInstructionRepository
         } else {
             return response()->json(['message' => 'Data not found'], 404);
         }
-
     }
     public function setToCanceled($id, $statusInfo)
     {
-        $instruction = ThirdPartyInstruction::find($id);
-        if ($instruction) {
+
+        try {
+            $instruction = ThirdPartyInstruction::find($id);
+            if (!$instruction) {
+                return response()->json(['message' => 'Data not found'], 404);
+            }
+
+            $instruction->statusInfo()->create($statusInfo);
             $instruction->status = 'cancelled';
             $instruction->save();
-            $instruction->statusInfo()->create($statusInfo);
-
-            return response()->json(['message' => 'Canceled successfully']);
-        } else {
-            return response()->json(['message' => 'Data not found'], 404);
+            return response()->json([
+                // $instruction->fresh()
+                'success' => false,
+                'message' => 'Canceled successfully',
+            ]);
+        } catch (\Exception $e) {
+            return [
+                'success' => false,
+                'errors' => $e->getMessage(),
+            ];
         }
     }
 
     public function setToCompleted($id)
     {
-        $instruction = ThirdPartyInstruction::where('_id', $id);
-        return response()->json($instruction);
+        try {
+            $instruction = ThirdPartyInstruction::find($id);
+            if (!$instruction) {
+                return response()->json(['message' => 'Data not found'], 404);
+            }
+
+            $invoice = VendorInvoice::where('third_party_instruction_id', $id)->count();
+            if ($invoice == 0) {
+                return response()->json(['message' => 'Minimal Terdapat 1 Invoice'], 400);
+            }
+
+            $instruction->status = 'completed';
+            $instruction->save();
+
+            return response()->json([
+                'instruction' => $instruction->fresh(),
+                'success' => false,
+                'message' => 'Completed successfully',
+            ]);
+
+        } catch (\Exception $e) {
+            return [
+                'success' => false,
+                'errors' => $e->getMessage(),
+            ];
+        }
     }
 }
