@@ -41,8 +41,22 @@ class VendorInvoiceController extends Controller
     {
         return $this->vendorInvoiceService->deleteInvoice($id);
     }
-    public function updateInvoice(Request $request, $id, $invoiceData)
+    // belum
+    public function updateInvoice(Request $request, $id)
     {
-        return $this->vendorInvoiceService->updateInvoice($id, $invoiceData);
+        $invoiceNumber = $request->input('invoiceNumber');
+        $deleteFile = $request->input('deleteFile');
+
+        $file = $request->file('invoiceAttachment');
+        $files = $request->file('suportingDocument');
+        $suportingDocument = [];
+
+        return response()->json([
+            $id,
+            $invoiceNumber,
+            $deleteFile,
+            $file,
+            $files,
+        ]);
     }
 }

@@ -67,8 +67,11 @@
             </div>
 
             <div>
-                <ActionButton text="Cancel" @click="closeFormEditInvoice" />
-                <ActionButton text="Confirm" @click="save" />
+                <ActionButton
+                    text="Cancel"
+                    @click.prevent="closeFormEditInvoice"
+                />
+                <ActionButton text="Confirm" @click.prevent="save" />
                 <!-- @click.prevent="deleteInstruction" -->
             </div>
         </Popup>
@@ -79,13 +82,14 @@
             <div>
                 <ActionButton
                     text="Cancel"
-                    @click="closeConfirmDeleteInvoice"
+                    @click.prevent="closeConfirmDeleteInvoice"
                 />
                 <ActionButton text="Confirm" @click.prevent="deleteInvoice" />
             </div>
         </Popup>
 
-        <table class="table">
+        <table v-if="vendor_invoice.length != 0" class="table">
+            <!-- <table class="table"> -->
             <thead>
                 <tr>
                     <td>Invoice Number</td>
@@ -126,7 +130,7 @@
         </table>
         <!-- Ketika tidak ada data -->
         <div
-            v-if="vendor_invoice.length == 0"
+            v-else
             style="
                 width: 100%;
                 display: flex;
@@ -140,6 +144,10 @@
         >
             <p>No Data</p>
         </div>
+        <div>
+            <button @click.prevent="setToCompleted">Set To Completed</button>
+        </div>
+        <!-- setInstructionToCompleted -->
     </div>
 </template>
 <script>
@@ -182,15 +190,20 @@ export default {
     },
     methods: {
         ...mapActions({
+            setInstructionToCompleted: "setInstructionToCompleted",
             saveEditInvoice: "saveEditInvoice",
+            deleteInvoiceById: "deleteInvoice",
         }),
-        //
+        setToCompleted() {
+            this.setInstructionToCompleted(this.$route.params.id);
+            window.location.reload();
+        },
         showFormEditInvoice(i) {
             this.editInvoice = this.vendor_invoice[i];
             this.isEditInvoice = true;
         },
         showConfirmDeleteInvoice(id) {
-            this.deleteId = id;
+            this.deleteInvoiceId = id;
             this.isDeleteInvoice = true;
         },
         closeFormEditInvoice() {
@@ -207,7 +220,8 @@ export default {
             }
         },
         deleteInvoice() {
-            console.log("delete", this.deleteId);
+            // console.log("delete", this.deleteInvoiceId);
+            this.deleteInvoiceById(this.deleteInvoiceId);
         },
 
         handleInputInvoiceAttachment(e) {

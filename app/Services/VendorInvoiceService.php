@@ -21,7 +21,7 @@ class VendorInvoiceService
     }
     public function deleteInvoice($id)
     {
-        $result = $this->vendorInvoiceRepository->deleteVendorInvoice($id, $invoiceData);
+        $result = $this->vendorInvoiceRepository->deleteVendorInvoice($id);
         return response()->json($result);
     }
 

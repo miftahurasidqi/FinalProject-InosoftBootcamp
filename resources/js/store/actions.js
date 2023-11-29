@@ -16,14 +16,20 @@ export const getCompletedInstructions = async ({ commit }, currrentPage) => {
 };
 
 export const searchInstructions = async ({ commit }, reqData) => {
+    console.log(reqData);
     const { status, keyWord, currrentPage } = reqData;
     const page = currrentPage + 1;
-    const response = await axios.get(
-        `api/instructions/${status}/search?page=${page}?keyword=${keyWord}`
-    );
+    const queryParameters = {
+        keyWord,
+        status,
+        page,
+    };
+    const response = await axios.get(`api/instructions/search`, {
+        params: queryParameters,
+    });
 
     console.log(response.data);
-    // commit("setInstructions", response); // menjalankan function setInstructions() yg ada pada file mutations.js
+    commit("setInstructions", response); // menjalankan function setInstructions() yg ada pada file mutations.js
 };
 
 // for Hompage end
@@ -189,7 +195,7 @@ export const saveEditInvoice = async ({ commit }, editData) => {
         });
     }
     try {
-        const response = await axios.patch(`api/editInvoice/${id}`, formData, {
+        const response = await axios.post(`/api/editInvoice/${id}`, formData, {
             headers: {
                 "Content-Type": "multipart/form-data",
             },
@@ -201,22 +207,24 @@ export const saveEditInvoice = async ({ commit }, editData) => {
 };
 
 export const deleteInvoice = async ({ commit }, id) => {
+    console.log(id);
     try {
-        const response = await axios.delete(`api/deleteInvoice/${id}`);
+        const response = await axios.delete(`/api/deleteInvoice/${id}`);
         console.log(response);
         // commit("setInstructionDetail", response);
     } catch (error) {
         console.error("Error :", error);
     }
 };
-export const updateInstructionStatusToComplete = async ({ commit }, id) => {
+export const setInstructionToCompleted = async ({ commit }, id) => {
     console.log(id);
-    // request data: {
-    //     status: "completed",                              // nilai harus "completed"
-    // }
-
-    // const response = await axios.patch(`api/data3Party/completed/${id}`);
-    // commit("setInstructionDetail", response);
+    try {
+        const response = await axios.patch(`/api/instruction/completed/${id}`);
+        console.log(response.data);
+        commit("setInstructionDetail", response.data.instruction);
+    } catch (error) {
+        console.log(error);
+    }
 };
 
 export const addInternalAttachment = async ({ commit }, reqData) => {
@@ -230,7 +238,7 @@ export const addInternalAttachment = async ({ commit }, reqData) => {
     });
     try {
         const response = await axios.post(
-            `api/forInternalOnly/attachment/${id}`,
+            `/api/internalOnly/attachment/add/${id}`,
             formData,
             {
                 headers: {

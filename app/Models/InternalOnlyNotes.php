@@ -4,19 +4,19 @@ namespace App\Models;
 
 use Jenssegers\Mongodb\Eloquent\Model as Eloquent;
 
-class ActivityLog extends Eloquent
+class InternalOnlyNotes extends Eloquent
 {
     protected $connection = 'mongodb';
-    protected $collection = 'activity_log';
+    protected $collection = 'internal_only_notes';
 
     protected $fillable = [
-        'activityName',
-        'user',
-        'date',
+        'uploadBy',
+        'time',
+        'note',
     ];
-
     public function thirdPartyInstruction()
     {
         return $this->belongsTo(ThirdPartyInstruction::class, 'third_party_instruction_id');
     }
+
 }

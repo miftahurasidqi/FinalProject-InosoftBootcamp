@@ -57,24 +57,25 @@ class ThirdPartyInstructionController extends Controller
         return $this->thirdpartyinstructionservice->getInstructions($pageInt, $status);
     }
 
-    public function searchOpenInstructions(Request $request)
+    public function searchInstructions(Request $request)
     {
-        $page = $request->input('page', '');
+        $keyword = $request->query('keyWord', '');
+        $tab = $request->query('status');
+        $page = $request->query('page');
         $pageInt = intval($page);
-        $status = ['draft', 'in progres'];
-        $keyword = $request->input('keyword', '');
+        $status = [];
+        if ($tab == 'open') {
+            $status = ['draft', 'in progres'];
+        } elseif ($tab == 'completed') {
+            $status = ['cancelled', 'completed'];
+        }
 
+        // return response()->json([
+        //     $pageInt,
+        //     $status,
+        //     $keyword,
+        // ]);
         return $this->thirdpartyinstructionservice->searchInstructions($pageInt, $status, $keyword);
-    }
-
-    public function searchCompletedInstructions(Request $request)
-    {
-        $page = $request->input('page', '');
-        $pageInt = intval($page);
-        $status = ['cancelled', 'completed'];
-        $keyword = $request->input('keyword', '');
-
-        return $thirdPartyInstruction = $this->thirdpartyinstructionservice->searchInstructions($pageInt, $status, $keyword);
     }
 
     public function getInstructionById(Request $request, $id)
@@ -108,7 +109,7 @@ class ThirdPartyInstructionController extends Controller
 
     public function setInstructionToCompleted(Request $request, $id)
     {
-        return response()->json($id);
-        // return $thirdPartyInstruction = $this->thirdpartyinstructionservice->setToCompleted($id)
+        // return response()->json($id);
+        return $thirdPartyInstruction = $this->thirdpartyinstructionservice->setToCompleted($id);
     }
 }

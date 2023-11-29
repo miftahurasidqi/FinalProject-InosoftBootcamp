@@ -53,14 +53,16 @@ class ThirdPartyInstruction extends Eloquent
     {
         return $this->belongsTo(InvoiceTo::class);
     }
-
-    public function forInternalOnly()
+    public function internalOnlyAttachment()
     {
-        return $this->hasMany(ForInternalOnly::class);
+        return $this->hasMany(InternalOnlyAttachment::class);
     }
-
+    public function internalOnlyNotes()
+    {
+        return $this->hasMany(InternalOnlyNotes::class);
+    }
     public function activityLog()
     {
-        return $this->embedsOne(ActivityLog::class);
+        return $this->hasMany(ActivityLog::class);
     }
 }
