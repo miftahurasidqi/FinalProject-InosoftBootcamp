@@ -20442,9 +20442,11 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
   })), {}, {
     showFormAddInvoice: function showFormAddInvoice() {
       this.isAddInvoice = true;
+      document.body.style.overflow = "hidden";
     },
     closeFormAddInvoice: function closeFormAddInvoice() {
       this.isAddInvoice = false;
+      document.body.style.overflow = "";
     },
     updateInvoiceNumber: function updateInvoiceNumber() {
       this.$store.commit("updateInvoiceNumber", this.invoiceNumber);
@@ -20662,15 +20664,19 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
     },
     showDelete: function showDelete() {
       this.isPopupDelete = true;
+      document.body.style.overflow = "hidden";
     },
     showTerminate: function showTerminate() {
       this.isPopupTerminate = true;
+      document.body.style.overflow = "hidden";
     },
     closeDelete: function closeDelete() {
       this.isPopupDelete = false;
+      document.body.style.overflow = "";
     },
     closeTerminate: function closeTerminate() {
       this.isPopupTerminate = false;
+      document.body.style.overflow = "";
     },
     updateDescription: function updateDescription() {
       this.$store.commit("updateDescription", this.description);
@@ -21344,8 +21350,7 @@ var _withScopeId = function _withScopeId(n) {
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.pushScopeId)("data-v-a8b77e1a"), n = n(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.popScopeId)(), n;
 };
 var _hoisted_1 = {
-  type: "button",
-  "class": "btn btn-secondary"
+  "class": "btn"
 };
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("button", _hoisted_1, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.text), 1 /* TEXT */);
@@ -21893,7 +21898,7 @@ var _withScopeId = function _withScopeId(n) {
 };
 var _hoisted_1 = {
   id: "info-panel",
-  "class": "flex-row card d-flex justify-content-evenly m-4 p-3"
+  "class": "flex-row p-3 m-4 card d-flex justify-content-evenly"
 };
 var _hoisted_2 = {
   "class": "container-detail-left"
@@ -22011,7 +22016,7 @@ var _hoisted_32 = {
 var _hoisted_33 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
     "class": "head-d-s"
-  }, "Statsu", -1 /* HOISTED */);
+  }, "Status", -1 /* HOISTED */);
 });
 var _hoisted_34 = {
   "class": "isi-status"
@@ -22202,46 +22207,63 @@ __webpack_require__.r(__webpack_exports__);
 var _withScopeId = function _withScopeId(n) {
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.pushScopeId)("data-v-f19a29ec"), n = n(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.popScopeId)(), n;
 };
-var _hoisted_1 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_1 = {
+  "class": "modal-body"
+};
+var _hoisted_2 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
-    "for": "invoice-num"
+    "for": "invoice-num",
+    "class": "me-5"
   }, "Vendor Invoice No", -1 /* HOISTED */);
 });
-var _hoisted_2 = /*#__PURE__*/_withScopeId(function () {
-  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, "Invoice Attachment", -1 /* HOISTED */);
+var _hoisted_3 = /*#__PURE__*/_withScopeId(function () {
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
+    "class": "input-title"
+  }, "Invoice Attachment", -1 /* HOISTED */);
 });
-var _hoisted_3 = {
+var _hoisted_4 = {
   key: 0,
   "class": "file-item"
 };
-var _hoisted_4 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_5 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, "by user 13/11/2023", -1 /* HOISTED */);
 });
-var _hoisted_5 = {
+var _hoisted_6 = {
+  "class": "file-item-button"
+};
+var _hoisted_7 = {
   key: 1,
   "for": "add-attachment-file",
   "class": "add-file"
 };
-var _hoisted_6 = /*#__PURE__*/_withScopeId(function () {
-  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, "Suporting Document", -1 /* HOISTED */);
+var _hoisted_8 = /*#__PURE__*/_withScopeId(function () {
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
+    "class": "input-title"
+  }, "Suporting Document", -1 /* HOISTED */);
 });
-var _hoisted_7 = {
+var _hoisted_9 = {
   "class": "file-item"
 };
-var _hoisted_8 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_10 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, "by user 13/11/2023", -1 /* HOISTED */);
 });
-var _hoisted_9 = ["onClick"];
-var _hoisted_10 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_11 = {
+  "class": "file-item-button"
+};
+var _hoisted_12 = ["onClick"];
+var _hoisted_13 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
     "for": "add-suport-file",
     "class": "add-file"
   }, "Add Suport Document", -1 /* HOISTED */);
 });
-var _hoisted_11 = {
+var _hoisted_14 = {
+  "class": "modal-footer"
+};
+var _hoisted_15 = {
   "class": "panel-top"
 };
-var _hoisted_12 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_16 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, "Vendor Invoice", -1 /* HOISTED */);
 });
 
@@ -22250,10 +22272,11 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_Popup = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Popup");
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" form add invoice "), $data.isAddInvoice ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Popup, {
     key: 0,
-    onClose: $options.closeFormAddInvoice
+    onClose: $options.closeFormAddInvoice,
+    title: "Add Vendor Invoice"
   }, {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [_hoisted_1, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [_hoisted_2, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
         id: "invoice-num",
         type: "text",
         "onUpdate:modelValue": _cache[0] || (_cache[0] = function ($event) {
@@ -22262,24 +22285,24 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         onInput: _cache[1] || (_cache[1] = function () {
           return $options.updateInvoiceNumber && $options.updateInvoiceNumber.apply($options, arguments);
         })
-      }, null, 544 /* HYDRATE_EVENTS, NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.invoiceNumber]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [_hoisted_2, _ctx.newInvoiceAttachment.name ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.newInvoiceAttachment.name), 1 /* TEXT */), _hoisted_4, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+      }, null, 544 /* HYDRATE_EVENTS, NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.invoiceNumber]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [_hoisted_3, _ctx.newInvoiceAttachment.name ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.newInvoiceAttachment.name), 1 /* TEXT */), _hoisted_5]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_6, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
         onClick: _cache[2] || (_cache[2] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function () {
           return $options.deleteInvoiceAttachment && $options.deleteInvoiceAttachment.apply($options, arguments);
         }, ["prevent"]))
-      }, "Remove")])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("label", _hoisted_5, "Add Attachment")), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+      }, " Remove ")])])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("label", _hoisted_7, "Add Attachment")), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
         hidden: "",
         id: "add-attachment-file",
         type: "file",
         onChange: _cache[3] || (_cache[3] = function () {
           return $options.handleInputInvoiceAttachment && $options.handleInputInvoiceAttachment.apply($options, arguments);
         })
-      }, null, 32 /* HYDRATE_EVENTS */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [_hoisted_6, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(_ctx.newInvoiceSuportDoc, function (file, index) {
-        return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(file.name), 1 /* TEXT */), _hoisted_8, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+      }, null, 32 /* HYDRATE_EVENTS */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [_hoisted_8, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(_ctx.newInvoiceSuportDoc, function (file, index) {
+        return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_9, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(file.name), 1 /* TEXT */), _hoisted_10]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_11, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
           onClick: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function ($event) {
             return $options.deleteSuportDoc(index);
           }, ["prevent"])
-        }, "Remove", 8 /* PROPS */, _hoisted_9)]);
-      }), 256 /* UNKEYED_FRAGMENT */)), _hoisted_10, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+        }, " Remove ", 8 /* PROPS */, _hoisted_12)])]);
+      }), 256 /* UNKEYED_FRAGMENT */)), _hoisted_13, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
         hidden: "",
         id: "add-suport-file",
         type: "file",
@@ -22287,16 +22310,20 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
           return $options.handleInputSuportDoc && $options.handleInputSuportDoc.apply($options, arguments);
         }),
         multiple: ""
-      }, null, 32 /* HYDRATE_EVENTS */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_ActionButton, {
-        text: "Cancel",
-        onClick: $options.closeFormAddInvoice
+      }, null, 32 /* HYDRATE_EVENTS */)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_14, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_ActionButton, {
+        type: "button",
+        "class": "buttons me-2",
+        onClick: $options.closeFormAddInvoice,
+        text: "Cancel"
       }, null, 8 /* PROPS */, ["onClick"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_ActionButton, {
-        text: "Confirm",
-        onClick: $options.save
-      }, null, 8 /* PROPS */, ["onClick"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" @click.prevent=\"deleteInstruction\" ")])];
+        type: "button",
+        "class": "buttons",
+        onClick: $options.save,
+        text: "Submit"
+      }, null, 8 /* PROPS */, ["onClick"])])];
     }),
     _: 1 /* STABLE */
-  }, 8 /* PROPS */, ["onClose"])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_11, [_hoisted_12, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_ActionButton, {
+  }, 8 /* PROPS */, ["onClose"])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_15, [_hoisted_16, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_ActionButton, {
     text: "Add Vendor Invoice",
     "class": "buttons",
     onClick: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)($options.showFormAddInvoice, ["prevent"])
@@ -22375,9 +22402,7 @@ var _hoisted_16 = {
   key: 0,
   "class": "suport-doc"
 };
-var _hoisted_17 = ["onClick"];
-var _hoisted_18 = ["onClick"];
-var _hoisted_19 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_17 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
     style: {
       "width": "100%",
@@ -22465,18 +22490,20 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("p", {
         key: i
       }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(suportDoc.name), 1 /* TEXT */);
-    }), 128 /* KEYED_FRAGMENT */))])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+    }), 128 /* KEYED_FRAGMENT */))])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_ActionButton, {
       onClick: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function ($event) {
         return $options.showConfirmDeleteInvoice(invoice._id);
-      }, ["prevent"])
-    }, " delete", 8 /* PROPS */, _hoisted_17), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+      }, ["prevent"]),
+      text: "Delete"
+    }, null, 8 /* PROPS */, ["onClick"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_ActionButton, {
       onClick: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function ($event) {
         return $options.showFormEditInvoice(index);
-      }, ["prevent"])
-    }, "edit", 8 /* PROPS */, _hoisted_18)])]);
+      }, ["prevent"]),
+      text: "Edit"
+    }, null, 8 /* PROPS */, ["onClick"])])]);
   }), 128 /* KEYED_FRAGMENT */))])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
     key: 3
-  }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Ketika tidak ada data "), _hoisted_19], 2112 /* STABLE_FRAGMENT, DEV_ROOT_FRAGMENT */)), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+  }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Ketika tidak ada data "), _hoisted_17], 2112 /* STABLE_FRAGMENT, DEV_ROOT_FRAGMENT */)), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
     onClick: _cache[4] || (_cache[4] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function () {
       return $options.setToCompleted && $options.setToCompleted.apply($options, arguments);
     }, ["prevent"]))
@@ -22521,34 +22548,48 @@ var _hoisted_4 = {
   key: 1,
   "class": "d-flex fles-row"
 };
-var _hoisted_5 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_5 = {
+  "class": "modal-body"
+};
+var _hoisted_6 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, "Anda yakin Akan menghapus Instruction ini?", -1 /* HOISTED */);
 });
-var _hoisted_6 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_7 = {
+  "class": "modal-body"
+};
+var _hoisted_8 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h6", null, "Reason Of Cancellation", -1 /* HOISTED */);
 });
-var _hoisted_7 = /*#__PURE__*/_withScopeId(function () {
-  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, "Canceled By"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, "User 1")], -1 /* HOISTED */);
+var _hoisted_9 = /*#__PURE__*/_withScopeId(function () {
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Nanti dibuat kayak gini <p>Cancelled by {{user}}</p> . gitu kan? "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, "Canceled By User 1"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <p>User 1</p> ")], -1 /* HOISTED */);
 });
-var _hoisted_8 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_10 = {
+  "class": "description-textarea"
+};
+var _hoisted_11 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
     "for": "description-cancel"
   }, "Description", -1 /* HOISTED */);
 });
-var _hoisted_9 = {
+var _hoisted_12 = {
   "class": "file-item"
 };
-var _hoisted_10 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_13 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, "by user 13/11/2023", -1 /* HOISTED */);
 });
-var _hoisted_11 = ["onClick"];
-var _hoisted_12 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_14 = {
+  "class": "file-item-button"
+};
+var _hoisted_15 = ["onClick"];
+var _hoisted_16 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
     "for": "add-attachment-cancel-file",
     "class": "add-file"
   }, "Add Attachment", -1 /* HOISTED */);
 });
-
+var _hoisted_17 = {
+  "class": "modal-footer"
+};
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_ActionButton = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("ActionButton");
   var _component_Popup = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Popup");
@@ -22570,24 +22611,26 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "class": "font-style"
   }, null, 8 /* PROPS */, ["onClick"])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Popup untuk button delete "), $data.isPopupDelete ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Popup, {
     key: 0,
-    onClose: $options.closeDelete
+    onClose: $options.closeDelete,
+    title: "Delete Instruction"
   }, {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-      return [_hoisted_5, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_ActionButton, {
+      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [_hoisted_6, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_ActionButton, {
         text: "Cancel",
         onClick: $options.closeDelete
       }, null, 8 /* PROPS */, ["onClick"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_ActionButton, {
         text: "Confirm",
         onClick: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)($options.deleteInstruction, ["prevent"])
-      }, null, 8 /* PROPS */, ["onClick"])])];
+      }, null, 8 /* PROPS */, ["onClick"])])])];
     }),
     _: 1 /* STABLE */
   }, 8 /* PROPS */, ["onClose"])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Popup untuk button terminate "), $data.isPopupTerminate ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Popup, {
     key: 1,
-    onClose: $options.closeTerminate
+    onClose: $options.closeTerminate,
+    title: "Terminate Instruction"
   }, {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-      return [_hoisted_6, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [_hoisted_7, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [_hoisted_8, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("textarea", {
+      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_7, [_hoisted_8, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [_hoisted_9, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_10, [_hoisted_11, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("textarea", {
         "onUpdate:modelValue": _cache[0] || (_cache[0] = function ($event) {
           return $data.description = $event;
         }),
@@ -22599,19 +22642,19 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         cols: "30",
         rows: "5"
       }, null, 544 /* HYDRATE_EVENTS, NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.description]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(_ctx.inputStatusAttachmentFile, function (file, index) {
-        return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_9, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(file.name), 1 /* TEXT */), _hoisted_10, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+        return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_12, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(file.name), 1 /* TEXT */), _hoisted_13]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_14, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
           onClick: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function ($event) {
             return $options.removeAttacmentCancelFile(index);
           }, ["prevent"])
-        }, " Remove ", 8 /* PROPS */, _hoisted_11)]);
-      }), 256 /* UNKEYED_FRAGMENT */)), _hoisted_12, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+        }, " Remove ", 8 /* PROPS */, _hoisted_15)])]);
+      }), 256 /* UNKEYED_FRAGMENT */)), _hoisted_16, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
         hidden: "",
         id: "add-attachment-cancel-file",
         type: "file",
         onChange: _cache[2] || (_cache[2] = function () {
           return $options.handleInputFile && $options.handleInputFile.apply($options, arguments);
         })
-      }, null, 32 /* HYDRATE_EVENTS */)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_ActionButton, {
+      }, null, 32 /* HYDRATE_EVENTS */)])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_17, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_ActionButton, {
         text: "Cancel",
         onClick: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)($options.closeTerminate, ["prevent"])
       }, null, 8 /* PROPS */, ["onClick"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_ActionButton, {
@@ -22818,18 +22861,48 @@ var _hoisted_2 = {
   "class": "popup-container"
 };
 var _hoisted_3 = {
-  "class": "popup-header"
+  "class": "mb-2 modal-header"
 };
 var _hoisted_4 = {
+  "class": "modal-title fs-5",
+  id: "exampleModalLabel"
+};
+var _hoisted_5 = /*#__PURE__*/_withScopeId(function () {
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("svg", {
+    xmlns: "http://www.w3.org/2000/svg",
+    width: "25",
+    height: "25",
+    viewBox: "0 0 24 24",
+    fill: "none",
+    stroke: "currentColor",
+    "stroke-width": "2",
+    "stroke-linecap": "round",
+    "stroke-linejoin": "round"
+  }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("line", {
+    x1: "18",
+    y1: "6",
+    x2: "6",
+    y2: "18"
+  }), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("line", {
+    x1: "6",
+    y1: "6",
+    x2: "18",
+    y2: "18"
+  })], -1 /* HOISTED */);
+});
+var _hoisted_6 = [_hoisted_5];
+var _hoisted_7 = {
   "class": "popup-content"
 };
 function render(_ctx, _cache, $props, $setup, $data, $options) {
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h1", _hoisted_4, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.title), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+    type: "button",
+    "class": "close-button",
+    "aria-label": "Close",
     onClick: _cache[0] || (_cache[0] = function () {
       return $options.closePopup && $options.closePopup.apply($options, arguments);
-    }),
-    "class": "close-button"
-  }, "X")]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.renderSlot)(_ctx.$slots, "default", {}, undefined, true)])])]);
+    })
+  }, [].concat(_hoisted_6))]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"popup-header\"> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("     <button @click=\"closePopup\" class=\"close-button\">X</button> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.renderSlot)(_ctx.$slots, "default", {}, undefined, true)])])]);
 }
 
 /***/ }),
@@ -31432,7 +31505,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\nbutton[data-v-a8b77e1a] {\r\n    background: none;\r\n    border: none;\r\n    color: black;\n}\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\nbutton[data-v-a8b77e1a] {\r\n    background: none;\r\n    border: none;\r\n    color: black;\r\n    padding: 1rem;\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -31576,7 +31649,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n*[data-v-f19a29ec] {\r\n    padding: 0;\r\n    margin: 0;\n}\n.panel-top[data-v-f19a29ec] {\r\n    display: flex;\r\n    justify-content: space-between;\r\n    margin: 1.5rem;\n}\n.panel-top p[data-v-f19a29ec] {\r\n    display: inline;\r\n    height: 40px;\r\n    line-height: 40px;\r\n    font-weight: 600;\n}\n.buttons[data-v-f19a29ec] {\r\n    background: rgb(0, 162, 162);\r\n    padding: 0.3rem 2rem;\r\n    border: none;\r\n    border-radius: 4px;\r\n    color: white;\r\n    font-weight: 600;\n}\n#vendor_invoice_list[data-v-f19a29ec] {\r\n    margin: 0rem 1.5rem;\r\n    border: 1px solid rgb(189, 189, 189);\n}\n#vendor_invoice_list thead tr td[data-v-f19a29ec] {\r\n    border: none;\r\n    font-size: small;\r\n    font-weight: 600;\r\n    color: white;\r\n    background: rgb(165, 165, 165);\n}\r\n/* .panel-top actionb .add-file {\r\n    background: rgb(95, 190, 155);\r\n    color: white;\r\n} */\r\n/* .file-item {\r\n    background: rgb(223, 223, 223);\r\n    padding: 5px;\r\n} */\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\r\n/* * {\r\n    padding: 0;\r\n    margin: 0;\r\n} */\n.panel-top[data-v-f19a29ec] {\r\n    display: flex;\r\n    justify-content: space-between;\r\n    margin: 1.5rem;\n}\n.panel-top p[data-v-f19a29ec] {\r\n    display: inline;\r\n    height: 40px;\r\n    line-height: 40px;\r\n    font-weight: 600;\n}\n.buttons[data-v-f19a29ec] {\r\n    background: rgb(0, 162, 162);\r\n    padding: 0.3rem 2rem;\r\n    border: none;\r\n    border-radius: 4px;\r\n    color: white;\r\n    font-weight: 600;\n}\n#vendor_invoice_list[data-v-f19a29ec] {\r\n    margin: 0rem 1.5rem;\r\n    border: 1px solid rgb(189, 189, 189);\n}\n#vendor_invoice_list thead tr td[data-v-f19a29ec] {\r\n    border: none;\r\n    font-size: small;\r\n    font-weight: 600;\r\n    color: white;\r\n    background: rgb(165, 165, 165);\n}\n.modal-body[data-v-f19a29ec] {\r\n    max-height: 20rem;\r\n    overflow-y: auto;\n}\n.add-file[data-v-f19a29ec] {\r\n    background: rgb(0, 162, 162);\r\n    padding: 0.3rem 2rem;\r\n    border: none;\r\n    border-radius: 4px;\r\n    color: white;\r\n    font-weight: 600;\r\n    cursor: pointer;\r\n    margin: 1rem 0;\n}\n.file-item[data-v-f19a29ec] {\r\n    display: flex;\r\n    justify-content: space-between;\r\n    padding: 1rem;\r\n    background-color: #f0eded;\r\n    margin: 1rem 0;\np[data-v-f19a29ec] {\r\n        margin-bottom: 0.2rem;\n}\n.file-item-button[data-v-f19a29ec] {\r\n        display: flex;\r\n        align-content: center;\n}\n}\n.input-title[data-v-f19a29ec] {\r\n    margin: 0;\n}\r\n/* .panel-top actionb .add-file {\r\n    background: rgb(95, 190, 155);\r\n    color: white;\r\n} */\r\n/* .file-item {\r\n    background: rgb(223, 223, 223);\r\n    padding: 5px;\r\n} */\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -31600,7 +31673,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n*[data-v-0884f7c8] {\r\n    padding: 0;\r\n    margin: 0;\n}\n.suport-doc[data-v-0884f7c8] {\r\n    position: absolute;\n}\n#vendor_invoice_list[data-v-0884f7c8] {\r\n    margin: 0rem 1.5rem;\r\n    border: 1px solid rgb(189, 189, 189);\n}\n#vendor_invoice_list thead tr td[data-v-0884f7c8] {\r\n    border: none;\r\n    font-size: small;\r\n    font-weight: 600;\r\n    color: white;\r\n    background: rgb(165, 165, 165);\n}\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n*[data-v-0884f7c8] {\r\n    padding: 0;\r\n    margin: 0;\n}\n.suport-doc[data-v-0884f7c8] {\r\n    position: absolute;\n}\n#vendor_invoice_list[data-v-0884f7c8] {\r\n    margin: 0rem 1.5rem;\r\n    border: 1px solid rgb(189, 189, 189);\n}\n#vendor_invoice_list thead tr td[data-v-0884f7c8] {\r\n    border: none;\r\n    font-size: small;\r\n    font-weight: 600;\r\n    color: white;\r\n    background: rgb(165, 165, 165);\n}\ntd[data-v-0884f7c8] {\r\n    height: 3rem;\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -31624,7 +31697,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\ntextarea[data-v-5cc65c4b] {\r\n    max-height: 50%;\n}\n.font-style[data-v-5cc65c4b] {\r\n    font-size: medium;\r\n    font-weight: 600;\n}\n.add-file[data-v-5cc65c4b] {\r\n    background: rgb(95, 190, 155);\r\n    color: white;\n}\n.file-item[data-v-5cc65c4b] {\r\n    background: rgb(223, 223, 223);\r\n    padding: 5px;\n}\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\ntextarea[data-v-5cc65c4b] {\r\n    max-height: 50%;\n}\n.font-style[data-v-5cc65c4b] {\r\n    font-size: medium;\r\n    font-weight: 600;\n}\n.add-file[data-v-5cc65c4b] {\r\n    /* background: rgb(95, 190, 155);\r\n    color: white;\r\n    */\r\n    background: rgb(0, 162, 162);\r\n    padding: 0.3rem 2rem;\r\n    border: none;\r\n    border-radius: 4px;\r\n    color: white;\r\n    font-weight: 600;\r\n    cursor: pointer;\r\n    margin: 1rem 0;\n}\n.file-item[data-v-5cc65c4b] {\r\n    /* background: rgb(223, 223, 223);\r\n    padding: 5px; */\r\n    display: flex;\r\n    justify-content: space-between;\r\n    padding: 1rem;\r\n    background-color: #f0eded;\r\n    margin: 1rem 0;\np[data-v-5cc65c4b] {\r\n        margin-bottom: 0.2rem;\n}\n.file-item-button[data-v-5cc65c4b] {\r\n        display: flex;\r\n        align-content: center;\n}\n}\n.modal-body[data-v-5cc65c4b] {\r\n    max-height: 20rem;\r\n    overflow-y: auto;\n}\n.description-textarea[data-v-5cc65c4b] {\r\n    display: flex;\r\n    flex-direction: column;\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

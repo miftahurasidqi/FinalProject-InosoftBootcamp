@@ -23,7 +23,7 @@
                     <button
                         @click.prevent="
                             deleteInvoiceAttachment(
-                                editInvoice.invoiceAttachment
+                                editInvoice.invoiceAttachment,
                             )
                         "
                     >
@@ -117,14 +117,14 @@
                     </div>
                 </td>
                 <td>
-                    <span
+                    <ActionButton
                         @click.prevent="showConfirmDeleteInvoice(invoice._id)"
-                    >
-                        delete</span
-                    >
-                    <span @click.prevent="showFormEditInvoice(index)"
-                        >edit</span
-                    >
+                        text="Delete"
+                    />
+                    <ActionButton
+                        @click.prevent="showFormEditInvoice(index)"
+                        text="Edit"
+                    />
                 </td>
             </tr>
         </table>
@@ -254,7 +254,7 @@ export default {
             } else {
                 this.addFile.suportingDocument =
                     this.addFile.suportingDocument.filter(
-                        (item) => item.name !== fileChose.name
+                        (item) => item.name !== fileChose.name,
                     );
             }
 
@@ -292,5 +292,8 @@ export default {
     font-weight: 600;
     color: white;
     background: rgb(165, 165, 165);
+}
+td {
+    height: 3rem;
 }
 </style>
