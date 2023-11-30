@@ -1,83 +1,101 @@
 <template>
     <div id="vendor_invoice_list">
         <!-- form edit invoice -->
-        <Popup v-if="isEditInvoice" @close="closeFormEditInvoice">
-            <div>
-                <label for="invoice-num">Vendor Invoice No</label>
-                <input
-                    id="invoice-num"
-                    type="text"
-                    v-model="editInvoice.invoiceNumber"
-                />
-                <!-- @input="updateInvoiceNumber" -->
-            </div>
+        <Popup
+            v-if="isEditInvoice"
+            @close="closeFormEditInvoice"
+            title="Edit Invoice"
+        >
+            <div class="modal-body">
+                <div>
+                    <label for="invoice-num">Vendor Invoice No</label>
+                    <input
+                        id="invoice-num"
+                        type="text"
+                        v-model="editInvoice.invoiceNumber"
+                    />
+                    <!-- @input="updateInvoiceNumber" -->
+                </div>
 
-            <div>
-                <p>Invoice Attachment</p>
-                <div
-                    v-if="editInvoice.invoiceAttachment.name"
-                    class="file-item"
-                >
-                    <p>{{ editInvoice.invoiceAttachment.name }}</p>
-                    <p>by user 13/11/2023</p>
-                    <button
-                        @click.prevent="
-                            deleteInvoiceAttachment(
-                                editInvoice.invoiceAttachment,
-                            )
-                        "
+                <div>
+                    <p class="input-title">Invoice Attachment</p>
+                    <div
+                        v-if="editInvoice.invoiceAttachment.name"
+                        class="file-item"
                     >
-                        Remove
-                    </button>
-                </div>
-                <label v-else for="add-attachment-file" class="add-file"
-                    >Add Attachment</label
-                >
-                <input
-                    hidden
-                    id="add-attachment-file"
-                    type="file"
-                    @change="handleInputInvoiceAttachment"
-                />
-            </div>
-            <div>
-                <p>Suporting Document</p>
-
-                <div
-                    v-for="(file, index) in editInvoice.suportingDocument"
-                    class="file-item"
-                >
-                    <p>{{ file.name }}</p>
-                    <p>by user 13/11/2023</p>
-                    <button @click.prevent="deleteSuportDoc(index)">
-                        Remove
-                    </button>
+                        <p>{{ editInvoice.invoiceAttachment.name }}</p>
+                        <p>by user 13/11/2023</p>
+                        <button
+                            class="file-item-button"
+                            @click.prevent="
+                                deleteInvoiceAttachment(
+                                    editInvoice.invoiceAttachment
+                                )
+                            "
+                        >
+                            Remove
+                        </button>
+                    </div>
+                    <label v-else for="add-attachment-file" class="add-file"
+                        >Add Attachment</label
+                    >
+                    <input
+                        hidden
+                        id="add-attachment-file"
+                        type="file"
+                        @change="handleInputInvoiceAttachment"
+                    />
                 </div>
 
-                <label for="add-suport-file" class="add-file"
-                    >Add Suport Document</label
-                >
-                <input
-                    hidden
-                    id="add-suport-file"
-                    type="file"
-                    @change="handleInputSuportDoc"
-                    multiple
-                />
+                <div>
+                    <p class="input-title">Suporting Document</p>
+                    <div
+                        v-for="(file, index) in editInvoice.suportingDocument"
+                        class="file-item"
+                    >
+                        <p>{{ file.name }}</p>
+                        <p>by user 13/11/2023</p>
+                        <button
+                            class="file-item-button"
+                            @click.prevent="deleteSuportDoc(index)"
+                        >
+                            Remove
+                        </button>
+                    </div>
+                    <label for="add-suport-file" class="add-file"
+                        >Add Suport Document</label
+                    >
+                    <input
+                        hidden
+                        id="add-suport-file"
+                        type="file"
+                        @change="handleInputSuportDoc"
+                        multiple
+                    />
+                </div>
             </div>
 
-            <div>
+            <div class="modal-footer">
                 <ActionButton
+                    class="buttons me-2"
                     text="Cancel"
                     @click.prevent="closeFormEditInvoice"
                 />
-                <ActionButton text="Confirm" @click.prevent="save" />
+                <ActionButton
+                    class="buttons"
+                    text="Confirm"
+                    @click.prevent="save"
+                />
                 <!-- @click.prevent="deleteInstruction" -->
             </div>
         </Popup>
 
         <!-- konfirmasi delete invoice -->
-        <Popup v-if="isDeleteInvoice" @close="closeConfirmDeleteInvoice">
+        <Popup
+            v-if="isDeleteInvoice"
+            @close="closeConfirmDeleteInvoice"
+            title="Delete Invoice"
+        >
             <p>Anda yakin Akan menghapus Invoice ini?</p>
             <div>
                 <ActionButton
@@ -105,8 +123,21 @@
                     <span>
                         {{ invoice.suportingDocument.length }}
                     </span>
-                    <span @click="showSuportDoc(index)">i</span>
-
+                    <button class="btn" @click="showSuportDoc(index)">
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="25"
+                            height="25"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="#000000"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        >
+                            <path d="M6 9l6 6 6-6" />
+                        </svg>
+                    </button>
                     <div v-if="isShowSuportDoc == index" class="suport-doc">
                         <p
                             v-for="(suportDoc, i) in invoice.suportingDocument"
@@ -117,14 +148,58 @@
                     </div>
                 </td>
                 <td>
-                    <ActionButton
+                    <!-- <ActionButton
                         @click.prevent="showConfirmDeleteInvoice(invoice._id)"
                         text="Delete"
-                    />
-                    <ActionButton
+                    /> -->
+                    <!-- <ActionButton
                         @click.prevent="showFormEditInvoice(index)"
                         text="Edit"
-                    />
+                    /> -->
+                    <button
+                        class="btn"
+                        @click.prevent="showConfirmDeleteInvoice(invoice._id)"
+                    >
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="25"
+                            height="25"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="#f80000"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        >
+                            <polyline points="3 6 5 6 21 6"></polyline>
+                            <path
+                                d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"
+                            ></path>
+                            <line x1="10" y1="11" x2="10" y2="17"></line>
+                            <line x1="14" y1="11" x2="14" y2="17"></line>
+                        </svg>
+                    </button>
+                    <button
+                        class="btn"
+                        @click.prevent="showFormEditInvoice(index)"
+                    >
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="25"
+                            height="25"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="#0cf800"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        >
+                            <polygon
+                                points="14 2 18 6 7 17 3 17 3 13 14 2"
+                            ></polygon>
+                            <line x1="3" y1="22" x2="21" y2="22"></line>
+                        </svg>
+                    </button>
                 </td>
             </tr>
         </table>
@@ -201,16 +276,20 @@ export default {
         showFormEditInvoice(i) {
             this.editInvoice = this.vendor_invoice[i];
             this.isEditInvoice = true;
+            document.body.style.overflow = "hidden";
         },
         showConfirmDeleteInvoice(id) {
             this.deleteInvoiceId = id;
             this.isDeleteInvoice = true;
+            document.body.style.overflow = "hidden";
         },
         closeFormEditInvoice() {
             this.isEditInvoice = false;
+            document.body.style.overflow = "";
         },
         closeConfirmDeleteInvoice() {
             this.isDeleteInvoice = false;
+            document.body.style.overflow = "";
         },
         showSuportDoc(index) {
             if (this.isShowSuportDoc == index) {
@@ -254,7 +333,7 @@ export default {
             } else {
                 this.addFile.suportingDocument =
                     this.addFile.suportingDocument.filter(
-                        (item) => item.name !== fileChose.name,
+                        (item) => item.name !== fileChose.name
                     );
             }
 
@@ -295,5 +374,47 @@ export default {
 }
 td {
     height: 3rem;
+}
+.btn {
+    border: 0;
+}
+.modal-body {
+    max-height: 20rem;
+    overflow-y: auto;
+}
+.add-file {
+    background: rgb(0, 162, 162);
+    padding: 0.3rem 2rem;
+    border: none;
+    border-radius: 4px;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    margin: 1rem 0;
+}
+.file-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem;
+    background-color: #f0eded;
+    margin: 1rem 0;
+    p {
+        margin-bottom: 0.2rem;
+    }
+    .file-item-button {
+        display: flex;
+        align-content: center;
+    }
+}
+.input-title {
+    margin: 0;
+}
+.buttons {
+    background: rgb(0, 190, 190);
+    padding: 0.3rem 2rem;
+    border: none;
+    border-radius: 4px;
+    color: white;
+    font-weight: 600;
 }
 </style>
