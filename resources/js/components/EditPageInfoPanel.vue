@@ -147,7 +147,7 @@
 
 <script>
 export default {
-    name: "CreatePageInfoPanel",
+    name: "EditPageInfoPanel",
     props: {
         newIstruction: {
             type: Object,

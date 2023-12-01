@@ -114,7 +114,7 @@ export default {
 .container-button-bottom button:nth-child(2) {
     padding: 0.4rem 2rem;
     margin-left: 1rem;
-    border: 0.6px solid black;
+    border: 0.6px solid rgb(165, 165, 165);
     border-radius: 5px;
     font-weight: 600;
 }

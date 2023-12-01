@@ -103,7 +103,7 @@ export default {
 
 .container-a-i {
     display: flex;
-    background: rgb(0, 190, 190);
+    /* background: rgb(0, 190, 190); */
 }
 
 .buttons {
