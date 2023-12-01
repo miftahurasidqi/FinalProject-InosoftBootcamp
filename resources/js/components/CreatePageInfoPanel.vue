@@ -248,7 +248,7 @@ export default {
     width: 80%;
     display: flex;
     flex-direction: column;
-    padding-left: 17.5rem;
+    padding-left: 15.5rem;
     padding-bottom: 1rem;
     border-right: 1px dashed rgb(160, 160, 160);
     padding-right: 10px;
@@ -269,6 +269,7 @@ export default {
     flex-direction: column;
     width: 280px;
     font-size: small;
+    margin-left: 2rem;
 }
 
 .pilihan label {
