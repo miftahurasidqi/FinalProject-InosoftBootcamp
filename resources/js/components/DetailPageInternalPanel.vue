@@ -148,9 +148,6 @@ export default {
     background-color: #f0eded;
     margin: 1rem 0;
     padding: 0.5rem;
-    .buttons {
-        width: 40%;
-    }
 }
 .notes-panel {
     background-color: #f0eded;
@@ -160,9 +157,6 @@ export default {
 .notes-panel-button {
     display: flex;
     justify-content: flex-end;
-    .buttons {
-        width: 30%;
-    }
 }
 .notes-input {
     display: flex;
