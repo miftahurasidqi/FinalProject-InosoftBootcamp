@@ -23,7 +23,7 @@
                     <button
                         @click.prevent="
                             deleteInvoiceAttachment(
-                                editInvoice.invoiceAttachment,
+                                editInvoice.invoiceAttachment
                             )
                         "
                     >
@@ -254,7 +254,7 @@ export default {
             } else {
                 this.addFile.suportingDocument =
                     this.addFile.suportingDocument.filter(
-                        (item) => item.name !== fileChose.name,
+                        (item) => item.name !== fileChose.name
                     );
             }
 
@@ -267,6 +267,8 @@ export default {
                 deleteFile: this.deleteFile,
                 addFile: this.addFile,
             };
+            //  deleteAttachment: this.deleteFile.invoiceAttachment,
+            // deletesuportDoc: this.deleteFile.suportingDocument,
             this.saveEditInvoice(editData);
         },
     },

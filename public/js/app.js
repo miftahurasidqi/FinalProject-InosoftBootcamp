@@ -20350,14 +20350,10 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
     addInternalAttachment: "addInternalAttachment"
   })), {}, {
     handleInputFile: function handleInputFile(e) {
-      console.log(e.target.files);
-      var files = [];
-      for (var i = 0; i < e.target.files.length; i++) {
-        files.push(e.target.files[i]);
-      }
+      console.log(e.target.files[0]);
       var reqData = {
         id: this.$route.params.id,
-        files: files
+        file: e.target.files[0]
       };
       this.addInternalAttachment(reqData);
     }
@@ -20598,6 +20594,8 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
         deleteFile: this.deleteFile,
         addFile: this.addFile
       };
+      //  deleteAttachment: this.deleteFile.invoiceAttachment,
+      // deletesuportDoc: this.deleteFile.suportingDocument,
       this.saveEditInvoice(editData);
     }
   })
@@ -22077,8 +22075,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     type: "file",
     onChange: _cache[0] || (_cache[0] = function () {
       return $options.handleInputFile && $options.handleInputFile.apply($options, arguments);
-    }),
-    multiple: ""
+    })
   }, null, 32 /* HYDRATE_EVENTS */)])]), _hoisted_8])]);
 }
 
@@ -24291,7 +24288,7 @@ var saveNewInvoice = /*#__PURE__*/function () {
 }();
 var saveEditInvoice = /*#__PURE__*/function () {
   var _ref30 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee15(_ref29, editData) {
-    var commit, id, invoiceNumber, deleteFile, addFile, formData, response;
+    var commit, id, invoiceNumber, deleteFile, addFile, formData, reqData, response;
     return _regeneratorRuntime().wrap(function _callee15$(_context15) {
       while (1) switch (_context15.prev = _context15.next) {
         case 0:
@@ -24299,8 +24296,11 @@ var saveEditInvoice = /*#__PURE__*/function () {
           console.log(editData);
           id = editData.id, invoiceNumber = editData.invoiceNumber, deleteFile = editData.deleteFile, addFile = editData.addFile;
           formData = new FormData();
-          formData.append("invoiceNumber", invoiceNumber);
-          formData.append("deleteFile", deleteFile);
+          reqData = {
+            invoiceNumber: invoiceNumber,
+            deleteFile: deleteFile
+          };
+          formData.append("reqData", JSON.stringify(reqData));
           if (addFile.invoiceAttachment.name) {
             formData.append("invoiceAttachment", addFile.invoiceAttachment);
           }
@@ -24318,7 +24318,7 @@ var saveEditInvoice = /*#__PURE__*/function () {
           });
         case 11:
           response = _context15.sent;
-          console.log(response);
+          console.log(response.data);
           _context15.next = 18;
           break;
         case 15:
@@ -24399,17 +24399,15 @@ var setInstructionToCompleted = /*#__PURE__*/function () {
 }();
 var addInternalAttachment = /*#__PURE__*/function () {
   var _ref36 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee18(_ref35, reqData) {
-    var commit, id, files, formData, response;
+    var commit, id, file, formData, response;
     return _regeneratorRuntime().wrap(function _callee18$(_context18) {
       while (1) switch (_context18.prev = _context18.next) {
         case 0:
           commit = _ref35.commit;
           console.log(reqData);
-          id = reqData.id, files = reqData.files;
+          id = reqData.id, file = reqData.file;
           formData = new FormData();
-          files.forEach(function (file, i) {
-            formData.append("internalAttachment[".concat(i, "]"), file);
-          });
+          formData.append("internalAttachment", file);
           _context18.prev = 5;
           _context18.next = 8;
           return axios.post("/api/internalOnly/attachment/add/".concat(id), formData, {
@@ -24419,7 +24417,7 @@ var addInternalAttachment = /*#__PURE__*/function () {
           });
         case 8:
           response = _context18.sent;
-          console.log(response);
+          console.log(response.data);
           // commit("setInstructionDetail", response);
           _context18.next = 15;
           break;

@@ -22,19 +22,13 @@ class VendorInvoiceController extends Controller
         $invoiceNumber = $request->input('invoiceNumber');
         $file = $request->file('invoiceAttachment');
         $files = $request->file('suportingDocument');
-        $suportingDocument = [];
 
-        $invoiceAttachment = $this->fileService->handleSinggelFile($file);
-
-        if ($files) {
-            $suportingDocument = $this->fileService->handleMultipleFile($files);
-        }
-        $invoiceData = [
+        $recData = [
             'invoiceNumber' => $invoiceNumber,
-            'invoiceAttachment' => $invoiceAttachment,
-            'suportingDocument' => $suportingDocument,
+            'file' => $file,
+            'files' => $files,
         ];
-        return $this->vendorInvoiceService->createInvoice($id, $invoiceData);
+        return $this->vendorInvoiceService->createInvoice($id, $recData);
     }
 
     public function deleteInvoice($id)
@@ -44,19 +38,14 @@ class VendorInvoiceController extends Controller
     // belum
     public function updateInvoice(Request $request, $id)
     {
-        $invoiceNumber = $request->input('invoiceNumber');
-        $deleteFile = $request->input('deleteFile');
-
+        $data = json_decode($request->input('reqData'), true);
         $file = $request->file('invoiceAttachment');
         $files = $request->file('suportingDocument');
-        $suportingDocument = [];
 
-        return response()->json([
-            $id,
-            $invoiceNumber,
-            $deleteFile,
-            $file,
-            $files,
-        ]);
+        $data['file'] = $file;
+        $data['files'] = $files;
+        // return response()->json($data);
+
+        return $this->vendorInvoiceService->updateInvoice($id, $data);
     }
 }

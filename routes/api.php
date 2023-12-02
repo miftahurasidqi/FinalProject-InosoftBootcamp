@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\InternalOnlyController;
+use App\Http\Controllers\ForInternalController;
 use App\Http\Controllers\ThirdPartyInstructionController;
 use App\Http\Controllers\VendorInvoiceController;
 use Illuminate\Support\Facades\Route;
@@ -48,6 +48,7 @@ Route::group([
     Route::patch('/instruction/completed/{id}', [ThirdPartyInstructionController::class, 'setInstructionToCompleted']);
     Route::delete('/instruction/{id}', [ThirdPartyInstructionController::class, 'destroy']);
     //== belum
+    Route::patch('/instruction/update/{id}', [ThirdPartyInstructionController::class, 'updateInstruction']);
 });
 
 // Route Api For VendorInvoice  Controller
@@ -61,11 +62,11 @@ Route::group([], function () {
 // Route Api For Internal Only
 Route::group([], function () {
     // belum
-    Route::post('/internalOnly/attachment/add/{id}', [InternalOnlyController::class, 'addAttachment']);
-    Route::delete('/internalOnly/attachment/delete/{id}', [InternalOnlyController::class, 'deleteAttachment']);
-    Route::delete('/internalOnly/note/add', [InternalOnlyController::class, 'addNote']);
-    Route::delete('/internalOnly/note/edit/{id}', [InternalOnlyController::class, 'editNote']);
-    Route::delete('/internalOnly/note/delete/{id}', [InternalOnlyController::class, 'deleteNote']);
+    Route::post('/internalOnly/attachment/add/{id}', [ForInternalController::class, 'addAttachment']);
+    Route::delete('/internalOnly/attachment/delete/{id}', [ForInternalController::class, 'deleteAttachment']);
+    Route::delete('/internalOnly/note/add', [ForInternalController::class, 'addNote']);
+    Route::delete('/internalOnly/note/edit/{id}', [ForInternalController::class, 'editNote']);
+    Route::delete('/internalOnly/note/delete/{id}', [ForInternalController::class, 'deleteNote']);
 });
 
 // nanti

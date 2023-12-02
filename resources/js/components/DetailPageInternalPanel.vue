@@ -32,7 +32,6 @@
                         id="add-attachment-file"
                         type="file"
                         @change="handleInputFile"
-                        multiple
                     />
                 </div>
             </div>
@@ -70,14 +69,10 @@ export default {
             addInternalAttachment: "addInternalAttachment",
         }),
         handleInputFile(e) {
-            console.log(e.target.files);
-            let files = [];
-            for (let i = 0; i < e.target.files.length; i++) {
-                files.push(e.target.files[i]);
-            }
+            console.log(e.target.files[0]);
             const reqData = {
                 id: this.$route.params.id,
-                files: files,
+                file: e.target.files[0],
             };
             this.addInternalAttachment(reqData);
         },

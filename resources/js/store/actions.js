@@ -165,27 +165,18 @@ export const saveNewInvoice = async ({ commit, state }, id) => {
     } catch (error) {
         console.error("Error sending data to API:", error);
     }
-    // response: {
-    //     message: "add Invoice success",
-    //     data: [
-    //             {
-    //                 id: "string",
-    //                 invoiceNumber: "srting",
-    //                 invoiceAttachment: "fileName",
-    //                 suportingDocument: [fileName],      // array berisi string "fileName"
-    //             }
-    //     ]
-    // }
 };
 
 export const saveEditInvoice = async ({ commit }, editData) => {
     console.log(editData);
     const { id, invoiceNumber, deleteFile, addFile } = editData;
     const formData = new FormData();
+    const reqData = {
+        invoiceNumber,
+        deleteFile,
+    };
 
-    formData.append("invoiceNumber", invoiceNumber);
-    formData.append("deleteFile", deleteFile);
-
+    formData.append("reqData", JSON.stringify(reqData));
     if (addFile.invoiceAttachment.name) {
         formData.append("invoiceAttachment", addFile.invoiceAttachment);
     }
@@ -200,7 +191,7 @@ export const saveEditInvoice = async ({ commit }, editData) => {
                 "Content-Type": "multipart/form-data",
             },
         });
-        console.log(response);
+        console.log(response.data);
     } catch (error) {
         console.error("Error :", error);
     }
@@ -230,12 +221,10 @@ export const setInstructionToCompleted = async ({ commit }, id) => {
 export const addInternalAttachment = async ({ commit }, reqData) => {
     console.log(reqData);
 
-    const { id, files } = reqData;
+    const { id, file } = reqData;
     const formData = new FormData();
+    formData.append(`internalAttachment`, file);
 
-    files.forEach((file, i) => {
-        formData.append(`internalAttachment[${i}]`, file);
-    });
     try {
         const response = await axios.post(
             `/api/internalOnly/attachment/add/${id}`,
@@ -246,7 +235,7 @@ export const addInternalAttachment = async ({ commit }, reqData) => {
                 },
             }
         );
-        console.log(response);
+        console.log(response.data);
         // commit("setInstructionDetail", response);
     } catch (error) {
         console.error("Error :", error);

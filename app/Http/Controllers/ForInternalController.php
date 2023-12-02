@@ -6,7 +6,7 @@ use App\Services\FileService;
 use App\Services\InternalOnlyService;
 use Illuminate\Http\Request;
 
-class InternalOnlyController extends Controller
+class ForInternalController extends Controller
 {
     protected $internalOnly;
 

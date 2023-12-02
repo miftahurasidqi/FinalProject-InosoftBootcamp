@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\FileService;
 use App\Services\ThirdPartyInstructionService;
 use Illuminate\Http\Request;
 
@@ -9,9 +10,13 @@ class ThirdPartyInstructionController extends Controller
 {
     protected $thirdpartyinstructionservice;
 
-    public function __construct(ThirdPartyInstructionService $thirdpartyinstructionservice)
-    {
+    public function __construct(
+        ThirdPartyInstructionService $thirdpartyinstructionservice,
+        FileService $fileService
+    ) {
         $this->thirdpartyinstructionservice = $thirdpartyinstructionservice;
+        $this->fileService = $fileService;
+
     }
 
     public function store(Request $request)
@@ -24,12 +29,7 @@ class ThirdPartyInstructionController extends Controller
 
         // Mengiterasi setiap file yang diunggah
         if ($files) {
-            foreach ($files as $index => $file) {
-                // Lakukan sesuatu dengan setiap file
-                $fileName = time() . '_' . $file->getClientOriginalName();
-                $file->move(public_path('uploads'), $fileName);
-                $attachment[] = $fileName;
-            }
+            $attachment = $this->fileService->saveMultipleFile($files);
         }
 
         $costDetail = $jsonData['costDetail'];
@@ -112,4 +112,29 @@ class ThirdPartyInstructionController extends Controller
         // return response()->json($id);
         return $thirdPartyInstruction = $this->thirdpartyinstructionservice->setToCompleted($id);
     }
+
+    public function updateInstruction(Request $request, $id)
+    {
+        // return response()->json($id);
+
+        // Menangkap data JSON
+        $editData = json_decode($request->input('data'), true);
+        // Menangkap file []
+        $files = $request->file('attachment');
+        $attachment = [];
+
+        // Mengiterasi setiap file yang diunggah
+        if ($files) {
+            $attachment = $this->fileService->saveMultipleFile($files);
+        }
+
+        $costDetail = $jsonData['costDetail'];
+        $costDetail['attachment'] = $attachment;
+        $jsonData['costDetail'] = $costDetail;
+
+        // return $this->thirdpartyinstructionservice->createInstruction($jsonData);
+
+        // return $thirdPartyInstruction = $this->thirdpartyinstructionservice->setToCompleted($id);
+    }
+
 }

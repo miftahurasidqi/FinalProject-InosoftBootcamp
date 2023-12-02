@@ -5,14 +5,22 @@ namespace App\Repositories;
 use App\Models\CostDetail;
 use App\Models\ThirdPartyInstruction;
 use App\Models\VendorInvoice;
+use App\Repositories\VendorInvoiceRepository;
+use App\Services\FileService;
 
 class ThirdPartyInstructionRepository
 {
     protected $thirdpartyinstruction;
 
-    public function __construct(ThirdPartyInstruction $thirdpartyinstruction)
-    {
+    public function __construct(
+        ThirdPartyInstruction $thirdpartyinstruction,
+        FileService $fileService,
+        VendorInvoiceRepository $vendorInvoiceRepository
+    ) {
+        $this->vendorInvoiceRepository = $vendorInvoiceRepository;
         $this->thirdpartyinstruction = $thirdpartyinstruction;
+        $this->fileService = $fileService;
+
     }
 
     public function createInstructionRepository(array $data): array
@@ -160,7 +168,7 @@ class ThirdPartyInstructionRepository
 
     public function getInstructionById($id)
     {
-        $instruction = ThirdPartyInstruction::with('vendorInvoice')->find($id);
+        $instruction = ThirdPartyInstruction::with(['vendorInvoice', 'internalOnlyAttachment'])->find($id);
 
         if ($instruction) {
             return response()->json($instruction);
@@ -173,7 +181,23 @@ class ThirdPartyInstructionRepository
     {
         $instruction = ThirdPartyInstruction::find($id);
         if ($instruction) {
+            $files = $instruction->costDetail->attachment;
+            $this->fileService->removeMultipleFile($files);
+
             $instruction->delete();
+
+            // delete relasi invoice
+            $invoiceId = $instruction->vendorInvoice()->where('third_party_instruction_id', $id)->get(['_id']);
+            if (count($invoiceId) != 0) {
+                for ($i = 0; $i < count($invoiceId); $i++) {
+                    $this->vendorInvoiceRepository->deleteVendorInvoice($invoiceId[$i]['_id']);
+                }
+            }
+
+            // delete relasi internal attachment
+            // delete relasi internal note
+
+            // return response()->json(['files' => $invoiceId]);
             return response()->json(['message' => 'Deleted successfully']);
         } else {
             return response()->json(['message' => 'Data not found'], 404);

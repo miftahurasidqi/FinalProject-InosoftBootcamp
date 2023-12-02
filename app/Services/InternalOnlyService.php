@@ -18,28 +18,34 @@ class InternalOnlyService
         $this->internalNoteRepository = $internalNoteRepository;
     }
 
-    public function addAttachment($id)
+    public function addAttachment($id, $file)
     {
-        return response()->json($id);
-    }
-     public function deleteAttachment($id)
-    {
-        return response()->json([$id]);
+        $result = $this->internalAttachmentRepository->create($id, $file);
+        return response()->json($result);
     }
 
-    public function addNote(Request $request, $id)
+    public function deleteAttachment($id)
     {
-        return response()->json([$id]);
+        $result = $this->internalAttachmentRepository->delete($id);
+        return response()->json($result);
     }
 
-    public function editNote(Request $request, $id)
+    public function addNote($id, $note)
     {
-        return response()->json([$id]);
+        $result = $this->internalNoteRepository->create($id, $note);
+        return response()->json($result);
     }
 
-    public function deleteNote(Request $request, $id)
+    public function editNote($id, $note)
     {
-        return response()->json([$id]);
-    }                           
+        $result = $this->internalNoteRepository->update($id, $note);
+        return response()->json($result);
+    }
+
+    public function deleteNote($id)
+    {
+        $result = $this->internalNoteRepository->delete($id);
+        return response()->json($result);
+    }
 
 }
