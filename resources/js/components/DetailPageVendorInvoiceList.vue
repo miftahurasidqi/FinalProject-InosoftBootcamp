@@ -23,7 +23,7 @@
                     <button
                         @click.prevent="
                             deleteInvoiceAttachment(
-                                editInvoice.invoiceAttachment,
+                                editInvoice.invoiceAttachment
                             )
                         "
                     >
@@ -254,7 +254,7 @@ export default {
             } else {
                 this.addFile.suportingDocument =
                     this.addFile.suportingDocument.filter(
-                        (item) => item.name !== fileChose.name,
+                        (item) => item.name !== fileChose.name
                     );
             }
 
@@ -283,7 +283,7 @@ export default {
 }
 
 #vendor_invoice_list {
-    margin: 0rem 1.5rem;
+    margin: 0rem 2rem;
     border: 1px solid rgb(189, 189, 189);
 }
 #vendor_invoice_list thead tr td {

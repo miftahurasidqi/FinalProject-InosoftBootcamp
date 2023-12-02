@@ -92,7 +92,7 @@ export default {
 #internal-panel-header {
     background: rgb(70, 70, 70);
     color: white;
-    padding-left: 1.5rem;
+    padding-left: 2rem;
     height: 40px;
 }
 #internal-panel-header p {
@@ -116,10 +116,10 @@ export default {
 }
 .c-a {
     width: 40%;
-    padding: 1.5rem;
+    padding: 2rem;
 }
 .c-i {
     width: 60%;
-    padding: 1.5rem;
+    padding: 2rem;
 }
 </style>
