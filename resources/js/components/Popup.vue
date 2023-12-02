@@ -89,7 +89,7 @@ export default {
     font-size: 16px;
 }
 
-.popup-content {
-    /* Styling untuk konten popup */
-}
+/* .popup-content {
+    Styling untuk konten popup
+} */
 </style>
