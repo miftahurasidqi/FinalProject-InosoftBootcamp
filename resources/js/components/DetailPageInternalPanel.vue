@@ -203,12 +203,7 @@
                         </div>
                         <div class="card notes-panel">
                             <p>
-                                this is an internal notes test! Lorem ipsum
-                                dolor sit amet consectetur adipisicing elit. Non
-                                rerum magni nostrum ratione expedita doloremque
-                                adipisci ad consequatur, saepe fuga sunt maxime
-                                voluptatum neque eius velit molestias quidem qui
-                                culpa?
+                                {{ notesPlaceholder }}
                             </p>
                         </div>
                     </div>
@@ -226,12 +221,34 @@
     </div>
 
     <Popup v-if="isAddNote" @close="closeAddNote" title="Add Note">
-        <div class="modal-body">
-            <textarea></textarea>
+        <div class="modal-body notes-input">
+            <p>By User</p>
+            <textarea rows="6" placeholder="Enter a note"></textarea>
+        </div>
+        <div class="modal-footer">
+            <ActionButton
+                class="buttons me-2"
+                text="Cancel"
+                @click.prevent="closeAddNote"
+            />
+            <ActionButton class="buttons" text="Confirm" />
         </div>
     </Popup>
     <Popup v-if="isEditNote" @close="closeEditNote" title="Edit Note">
-        <div class="modal-body"></div>
+        <div class="modal-body notes-input">
+            <p>By User</p>
+            <textarea rows="6" placeholder="Enter a note">{{
+                notesPlaceholder
+            }}</textarea>
+        </div>
+        <div class="modal-footer">
+            <ActionButton
+                class="buttons me-2"
+                text="Cancel"
+                @click.prevent="closeEditNote"
+            />
+            <ActionButton class="buttons" text="Confirm" />
+        </div>
     </Popup>
 </template>
 
@@ -250,6 +267,8 @@ export default {
         return {
             isAddNote: false,
             isEditNote: false,
+            notesPlaceholder:
+                "Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat.",
         };
     },
     methods: {
@@ -370,5 +389,9 @@ export default {
 .modal-body {
     max-height: 20rem;
     overflow-y: auto;
+    margin-bottom: 2rem;
+    p {
+        margin: 0;
+    }
 }
 </style>

@@ -138,7 +138,7 @@ export default {
             console.log(e.target.files[0]);
             this.$store.commit(
                 "handleInputInvoiceAttachment",
-                e.target.files[0]
+                e.target.files[0],
             );
         },
         deleteInvoiceAttachment() {
