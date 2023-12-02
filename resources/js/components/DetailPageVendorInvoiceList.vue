@@ -8,7 +8,9 @@
         >
             <div class="modal-body">
                 <div>
-                    <label for="invoice-num">Vendor Invoice No</label>
+                    <label for="invoice-num" class="me-5"
+                        >Vendor Invoice No</label
+                    >
                     <input
                         id="invoice-num"
                         type="text"
@@ -16,6 +18,7 @@
                     />
                     <!-- @input="updateInvoiceNumber" -->
                 </div>
+
                 <div>
                     <p class="input-title">Invoice Attachment</p>
                     <div
@@ -361,7 +364,7 @@ export default {
 }
 
 #vendor_invoice_list {
-    margin: 0rem 2rem;
+    margin: 0rem 1.5rem;
     border: 1px solid rgb(189, 189, 189);
 }
 #vendor_invoice_list thead tr td {
@@ -397,6 +400,13 @@ td {
     padding: 1rem;
     background-color: #f0eded;
     margin: 1rem 0;
+    p {
+        margin-bottom: 0.2rem;
+    }
+    .file-item-button {
+        display: flex;
+        align-content: center;
+    }
 }
 .input-title {
     margin: 0;
