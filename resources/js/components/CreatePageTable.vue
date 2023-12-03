@@ -3,7 +3,7 @@
         style="
             margin: 0rem 2rem;
             padding: 1rem 0rem;
-            border-top: 1px solid gray;
+            border-top: 1px solid rgb(210, 210, 210);
         "
     >
         <h6>Cost Detail</h6>
@@ -12,43 +12,40 @@
         <table class="table">
             <thead>
                 <tr>
-                    <th>Description</th>
-                    <th>QTY</th>
-                    <th>UOM</th>
-                    <th>Unit Price</th>
-                    <th>GST(%)</th>
-                    <th>Currency</th>
-                    <th>Vat Amount</th>
-                    <th>Sub Total</th>
-                    <th>Total</th>
+                    <th><p>Description</p></th>
+                    <th><p>QTY</p></th>
+                    <th><p>UOM</p></th>
+                    <th><p>Unit Price</p></th>
+                    <th><p>GST(%)</p></th>
+                    <th><p>Currency</p></th>
+                    <th class="table-detail-hasil"><p>Vat Amount</p></th>
+                    <th class="table-detail-hasil"><p>Sub Total</p></th>
+                    <th class="table-detail-hasil"><p>Total</p></th>
                     <!-- <th>Charge To</th> -->
                     <th></th>
                     <th></th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody class="table-isi">
                 <tr v-for="(costItem, index) in newCostItems" :key="index">
-                    <td>
+                    <td class="table-isi-input">
                         <input
                             type="text"
                             placeholder="Enter Description"
-                            class="table-input-large"
                             v-model="costItem.description"
                         />
                     </td>
-                    <td>
+                    <td class="table-isi-input">
                         <input
                             type="number"
                             placeholder="Enter Qty"
-                            class="table-input-large"
                             v-model="costItem.qty"
                             @input="updateQTY(index)"
                         />
                     </td>
-                    <td>
+                    <td class="table-isi-select">
                         <select
                             class="form-select"
-                            style="width: 80px"
                             aria-label="Select UOM"
                             v-model="costItem.uom"
                         >
@@ -57,24 +54,22 @@
                             <option>Three</option>
                         </select>
                     </td>
-                    <td>
+                    <td class="table-isi-input">
                         <input
                             type="number"
                             placeholder="Enter Unit Price"
-                            class="table-input-large"
                             v-model="costItem.unitPrice"
                             @input="updateUnitPrice(index)"
                         />
                     </td>
-                    <td>
+                    <td class="table-isi-input">
                         <input
                             type="number"
-                            class="table-input-large"
                             v-model="costItem.gst"
                             @input="updateGST(index)"
                         />
                     </td>
-                    <td>
+                    <td class="table-isi-select">
                         <select
                             class="form-select"
                             aria-label="Select currency"
@@ -86,13 +81,13 @@
                             <option>SGD</option>
                         </select>
                     </td>
-                    <td>
+                    <td class="table-isi-hasil px-3">
                         <p>{{ costItem.vatAmount }}</p>
                     </td>
-                    <td>
+                    <td class="table-isi-hasil px-3">
                         <p>{{ costItem.subTotal }}</p>
                     </td>
-                    <td>
+                    <td class="table-isi-hasil px-3">
                         <p>{{ costItem.total }}</p>
                     </td>
                     <!-- <td>
@@ -162,16 +157,16 @@
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td>
-                        <p>{{ grandTotal.currency }} (total)</p>
+                    <td class="table-hasil">
+                        <p>{{ grandTotal.currency }} <span> (total)</span></p>
                     </td>
-                    <td>
+                    <td class="table-hasil">
                         <p>{{ grandTotal.vatAmount }}</p>
                     </td>
-                    <td>
+                    <td class="table-hasil">
                         <p>{{ grandTotal.subTotal }}</p>
                     </td>
-                    <td>
+                    <td class="table-hasil">
                         <p>{{ grandTotal.total }}</p>
                     </td>
                     <td></td>
@@ -276,22 +271,78 @@ export default {
     padding: 0px;
     margin: 0px;
 }
+
+thead tr th p {
+    padding-left: 5px;
+    width: 100px;
+    /* color: red; */
+}
+
+.table-detail-hasil p {
+    display: flex;
+    justify-content: flex-end;
+}
+
 #create-cost-detail {
     margin: 0rem 2rem;
+    border: 1px solid rgb(210, 210, 210);
+}
+
+.table-isi-input input {
+    height: 35px;
+    font-size: small;
+    font-weight: 500;
+    padding-left: 12px;
+    border-radius: 3px;
     border: 1px solid rgb(165, 165, 165);
+    background: rgb(250, 250, 250);
+    min-width: 150px;
+    /* color: rgb(165, 165, 165); */
+}
+.table-isi-input input::placeholder {
+    color: rgb(165, 165, 165);
 }
 
-.table-input-large {
-    max-width: 150px;
+.table-isi-select select {
+    height: 35px;
+    font-size: small;
+    font-weight: 500;
+    padding-left: 12px;
+    border-radius: 3px;
+    border: 1px solid rgb(165, 165, 165);
+    min-width: 80px;
+}
+.table-isi-hasil p {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    font-size: small;
+    font-weight: 500;
+    height: 35px;
 }
 
+.table-hasil {
+    background: rgb(250, 250, 250);
+}
+.table-hasil p {
+    display: flex;
+    align-items: center;
+    font-size: small;
+    font-weight: 500;
+    height: 20px;
+}
+.table-hasil span {
+    padding-left: 5px;
+    font-weight: 400;
+    color: rgb(100, 100, 100);
+}
 .b-min {
     display: flex;
     justify-content: center;
     align-items: center;
     font-size: x-large;
-    height: 30px;
-    width: 30px;
+    height: 35px;
+    width: 35px;
     border-radius: 5px;
     border: none;
 }
@@ -308,8 +359,8 @@ export default {
     justify-content: center;
     align-items: center;
     font-size: x-large;
-    height: 30px;
-    width: 30px;
+    height: 35px;
+    width: 35px;
     border-radius: 5px;
     border: none;
     background: rgb(0, 190, 190);
@@ -353,6 +404,8 @@ export default {
 .a-r textarea {
     border: none;
     height: 100px;
-    background: rgb(245, 245, 245);
+    background: rgb(250, 250, 250);
+    border: 1px solid rgb(190, 190, 190);
+    border-radius: 3px;
 }
 </style>

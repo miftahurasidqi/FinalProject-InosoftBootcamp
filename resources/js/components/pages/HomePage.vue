@@ -9,7 +9,7 @@
                             <ActionButton
                                 @click="isOpenSwitcher"
                                 text="Open"
-                                class="b-open"
+                                class="b-open terbuka"
                             />
                             <ActionButton
                                 @click="isCloseSwitcher"
@@ -21,7 +21,7 @@
                             <input
                                 name="attention-of"
                                 type="text"
-                                placeholder="Search Instruction"
+                                placeholder="Search"
                                 v-model="searchKeyword"
                                 @input="search"
                             />
@@ -29,9 +29,9 @@
                         </div>
                     </div>
                     <div class="conatiner-b-intruction">
-                        <p>
-                            show {{ pageInfo.size }} of
-                            {{ pageInfo.totalData }} data
+                        <p class="show-data">
+                            {{ pageInfo.size }} of
+                            {{ pageInfo.totalData }} entries displayed
                         </p>
 
                         <div style="position: relative">
@@ -59,7 +59,7 @@
                 </div>
             </div>
 
-            <table class="table my-4">
+            <table class="table">
                 <thead class="table-h">
                     <tr>
                         <th><p>Instruction ID</p></th>
@@ -211,23 +211,14 @@ export default {
     padding: 1.5rem;
 }
 
-.export {
-    padding: 3px 1rem;
-    border: 1px solid black;
-    border-radius: 4px;
-    margin-left: 1rem;
-    font-size: small;
-    font-weight: 600;
-}
-
 .container-card-top {
     display: flex;
     justify-content: space-between;
     align-items: center;
     height: 50px;
     margin-top: 1rem;
-    margin-bottom: 2rem;
-    border-bottom: 3px solid rgb(224, 224, 224);
+    margin-bottom: 1.5rem;
+    border-bottom: 2px solid rgb(230, 230, 230);
     box-sizing: border-box;
 }
 
@@ -236,7 +227,7 @@ export default {
     font-weight: 600;
     font-size: 1.2rem;
     height: calc(100% + 3px);
-    color: gray;
+    color: rgb(160, 160, 160);
     padding: 0rem 1rem;
     border-radius: 0;
     box-sizing: border-box;
@@ -245,12 +236,21 @@ export default {
 .b-completed:hover {
     background: none;
     color: rgb(0, 190, 190);
-    border-bottom: 3px solid rgb(0, 190, 190);
+    border-bottom: 4px solid rgb(0, 190, 190);
 }
 
 .conatiner-b-intruction {
     display: flex;
     justify-content: space-between;
+    height: 60px;
+    margin-bottom: 10px;
+}
+
+.show-data {
+    align-self: end;
+    font-size: medium;
+    font-weight: 500;
+    color: rgb(170, 170, 170);
 }
 
 .close {
@@ -276,7 +276,7 @@ export default {
 }
 .logistic,
 .service {
-    width: 194px;
+    width: 228px;
     height: 36px;
     border: none;
     font-size: small;
@@ -296,8 +296,8 @@ export default {
     color: white;
     font-size: small;
     font-weight: 600;
-    height: 35px;
-    padding: 0rem 1rem;
+    height: 36px;
+    padding: 0rem 2rem;
 }
 .b-intruction:hover {
     background: rgb(0, 170, 170);
@@ -311,6 +311,27 @@ export default {
     display: flex;
     align-items: center;
     height: 100%;
+    padding-bottom: 5px;
+}
+
+.container-s-e input {
+    height: 35px;
+    width: 230px;
+    border: 1px solid rgb(230, 230, 230);
+    font-size: small;
+    font-weight: 500;
+    padding-left: 10px;
+}
+
+.export {
+    padding: 3px 1rem;
+    height: 35px;
+    width: 80px;
+    border: 1px solid rgb(230, 230, 230);
+    border-radius: 3px;
+    margin-left: 1rem;
+    font-size: small;
+    font-weight: 600;
 }
 
 .table-h tr th {
@@ -318,8 +339,5 @@ export default {
     height: 35px;
     color: white;
     font-weight: 500;
-}
-
-.table-b {
 }
 </style>

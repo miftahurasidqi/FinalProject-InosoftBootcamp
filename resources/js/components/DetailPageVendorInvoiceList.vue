@@ -8,7 +8,9 @@
         >
             <div class="modal-body">
                 <div>
-                    <label for="invoice-num">Vendor Invoice No</label>
+                    <label for="invoice-num" class="me-5"
+                        >Vendor Invoice No</label
+                    >
                     <input
                         id="invoice-num"
                         type="text"

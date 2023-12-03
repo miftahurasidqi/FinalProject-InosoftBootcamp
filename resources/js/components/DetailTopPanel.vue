@@ -2,7 +2,7 @@
     <div
         id="top-panel"
         class="flex-wrap d-flex justify-content-between"
-        style="margin: 0rem 1.5rem"
+        style="margin: 0rem 2rem"
     >
         <div>
             <p class="font-style">Back</p>

@@ -1,8 +1,5 @@
 <template>
-    <div
-        id="info-panel"
-        class="flex-row p-3 m-4 card d-flex justify-content-evenly"
-    >
+    <div id="info-panel" class="container-dpip">
         <div class="container-detail-left">
             <div class="container-detail">
                 <div class="detail">
@@ -74,6 +71,13 @@ export default {
     padding: 0px;
     margin: 0px;
 }
+.container-dpip {
+    display: flex;
+    margin: 1rem 2rem;
+    padding: 1rem;
+    border: 1px solid rgb(210, 210, 210);
+    border-radius: 3px;
+}
 .head-d-s {
     font-size: small;
     font-weight: 500;
@@ -113,7 +117,7 @@ export default {
     width: 40%;
     flex-direction: row;
     justify-content: flex-start;
-    border-left: 1px dashed rgb(191, 191, 191);
+    border-left: 1px dashed rgb(160, 160, 160);
     padding-left: 10px;
 }
 .detail {

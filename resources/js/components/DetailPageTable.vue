@@ -104,7 +104,7 @@ export default {
 
 <style scoped>
 .container-cd {
-    margin: 0rem 1.5rem;
+    margin: 0rem 2rem;
     border: none;
     border-top: 1px solid rgb(200, 200, 200);
     border-radius: 0px;

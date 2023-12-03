@@ -7,7 +7,7 @@
     >
         <div class="modal-body">
             <div>
-                <label for="invoice-num" class="me-5">Vendor Invoice No</label>
+                <label for="invoice-num">Vendor Invoice No</label>
                 <input
                     id="invoice-num"
                     type="text"
@@ -158,14 +158,15 @@ export default {
 </script>
 
 <style scoped>
-/* * {
+* {
     padding: 0;
     margin: 0;
-} */
+}
+
 .panel-top {
     display: flex;
     justify-content: space-between;
-    margin: 1.5rem;
+    margin: 2rem;
 }
 .panel-top p {
     display: inline;
