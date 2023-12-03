@@ -280,7 +280,7 @@ thead tr th p {
 
 .table-detail-hasil p {
     display: flex;
-    justify-content: end;
+    justify-content: flex-end;
 }
 
 #create-cost-detail {
@@ -314,7 +314,7 @@ thead tr th p {
 }
 .table-isi-hasil p {
     display: flex;
-    justify-content: end;
+    justify-content: flex-end;
     align-items: center;
     font-size: small;
     font-weight: 500;
