@@ -8,20 +8,26 @@
                 <p>Attachment</p>
                 <div>
                     <div>
-                        <div>
+                        <div class="card attachment-panel">
                             <p>filename.pdf</p>
                             <p>Upload By User 1 11/29/2023</p>
-                            <button>delete</button>
+                            <div class="attachment-panel-button">
+                                <ActionButton class="buttons" text="Delete" />
+                            </div>
                         </div>
-                        <div>
+                        <div class="card attachment-panel">
                             <p>filename.pdf</p>
                             <p>Upload By User 1 11/29/2023</p>
-                            <button>delete</button>
+                            <div class="attachment-panel-button">
+                                <ActionButton class="buttons" text="Delete" />
+                            </div>
                         </div>
-                        <div>
+                        <div class="card attachment-panel">
                             <p>filename.pdf</p>
                             <p>Upload By User 1 11/29/2023</p>
-                            <button>delete</button>
+                            <div class="attachment-panel-button">
+                                <ActionButton class="buttons" text="Delete" />
+                            </div>
                         </div>
                     </div>
                     <label for="add-attachment-file" class="buttons"
@@ -38,15 +44,31 @@
             <div class="c-i">
                 <p>Internal Notes</p>
                 <div>
-                    <div>
-                        <div>
-                            <button>delete</button>
-                            <button>edit</button>
-                            <p>By User 1 11/29/2023</p>
-                            <textarea disabled>nini note1</textarea>
+                    <div class="card notes-panel">
+                        <p>
+                            this is an internal notes test! Lorem ipsum dolor
+                            sit amet consectetur adipisicing elit. Non rerum
+                            magni nostrum ratione expedita doloremque adipisci
+                            ad consequatur, saepe fuga sunt maxime voluptatum
+                            neque eius velit molestias quidem qui culpa?
+                        </p>
+                        <p>By User 1 11/29/2023</p>
+                        <div class="notes-panel-button">
+                            <ActionButton class="buttons me-2" text="Delete" />
+                            <ActionButton class="buttons" text="Edit" />
                         </div>
                     </div>
-                    <button>Add Internal Note</button>
+                    <div class="notes-input">
+                        <p>Write a new note:</p>
+                        <textarea
+                            rows="6"
+                            placeholder="Enter a note here"
+                        ></textarea>
+                        <ActionButton
+                            class="buttons"
+                            text="Add Internal Note"
+                        />
+                    </div>
                 </div>
             </div>
         </div>
@@ -98,6 +120,7 @@ export default {
 
 .container-a-i {
     display: flex;
+    /* background: rgb(0, 190, 190); */
 }
 
 .buttons {
@@ -115,5 +138,33 @@ export default {
 .c-i {
     width: 60%;
     padding: 1.5rem;
+}
+.attachment-panel {
+    background-color: #f0eded;
+    margin: 1rem 0;
+    padding: 0.5rem;
+    .buttons {
+        width: 40%;
+    }
+}
+.notes-panel {
+    background-color: #f0eded;
+    margin: 1rem 0;
+    padding: 0.5rem;
+}
+.notes-panel-button {
+    display: flex;
+    justify-content: flex-end;
+    .buttons {
+        width: 30%;
+    }
+}
+.notes-input {
+    display: flex;
+    flex-direction: column;
+}
+.attachment-panel-button {
+    display: flex;
+    justify-content: flex-end;
 }
 </style>

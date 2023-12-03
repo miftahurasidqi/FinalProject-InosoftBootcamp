@@ -124,7 +124,7 @@ export default {
     border-radius: 5px;
     font-weight: 600;
     border: none;
-    background: rgb(0, 162, 162);
+    background: rgb(0, 190, 190);
     color: white;
 }
 

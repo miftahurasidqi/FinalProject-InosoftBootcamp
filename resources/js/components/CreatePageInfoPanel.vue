@@ -7,6 +7,7 @@
                     aria-label="Select instruction type"
                     v-model="newIstruction.instructionType"
                 >
+                    <option disabled value="">Select Instruction</option>
                     <option>Service Instruction</option>
                     <option>Logistic Instruction</option>
                     <!-- Make the option dynamic later -->

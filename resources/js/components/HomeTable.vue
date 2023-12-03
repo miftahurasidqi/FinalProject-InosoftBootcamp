@@ -72,10 +72,13 @@ export default {
     margin-right: 1rem;
 }
 .container-tb {
-    border-bottom: 1px solid black;
+    border-bottom: 1px solid rgb(200, 200, 200);
 }
 .container-tb td {
     border-bottom: 0px;
+    font-size: small;
+    font-weight: 600;
+    color: rgb(98, 98, 98);
 }
 .i-status {
     display: flex;
