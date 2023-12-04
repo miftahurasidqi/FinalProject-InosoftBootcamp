@@ -1,7 +1,11 @@
 <template>
     <div id="page-body">
-        <h1>3rd Party Instruction</h1>
-        <form class="container-create">
+        <h1 style="margin-bottom: 8px">3rd Party Instruction</h1>
+        <form
+            class="card"
+            style="padding-bottom: 2rem"
+            @submit.prevent="handleSubmit"
+        >
             <CreatePageInfoPanel
                 :newIstruction="newIstruction"
                 :getLinkTo="getLinkTo"
@@ -13,13 +17,14 @@
                 :newCostItems="newCostItems"
                 :newGrandTotal="newGrandTotal"
             />
-
-            <div class="card">
-                <button @click.prevent="saveAsDraft">Save as Daft</button>
-                <button @click.prevent="submit">submit</button>
+            <div class="container-button-bottom">
+                <button type="button" @click="handleCancel">Cancel</button>
+                <button type="submit" @click="handleForDraft">
+                    Save as Daft
+                </button>
+                <button type="submit" @click="handleForSubmit">Submit</button>
             </div>
         </form>
-
         <!-- <div> -->
         <!-- <SendMail />
         <InternalNote />
@@ -38,6 +43,7 @@ import VendorInvoice from "../modal/VendorInvoice.vue";
 import ReasonCancellation from "../modal/ReasonCancellation.vue";
 import SendMail from "../modal/SendMail.vue";
 import AddInvoiceTarget from "../modal/AddInvoiceTarget.vue";
+
 export default {
     name: "CreatePage",
     components: {
@@ -48,6 +54,11 @@ export default {
         ReasonCancellation,
         SendMail,
         AddInvoiceTarget,
+    },
+    data() {
+        return {
+            status: "",
+        };
     },
     computed: {
         ...mapGetters({
@@ -64,12 +75,17 @@ export default {
         ...mapActions({
             saveNewInstruction: "saveNewInstruction",
         }),
-        async saveAsDraft() {
-            const response = await this.saveNewInstruction("draft");
-            await this.$router.push(`/detail/${response}`);
+        handleCancel() {
+            this.$router.push("/");
         },
-        async submit() {
-            const response = await this.saveNewInstruction("in progres");
+        handleForDraft() {
+            this.status = "draft";
+        },
+        handleForSubmit() {
+            this.status = "in progres";
+        },
+        async handleSubmit() {
+            const response = await this.saveNewInstruction(this.status);
             await this.$router.push(`/detail/${response}`);
         },
     },
@@ -81,11 +97,35 @@ export default {
     padding: 0;
     margin: 0;
 }
-.container-create {
-    background: white;
-    box-shadow: 0px 0px 10px -5px black;
-    border-radius: 10px;
-    overflow: hidden;
+
+.container-button-bottom {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 2rem;
+    margin-right: 2rem;
+}
+
+.container-button-bottom button:nth-child(1) {
+    padding: 0.4rem 2rem;
+    border: none;
+    border-radius: 5px;
+    font-weight: 600;
+}
+.container-button-bottom button:nth-child(2) {
+    padding: 0.4rem 2rem;
+    margin-left: 1rem;
+    border: 0.6px solid rgb(165, 165, 165);
+    border-radius: 5px;
+    font-weight: 600;
+}
+.container-button-bottom button:nth-child(3) {
+    padding: 0.4rem 4rem;
+    margin-left: 1rem;
+    border-radius: 5px;
+    font-weight: 600;
+    border: none;
+    background: rgb(0, 190, 190);
+    color: white;
 }
 
 #page-body {

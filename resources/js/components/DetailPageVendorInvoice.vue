@@ -1,6 +1,11 @@
 <template>
-    <div id="vendor-invoice">
-        <Popup v-if="isAddInvoice" @close="closeFormAddInvoice">
+    <!-- form add invoice -->
+    <Popup
+        v-if="isAddInvoice"
+        @close="closeFormAddInvoice"
+        title="Add Vendor Invoice"
+    >
+        <div class="modal-body">
             <div>
                 <label for="invoice-num">Vendor Invoice No</label>
                 <input
@@ -12,13 +17,20 @@
             </div>
 
             <div>
-                <p>Invoice Attachment</p>
+                <p class="input-title">Invoice Attachment</p>
                 <div v-if="newInvoiceAttachment.name" class="file-item">
-                    <p>{{ newInvoiceAttachment.name }}</p>
-                    <p>by user 13/11/2023</p>
-                    <button @click.prevent="deleteInvoiceAttachment">
-                        Remove
-                    </button>
+                    <div>
+                        <p>{{ newInvoiceAttachment.name }}</p>
+                        <p>by user 13/11/2023</p>
+                    </div>
+                    <div>
+                        <button
+                            class="btn"
+                            @click.prevent="deleteInvoiceAttachment"
+                        >
+                            <TrashIcon />
+                        </button>
+                    </div>
                 </div>
                 <label v-else for="add-attachment-file" class="add-file"
                     >Add Attachment</label
@@ -31,17 +43,24 @@
                 />
             </div>
             <div>
-                <p>Suporting Document</p>
+                <p class="input-title">Suporting Document</p>
 
                 <div
                     v-for="(file, index) in newInvoiceSuportDoc"
                     class="file-item"
                 >
-                    <p>{{ file.name }}</p>
-                    <p>by user 13/11/2023</p>
-                    <button @click.prevent="deleteSuportDoc(index)">
-                        Remove
-                    </button>
+                    <div>
+                        <p>{{ file.name }}</p>
+                        <p>by user 13/11/2023</p>
+                    </div>
+                    <div>
+                        <button
+                            class="btn"
+                            @click.prevent="deleteSuportDoc(index)"
+                        >
+                            <TrashIcon />
+                        </button>
+                    </div>
                 </div>
 
                 <label for="add-suport-file" class="add-file"
@@ -55,42 +74,37 @@
                     multiple
                 />
             </div>
-
-            <div>
-                <ActionButton text="Cancel" @click="closeFormAddInvoice" />
-                <ActionButton text="Confirm" @click="save" />
-                <!-- @click.prevent="deleteInstruction" -->
-            </div>
-        </Popup>
-
-        <div>
-            <h2>Vendor Invoice</h2>
+        </div>
+        <div class="modal-footer">
             <ActionButton
-                text="Add Vendor Invoice"
-                @click.prevent="showFormAddInvoice"
+                type="button"
+                class="buttons me-2"
+                @click="closeFormAddInvoice"
+                text="Cancel"
+            />
+            <ActionButton
+                type="button"
+                class="buttons"
+                @click="save"
+                text="Submit"
             />
         </div>
+    </Popup>
 
-        <div id="vendor_invoice_list">
-            <table>
-                <thead>
-                    <tr>
-                        <td>Invoice Number</td>
-                        <td>Attachment</td>
-                        <td>Suporting Document</td>
-                    </tr>
-                </thead>
-                <tr v-for="(invoice, i) in vendor_invoice" :key="i">
-                    <td>{{ invoice.invoiceNumber }}</td>
-                    <td>{{ invoice.invoiceAttachment }}</td>
-                    <td>{{ invoice.suportingDocument }}</td>
-                </tr>
-            </table>
-        </div>
+    <div class="panel-top">
+        <p>Vendor Invoice</p>
+        <ActionButton
+            v-if="isCompleted"
+            text="Add Vendor Invoice"
+            class="buttons"
+            @click.prevent="showFormAddInvoice"
+        />
     </div>
 </template>
+
 <script>
 import { mapGetters, mapActions } from "vuex";
+import TrashIcon from "./assets/icons/TrashIcon.vue";
 import ActionButton from "./ActionButton.vue";
 import Popup from "./Popup.vue";
 
@@ -98,7 +112,13 @@ export default {
     name: "DetailPageVendorInvoice",
     components: {
         ActionButton,
+        TrashIcon,
         Popup,
+    },
+    props: {
+        status: {
+            type: String,
+        },
     },
     data() {
         return {
@@ -112,6 +132,12 @@ export default {
             newInvoiceAttachment: "newInvoiceAttachment",
             newInvoiceSuportDoc: "newInvoiceSuportDoc",
         }),
+        isCompleted() {
+            if (this.status == "completed") {
+                return false;
+            }
+            return true;
+        },
     },
     methods: {
         ...mapActions({
@@ -119,14 +145,17 @@ export default {
         }),
         showFormAddInvoice() {
             this.isAddInvoice = true;
+            document.body.style.overflow = "hidden";
         },
         closeFormAddInvoice() {
             this.isAddInvoice = false;
+            document.body.style.overflow = "";
         },
         updateInvoiceNumber() {
             this.$store.commit("updateInvoiceNumber", this.invoiceNumber);
         },
         handleInputInvoiceAttachment(e) {
+            console.log(e.target.files[0]);
             this.$store.commit(
                 "handleInputInvoiceAttachment",
                 e.target.files[0]
@@ -141,20 +170,87 @@ export default {
         deleteSuportDoc(index) {
             this.$store.commit("deleteSuportDoc", index);
         },
-        save() {
-            this.saveNewInvoice(this.$route.params.id);
+        async save() {
+            await this.saveNewInvoice(this.$route.params.id);
+            window.location.reload();
         },
     },
 };
 </script>
 
 <style scoped>
-.add-file {
-    background: rgb(95, 190, 155);
+* {
+    padding: 0;
+    margin: 0;
+}
+
+.panel-top {
+    display: flex;
+    justify-content: space-between;
+    margin: 2rem;
+}
+.panel-top p {
+    display: inline;
+    height: 40px;
+    line-height: 40px;
+    font-weight: 600;
+}
+.buttons {
+    background: rgb(0, 190, 190);
+    padding: 0.3rem 2rem;
+    border: none;
+    border-radius: 4px;
     color: white;
+    font-weight: 600;
+}
+#vendor_invoice_list {
+    margin: 0rem 1.5rem;
+    border: 1px solid rgb(189, 189, 189);
+}
+#vendor_invoice_list thead tr td {
+    border: none;
+    font-size: small;
+    font-weight: 600;
+    color: white;
+    background: rgb(165, 165, 165);
+}
+.modal-body {
+    max-height: 20rem;
+    overflow-y: auto;
+}
+.add-file {
+    background: rgb(0, 162, 162);
+    padding: 0.3rem 2rem;
+    border: none;
+    border-radius: 4px;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    margin: 1rem 0;
 }
 .file-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem;
+    background-color: #f0eded;
+    margin: 1rem 0;
+    p {
+        margin-bottom: 0.2rem;
+    }
+    .file-item-button {
+        display: flex;
+        align-content: center;
+    }
+}
+.input-title {
+    margin: 0;
+}
+/* .panel-top actionb .add-file {
+    background: rgb(95, 190, 155);
+    color: white;
+} */
+/* .file-item {
     background: rgb(223, 223, 223);
     padding: 5px;
-}
+} */
 </style>

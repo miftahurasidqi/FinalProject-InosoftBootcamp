@@ -1,6 +1,6 @@
 <template>
     <div id="page-body">
-        <h1>Home</h1>
+        <h1 style="margin-bottom: 8px">Home</h1>
         <div class="card card-styling">
             <div class="card-body">
                 <div id="card-header">
@@ -9,30 +9,36 @@
                             <ActionButton
                                 @click="isOpenSwitcher"
                                 text="Open"
-                                class="b-open"
+                                :class="{
+                                    'b-open': isOpen,
+                                    'b-completed': !isOpen,
+                                }"
                             />
+
                             <ActionButton
                                 @click="isCloseSwitcher"
                                 text="Completed"
-                                class="b-completed"
+                                :class="{
+                                    'b-open': !isOpen,
+                                    'b-completed': isOpen,
+                                }"
                             />
                         </div>
-
                         <div class="container-s-e">
                             <input
                                 name="attention-of"
                                 type="text"
-                                placeholder="Search Instruction"
+                                placeholder="Search"
                                 v-model="searchKeyword"
                                 @input="search"
                             />
-                            <ActionButton text="Export" class="border" />
+                            <ActionButton text="Export" class="export" />
                         </div>
                     </div>
                     <div class="conatiner-b-intruction">
-                        <p>
-                            show {{ pageInfo.size }} of
-                            {{ pageInfo.totalData }} data
+                        <p class="show-data">
+                            {{ pageInfo.size }} of
+                            {{ pageInfo.totalData }} entries displayed
                         </p>
 
                         <div style="position: relative">
@@ -42,10 +48,16 @@
                                 class="b-intruction"
                             />
                             <div :class="listClass" style="transition: 0.3s">
-                                <button class="logistic">
+                                <button
+                                    class="logistic"
+                                    @click="goCreateLogistic"
+                                >
                                     Logistic Instruction
                                 </button>
-                                <button class="service">
+                                <button
+                                    class="service"
+                                    @click="goCreateService"
+                                >
                                     Service Intruction
                                 </button>
                             </div>
@@ -54,10 +66,10 @@
                 </div>
             </div>
 
-            <table class="table my-4">
+            <table class="table">
                 <thead class="table-h">
                     <tr>
-                        <th>Instruction ID</th>
+                        <th><p>Instruction ID</p></th>
                         <th>Link To</th>
                         <th>Instruction Type</th>
                         <th>Assigned Vendor</th>
@@ -75,8 +87,7 @@
                     />
                 </tbody>
             </table>
-
-            <ActionButton @click="loadNextInstructions" text="Load Next Data" />
+            <!-- <ActionButton @click="loadNextInstructions" text="Load Next Data" /> -->
         </div>
     </div>
 </template>
@@ -94,14 +105,13 @@ export default {
     },
     data() {
         return {
-            isOpen: true, // Secara default menunjukkan halaman 'Open'
+            isOpen: true,
             isListOpen: false,
             searchKeyword: "",
             loading: false,
         };
     },
     mounted() {
-        // menjalankan function saat renderan awal
         this.getOpenInstructions(0);
         window.addEventListener("scroll", this.handleScroll);
     },
@@ -115,12 +125,17 @@ export default {
         },
     },
     methods: {
-        // mengakses function dari store  (store/actions.js)
         ...mapActions({
             getOpenInstructions: "getOpenInstructions",
             getCompletedInstructions: "getCompletedInstructions",
             searchInstructions: "searchInstructions",
         }),
+        goCreateService() {
+            this.$router.push("/create");
+        },
+        goCreateLogistic() {
+            this.$router.push("/create");
+        },
         isOpenSwitcher() {
             this.isOpen = true;
             this.getOpenInstructions(0);
@@ -146,13 +161,12 @@ export default {
                     : this.getCompletedInstructions(0);
             }
         },
-
         loadNextInstructions() {
             if (this.loading) return;
             this.loading = true;
 
             // memeriksa tab apakah open atau completed
-            if (this.pageInfo.currrentPage !== this.pageInfo.totalPages) {
+            if (this.pageInfo.currrentPage < this.pageInfo.totalPages) {
                 let status = this.isOpen ? "open" : "completed";
                 const reqData = {
                     status,
@@ -160,11 +174,8 @@ export default {
                     currrentPage: this.pageInfo.currrentPage,
                 };
                 if (this.searchKeyword) {
-                    console.log(reqData);
                     this.searchInstructions(reqData);
                 } else {
-                    console.log(status, "str 0");
-
                     this.isOpen
                         ? this.getOpenInstructions(this.pageInfo.currrentPage)
                         : this.getCompletedInstructions(
@@ -177,7 +188,6 @@ export default {
             this.loading = false;
         },
         handleScroll() {
-            // Jika pengguna telah mencapai bagian bawah
             if (
                 window.innerHeight + window.scrollY >=
                 document.body.offsetHeight
@@ -195,12 +205,17 @@ export default {
 </script>
 
 <style scoped>
+* {
+    padding: 0;
+    margin: 0;
+}
+
 #page-body {
     margin: 2rem;
 }
 
 .card-styling {
-    box-shadow: 0px 0px 10px -5px black;
+    padding: 1.5rem;
 }
 
 .container-card-top {
@@ -209,30 +224,69 @@ export default {
     align-items: center;
     height: 50px;
     margin-top: 1rem;
-    margin-bottom: 2rem;
-    border-bottom: 3px solid rgb(224, 224, 224);
+    margin-bottom: 1.5rem;
+    border-bottom: 2px solid rgb(230, 230, 230);
     box-sizing: border-box;
 }
 
+.b-open {
+    font-weight: 600;
+    font-size: 1.2rem;
+    height: calc(100% + 3px);
+    color: rgb(160, 160, 160);
+    padding: 0rem 1rem;
+    border-radius: 0;
+    box-sizing: border-box;
+    background: none;
+    color: rgb(0, 190, 190);
+    border-bottom: 4px solid rgb(0, 190, 190);
+}
+.b-completed {
+    font-weight: 600;
+    font-size: 1.2rem;
+    height: calc(100% + 3px);
+    color: rgb(160, 160, 160);
+    padding: 0rem 1rem;
+    border-radius: 0;
+    box-sizing: border-box;
+}
+
+.b-completed:hover {
+    background: none;
+    color: rgb(0, 190, 190);
+}
+
+/* 
 .b-open,
 .b-completed {
     font-weight: 600;
     font-size: 1.2rem;
     height: calc(100% + 3px);
-    color: gray;
+    color: rgb(160, 160, 160);
+    padding: 0rem 1rem;
     border-radius: 0;
     box-sizing: border-box;
 }
+
 .b-open:hover,
 .b-completed:hover {
     background: none;
-    color: rgb(95, 190, 155);
-    border-bottom: 3px solid rgb(95, 190, 155);
-}
+    color: rgb(0, 190, 190);
+    border-bottom: 4px solid rgb(0, 190, 190);
+} */
 
 .conatiner-b-intruction {
     display: flex;
     justify-content: space-between;
+    height: 60px;
+    margin-bottom: 10px;
+}
+
+.show-data {
+    align-self: end;
+    font-size: medium;
+    font-weight: 500;
+    color: rgb(170, 170, 170);
 }
 
 .close {
@@ -256,16 +310,13 @@ export default {
     display: flex;
     flex-direction: column;
 }
-
-/* .open-intruction:hover {
-    height: 72px;
-    transition: 0.3s;
-} */
 .logistic,
 .service {
-    width: 216px;
+    width: 228px;
     height: 36px;
     border: none;
+    font-size: small;
+    font-weight: 600;
     border-radius: 4px;
     color: black;
     background: rgb(244, 244, 244);
@@ -277,11 +328,15 @@ export default {
     transition: 0.3s;
 }
 .b-intruction {
-    background: rgb(95, 190, 155);
+    background: rgb(0, 190, 190);
     color: white;
+    font-size: small;
+    font-weight: 600;
+    height: 36px;
+    padding: 0rem 2rem;
 }
 .b-intruction:hover {
-    background: rgb(70, 140, 115);
+    background: rgb(0, 170, 170);
     transition: 0.3s;
 }
 
@@ -292,20 +347,35 @@ export default {
     display: flex;
     align-items: center;
     height: 100%;
+    padding-bottom: 5px;
+}
+
+.container-s-e input {
+    height: 35px;
+    width: 230px;
+    border: 1px solid rgb(230, 230, 230);
+    font-size: small;
+    font-weight: 500;
+    padding-left: 10px;
+}
+
+.export {
+    padding: 3px 1rem;
+    height: 35px;
+    width: 80px;
+    border: 1px solid rgb(230, 230, 230);
+    border-radius: 3px;
+    margin-left: 1rem;
+    font-size: small;
+    font-weight: 600;
+    background: rgb(46, 199, 199);
+    color: rgb(230, 243, 243);
 }
 
 .table-h tr th {
-    background: slategray;
+    background: rgb(170, 170, 170);
+    height: 35px;
     color: white;
     font-weight: 500;
-}
-
-.table-b {
-}
-
-.th-status {
-    display: flex;
-    justify-content: center;
-    align-items: center;
 }
 </style>

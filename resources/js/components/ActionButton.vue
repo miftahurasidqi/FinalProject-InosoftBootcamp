@@ -1,5 +1,5 @@
 <template>
-    <button type="button" class="btn btn-secondary">{{ text }}</button>
+    <button class="btn">{{ text }}</button>
 </template>
 
 <script>
@@ -18,5 +18,6 @@ button {
     background: none;
     border: none;
     color: black;
+    padding: 1rem;
 }
 </style>

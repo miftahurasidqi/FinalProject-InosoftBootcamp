@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\FileService;
 use App\Services\ThirdPartyInstructionService;
 use Illuminate\Http\Request;
 
@@ -9,9 +10,13 @@ class ThirdPartyInstructionController extends Controller
 {
     protected $thirdpartyinstructionservice;
 
-    public function __construct(ThirdPartyInstructionService $thirdpartyinstructionservice)
-    {
+    public function __construct(
+        ThirdPartyInstructionService $thirdpartyinstructionservice,
+        FileService $fileService
+    ) {
         $this->thirdpartyinstructionservice = $thirdpartyinstructionservice;
+        $this->fileService = $fileService;
+
     }
 
     public function store(Request $request)
@@ -24,12 +29,7 @@ class ThirdPartyInstructionController extends Controller
 
         // Mengiterasi setiap file yang diunggah
         if ($files) {
-            foreach ($files as $index => $file) {
-                // Lakukan sesuatu dengan setiap file
-                $fileName = time() . '_' . $file->getClientOriginalName();
-                $file->move(public_path('uploads'), $fileName);
-                $attachment[] = $fileName;
-            }
+            $attachment = $this->fileService->saveMultipleFile($files);
         }
 
         $costDetail = $jsonData['costDetail'];
@@ -57,34 +57,37 @@ class ThirdPartyInstructionController extends Controller
         return $this->thirdpartyinstructionservice->getInstructions($pageInt, $status);
     }
 
-    // belum
-    public function searchOpenInstructions(Request $request)
+    public function searchInstructions(Request $request)
     {
-        $page = $request->input('page', '');
+        $keyword = $request->query('keyWord', '');
+        $tab = $request->query('status');
+        $page = $request->query('page');
         $pageInt = intval($page);
-        $status = ['draft', 'in progres'];
-        $keyword = $request->input('keyword', '');
+        $status = [];
+        if ($tab == 'open') {
+            $status = ['draft', 'in progres'];
+        } elseif ($tab == 'completed') {
+            $status = ['cancelled', 'completed'];
+        }
 
-        return $thirdPartyInstruction = $this->thirdpartyinstructionservice->searchInstructions($pageInt, $status, $keyword);
+        // return response()->json([
+        //     $pageInt,
+        //     $status,
+        //     $keyword,
+        // ]);
+        return $this->thirdpartyinstructionservice->searchInstructions($pageInt, $status, $keyword);
     }
 
-    public function searchCompletedInstructions(Request $request)
-    {
-        $page = $request->input('page', '');
-        $pageInt = intval($page);
-        $status = ['cancelled', 'completed'];
-        $keyword = $request->input('keyword', '');
-
-        return $thirdPartyInstruction = $this->thirdpartyinstructionservice->searchInstructions($pageInt, $status, $keyword);
-    }
     public function getInstructionById(Request $request, $id)
     {
         return $thirdPartyInstruction = $this->thirdpartyinstructionservice->getInstructionById($id);
     }
+
     public function destroy(Request $request, $id)
     {
         return $thirdPartyInstruction = $this->thirdpartyinstructionservice->deleteById($id);
     }
+
     public function setInstructionToCanceled(Request $request, $id)
     {
         $statusInfo = json_decode($request->input('statusInfo'), true);
@@ -103,9 +106,32 @@ class ThirdPartyInstructionController extends Controller
         $statusInfo['canceledAttachment'] = $attachment;
         return $thirdPartyInstruction = $this->thirdpartyinstructionservice->setToCanceled($id, $statusInfo);
     }
+
     public function setInstructionToCompleted(Request $request, $id)
     {
-        return response()->json($id);
-        // return $thirdPartyInstruction = $this->thirdpartyinstructionservice->setToCompleted($id)
+        // return response()->json($id);
+        return $thirdPartyInstruction = $this->thirdpartyinstructionservice->setToCompleted($id);
     }
+
+    public function updateInstruction(Request $request, $id)
+    {
+        // Menangkap data JSON
+        $editData = json_decode($request->input('data'), true);
+        // Menangkap file []
+        $files = $request->file('attachment');
+        $attachment = [];
+
+        // Mengiterasi setiap file yang diunggah
+        if ($files) {
+            $attachment = $this->fileService->saveMultipleFile($files);
+        }
+        // return response()->json([
+        //     'id' => $id,
+        //     'id2' => $editData,
+        //     'id3' => $attachment,
+        // ]);
+
+        return $thirdPartyInstruction = $this->thirdpartyinstructionservice->updateInstruction($id, $editData, $attachment);
+    }
+
 }

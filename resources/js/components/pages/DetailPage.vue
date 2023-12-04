@@ -1,7 +1,7 @@
 <template>
     <div id="page-body">
         <h1>3rd Party Instruction</h1>
-        <div class="card">
+        <div class="card container-d-p">
             <h2>{{ instruction.instructionId }}</h2>
 
             <DetailTopPanel
@@ -11,22 +11,14 @@
 
             <DetailPageInfoPanel :instruction="instruction" />
             <!-- <hr /> -->
-            <div id="cost-detail-panel" class="card">
-                <h2>Cost Detail</h2>
-                <DetailPageTable />
-            </div>
-            <div id="attachment-panel" class="d-flex justify-content-between">
-                <div>
-                    <h2>Attachment</h2>
-                    <button>Add Attachment</button>
-                </div>
-                <div>
-                    <label for="notes">Notes</label>
-                    <textarea name="notes" id="" cols="10" rows="10"></textarea>
-                </div>
-            </div>
+
+            <DetailPageTable />
+
             <!--  -->
-            <DetailPageVendorInvoice />
+            <div v-if="isShowVendorInvoice" id="vendor-invoice">
+                <DetailPageVendorInvoice :status="instruction.status" />
+                <DetailPageVendorInvoiceList :status="instruction.status" />
+            </div>
             <!--  -->
             <DetailPageInternalPanel />
             <!--  -->
@@ -42,6 +34,7 @@ import DetailTopPanel from "../DetailTopPanel.vue";
 import DetailPageInfoPanel from "../DetailPageInfoPanel.vue";
 import DetailPageTable from "../DetailPageTable.vue";
 import DetailPageVendorInvoice from "../DetailPageVendorInvoice.vue";
+import DetailPageVendorInvoiceList from "../DetailPageVendorInvoiceList.vue";
 import DetailPageInternalPanel from "../DetailPageInternalPanel.vue";
 
 export default {
@@ -52,6 +45,7 @@ export default {
         ActionButton,
         DetailTopPanel,
         DetailPageVendorInvoice,
+        DetailPageVendorInvoiceList,
         DetailPageInternalPanel,
     },
     mounted() {
@@ -61,6 +55,14 @@ export default {
         ...mapGetters({
             instruction: "instructionDetail",
         }),
+        isShowVendorInvoice() {
+            if (this.instruction.status == "cancelled") {
+                return false;
+            } else if (this.instruction.status == "draft") {
+                return false;
+            }
+            return true;
+        },
     },
     methods: {
         ...mapActions({
@@ -74,17 +76,12 @@ export default {
 #page-body {
     margin: 2rem;
 }
-
-#attachment-panel {
-    height: 300px;
+.container-d-p {
+    border: 1px solid rgb(210, 210, 210);
 }
 
 #internal-panel-header {
     background-color: black;
     color: white;
-}
-
-textarea {
-    max-height: 50%;
 }
 </style>

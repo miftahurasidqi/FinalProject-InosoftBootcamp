@@ -21,6 +21,7 @@ class ThirdPartyInstructionService
         $this->invoicetoService = $invoicetoService;
     }
 
+    // Create Instrunction Service
     public function createInstruction(array $data)
     {
 
@@ -63,13 +64,14 @@ class ThirdPartyInstructionService
     {
         $result = $this->thirdPartyInstructionRepository->getByStatus($page, $status);
         return response()->json($result);
-
     }
 
     //  ===
     public function searchInstructions($page, $status, $keyword)
     {
-        return $this->thirdPartyInstructionRepository->searchInstructions($page, $status, $keyword);
+        $result = $this->thirdPartyInstructionRepository->searchInstructions($page, $status, $keyword);
+        return response()->json($result);
+
     }
 
     public function getInstructionById($id)
@@ -99,4 +101,41 @@ class ThirdPartyInstructionService
         return $this->thirdPartyInstructionRepository->setToCompleted($id);
     }
 
+    public function updateInstruction($id, $editData, $attachment)
+    {
+
+        $validator = Validator::make($editData, [
+            'instructionType' => 'required|string',
+            'linkTo' => 'required|array',
+            'attentionOf' => 'required|string',
+            'invoiceTo' => 'required|string',
+            'assignedVendor' => 'required|string',
+            'vendorAddress' => 'required|string',
+            'vendorQuotationNo' => 'required|string',
+            'customerContract' => 'required|string',
+            'NoCustomerPO' => 'required|string',
+            'status' => 'required|string',
+            'costDetail' => 'required|array',
+            'costDetail.costItem.*.description' => 'required|string',
+            'costDetail.costItem.*.QTY' => 'required|numeric',
+            'costDetail.costItem.*.UOM' => 'required|string',
+            'costDetail.costItem.*.unitPrice' => 'required|numeric',
+            'costDetail.costItem.*.GST' => 'required|numeric',
+            'costDetail.costItem.*.currency' => 'required|string',
+            'costDetail.costItem.*.vatAmount' => 'required|numeric',
+            'costDetail.costItem.*.subTotal' => 'required|numeric',
+            'costDetail.costItem.*.total' => 'required|numeric',
+            'costDetail.grandTotal.*.currency' => 'required|string',
+            'costDetail.grandTotal.*.vatAmount' => 'required|numeric',
+            'costDetail.grandTotal.*.subTotal' => 'required|numeric',
+            'costDetail.grandTotal.*.total' => 'required|numeric',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['error' => $validator->errors()], 400);
+        }
+
+        $result = $this->thirdPartyInstructionRepository->updateInstruction($id, $editData, $attachment);
+        return response()->json($result);
+    }
 }

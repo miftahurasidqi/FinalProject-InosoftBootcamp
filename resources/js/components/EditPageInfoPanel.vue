@@ -5,16 +5,15 @@
                 <select
                     class="info-top-panel"
                     aria-label="Select instruction type"
-                    v-model="newIstruction.instructionType"
+                    v-model="editInstruction.instructionType"
+                    disabled
                 >
-                    <option disabled value="">Select Instruction</option>
                     <option>Service Instruction</option>
                     <option>Logistic Instruction</option>
-                    <!-- Make the option dynamic later -->
                 </select>
             </div>
             <div class="pilihan-right">
-                <p>Draft</p>
+                <p>{{ editInstruction.status }}</p>
             </div>
         </div>
         <div class="container-content-1">
@@ -23,12 +22,12 @@
                     <div class="pilihan">
                         <label>Link To </label>
                         <div @click.prevent="toggleOptions" class="link-to">
-                            <p v-if="newIstruction.linkTo.length == 0">
+                            <p v-if="editInstruction.linkTo.length == 0">
                                 Select Link To
                             </p>
                             <p v-else class="overflow-h">
                                 <span
-                                    v-for="(item, i) in newIstruction.linkTo"
+                                    v-for="(item, i) in editInstruction.linkTo"
                                     :key="i"
                                 >
                                     <span>{{ item }}</span
@@ -49,7 +48,7 @@
                                 </p>
                                 <input
                                     type="checkbox"
-                                    v-model="newIstruction.linkTo"
+                                    v-model="editInstruction.linkTo"
                                     :value="item"
                                 />
                             </label>
@@ -62,7 +61,7 @@
                             name="attention-of"
                             type="text"
                             placeholder="Enter Attention Of"
-                            v-model="newIstruction.attentionOf"
+                            v-model="editInstruction.attentionOf"
                             required
                         />
                     </div>
@@ -72,7 +71,7 @@
                             class="link-to"
                             name="invoice-to"
                             id=""
-                            v-model="newIstruction.invoiceTo"
+                            v-model="editInstruction.invoiceTo"
                         >
                             <option disabled value="">Select an Option</option>
                             <option>MITO</option>
@@ -87,7 +86,7 @@
                             class="link-to"
                             name="assigned-vendor"
                             id=""
-                            v-model="newIstruction.assignedVendor"
+                            v-model="editInstruction.assignedVendor"
                         >
                             <option disabled value="">
                                 Select Assigned Vendor
@@ -103,7 +102,7 @@
                             name="vendor-address"
                             type="text"
                             placeholder="Select Vendor Address"
-                            v-model="newIstruction.vendorAddress"
+                            v-model="editInstruction.vendorAddress"
                         />
                     </div>
                     <div class="pilihan">
@@ -113,7 +112,7 @@
                             name="quotation-no"
                             type="text"
                             placeholder="Enter Vendor Quotation No."
-                            v-model="newIstruction.vendorQuotationNo"
+                            v-model="editInstruction.vendorQuotationNo"
                         />
                     </div>
                 </div>
@@ -124,7 +123,7 @@
                     <select
                         name="customer-contract"
                         class="link-to"
-                        v-model="newIstruction.customerContract"
+                        v-model="editInstruction.customerContract"
                     >
                         <option disabled value="">Select customer</option>
                         <option>Customer 1</option>
@@ -138,7 +137,7 @@
                         name="customerPO"
                         type="text"
                         placeholder="Enter Customer PO"
-                        v-model="newIstruction.NoCustomerPO"
+                        v-model="editInstruction.NoCustomerPO"
                     />
                 </div>
             </div>
@@ -148,9 +147,9 @@
 
 <script>
 export default {
-    name: "CreatePageInfoPanel",
+    name: "EditPageInfoPanel",
     props: {
-        newIstruction: {
+        editInstruction: {
             type: Object,
         },
         getLinkTo: {
