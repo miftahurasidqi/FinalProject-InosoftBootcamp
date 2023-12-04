@@ -65,7 +65,7 @@
                                 {{ attachment.name }}
                             </p>
                         </div>
-                        <button>Add Attachment</button>
+                        <!-- <button>Add Attachment</button> -->
                     </div>
                     <!--  costDetail.grandTotal -->
                 </div>

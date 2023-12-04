@@ -15,9 +15,9 @@
             <DetailPageTable />
 
             <!--  -->
-            <div id="vendor-invoice">
-                <DetailPageVendorInvoice />
-                <DetailPageVendorInvoiceList />
+            <div v-if="isShowVendorInvoice" id="vendor-invoice">
+                <DetailPageVendorInvoice :status="instruction.status" />
+                <DetailPageVendorInvoiceList :status="instruction.status" />
             </div>
             <!--  -->
             <DetailPageInternalPanel />
@@ -55,6 +55,14 @@ export default {
         ...mapGetters({
             instruction: "instructionDetail",
         }),
+        isShowVendorInvoice() {
+            if (this.instruction.status == "cancelled") {
+                return false;
+            } else if (this.instruction.status == "draft") {
+                return false;
+            }
+            return true;
+        },
     },
     methods: {
         ...mapActions({

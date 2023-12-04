@@ -27,14 +27,14 @@
                         <p>{{ editInvoice.invoiceAttachment.name }}</p>
                         <p>by user 13/11/2023</p>
                         <button
-                            class="file-item-button"
+                            class="btn"
                             @click.prevent="
                                 deleteInvoiceAttachment(
                                     editInvoice.invoiceAttachment
                                 )
                             "
                         >
-                            Remove
+                            <TrashIcon />
                         </button>
                     </div>
                     <label v-else for="add-attachment-file" class="add-file"
@@ -57,10 +57,10 @@
                         <p>{{ file.name }}</p>
                         <p>by user 13/11/2023</p>
                         <button
-                            class="file-item-button"
+                            class="btn"
                             @click.prevent="deleteSuportDoc(index)"
                         >
-                            Remove
+                            <TrashIcon />
                         </button>
                     </div>
                     <label for="add-suport-file" class="add-file"
@@ -107,14 +107,14 @@
             </div>
         </Popup>
 
-        <table v-if="Array.isArray(vendor_invoice)" class="table">
+        <table v-if="!showNoData" class="table">
             <!-- <table class="table"> -->
             <thead>
                 <tr>
                     <td>Invoice Number</td>
                     <td>Attachment</td>
                     <td>Suporting Document</td>
-                    <td>Actions</td>
+                    <td v-if="isCompleted">Actions</td>
                 </tr>
             </thead>
             <tr v-for="(invoice, index) in vendor_invoice" :key="index">
@@ -136,7 +136,7 @@
                         </p>
                     </div>
                 </td>
-                <td>
+                <td v-if="isCompleted">
                     <!-- <ActionButton
                         @click.prevent="showConfirmDeleteInvoice(invoice._id)"
                         text="Delete"
@@ -161,23 +161,16 @@
             </tr>
         </table>
         <!-- Ketika tidak ada data -->
-        <div
-            v-else
-            style="
-                width: 100%;
-                display: flex;
-                justify-content: center;
-                height: 35px;
-                align-items: center;
-                font-size: small;
-                font-weight: 600;
-                color: rgb(120, 120, 120);
-            "
-        >
+        <div v-if="showNoData" class="noData">
             <p>No Data</p>
         </div>
-        <div>
-            <button @click.prevent="setToCompleted">Set To Completed</button>
+
+        <div class="recive-instruction" v-if="!showNoData && isCompleted">
+            <ActionButton
+                class="buttons"
+                @click.prevent="setToCompleted"
+                text="Recive Instruction"
+            />
         </div>
         <!-- setInstructionToCompleted -->
     </div>
@@ -199,11 +192,15 @@ export default {
         PenIcon,
         Popup,
     },
+    props: {
+        status: {
+            type: String,
+        },
+    },
     data() {
         return {
             isEditInvoice: false,
             isDeleteInvoice: false,
-
             isShowSuportDoc: -1,
             deleteInvoiceId: "",
             editInvoice: {
@@ -225,6 +222,20 @@ export default {
         ...mapGetters({
             vendor_invoice: "vendor_invoice",
         }),
+        showNoData() {
+            if (Array.isArray(this.vendor_invoice)) {
+                if (this.vendor_invoice.length !== 0) {
+                    return false;
+                }
+            }
+            return true;
+        },
+        isCompleted() {
+            if (this.status == "completed") {
+                return false;
+            }
+            return true;
+        },
     },
     methods: {
         ...mapActions({
@@ -232,6 +243,11 @@ export default {
             saveEditInvoice: "saveEditInvoice",
             deleteInvoiceById: "deleteInvoice",
         }),
+        setShowNoData() {
+            if (vendor_invoice.length !== 0) {
+                showNoData = false;
+            }
+        },
         setToCompleted() {
             this.setInstructionToCompleted(this.$route.params.id);
             window.location.reload();
@@ -383,5 +399,20 @@ td {
     border-radius: 4px;
     color: white;
     font-weight: 600;
+}
+.noData {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    height: 35px;
+    align-items: center;
+    font-size: small;
+    font-weight: 600;
+    color: rgb(120, 120, 120);
+}
+
+.recive-instruction {
+    display: flex;
+    justify-content: center;
 }
 </style>

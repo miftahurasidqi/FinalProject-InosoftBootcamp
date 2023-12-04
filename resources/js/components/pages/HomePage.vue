@@ -9,12 +9,19 @@
                             <ActionButton
                                 @click="isOpenSwitcher"
                                 text="Open"
-                                class="b-open terbuka"
+                                :class="{
+                                    'b-open': isOpen,
+                                    'b-completed': !isOpen,
+                                }"
                             />
+
                             <ActionButton
                                 @click="isCloseSwitcher"
                                 text="Completed"
-                                class="b-completed"
+                                :class="{
+                                    'b-open': !isOpen,
+                                    'b-completed': isOpen,
+                                }"
                             />
                         </div>
                         <div class="container-s-e">
@@ -222,6 +229,34 @@ export default {
     box-sizing: border-box;
 }
 
+.b-open {
+    font-weight: 600;
+    font-size: 1.2rem;
+    height: calc(100% + 3px);
+    color: rgb(160, 160, 160);
+    padding: 0rem 1rem;
+    border-radius: 0;
+    box-sizing: border-box;
+    background: none;
+    color: rgb(0, 190, 190);
+    border-bottom: 4px solid rgb(0, 190, 190);
+}
+.b-completed {
+    font-weight: 600;
+    font-size: 1.2rem;
+    height: calc(100% + 3px);
+    color: rgb(160, 160, 160);
+    padding: 0rem 1rem;
+    border-radius: 0;
+    box-sizing: border-box;
+}
+
+.b-completed:hover {
+    background: none;
+    color: rgb(0, 190, 190);
+}
+
+/* 
 .b-open,
 .b-completed {
     font-weight: 600;
@@ -232,12 +267,13 @@ export default {
     border-radius: 0;
     box-sizing: border-box;
 }
+
 .b-open:hover,
 .b-completed:hover {
     background: none;
     color: rgb(0, 190, 190);
     border-bottom: 4px solid rgb(0, 190, 190);
-}
+} */
 
 .conatiner-b-intruction {
     display: flex;
@@ -332,6 +368,8 @@ export default {
     margin-left: 1rem;
     font-size: small;
     font-weight: 600;
+    background: rgb(46, 199, 199);
+    color: rgb(230, 243, 243);
 }
 
 .table-h tr th {

@@ -2,7 +2,7 @@
     <Popup
         v-if="isDeleteAttachment"
         @close="closeConfirmDelete"
-        title="Delete Attachment"
+        title="Delete Invoice"
     >
         <p>Anda yakin Akan menghapus Attachment ini?</p>
         <div>
@@ -125,7 +125,7 @@
         </div>
     </Popup>
 
-    <Popup v-if="isDeleteNote" @close="closeDeleteNote" title="Delete Note">
+    <Popup v-if="isDeleteNote" @close="closeDeleteNote" title="Delete Invoice">
         <p>Anda yakin Akan menghapus Attachment ini?</p>
         <div>
             <ActionButton text="Cancel" @click.prevent="closeDeleteNote" />

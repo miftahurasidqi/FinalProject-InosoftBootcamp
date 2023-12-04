@@ -74,15 +74,13 @@
                             <p>{{ file.name }}</p>
                             <p>by user 13/11/2023</p>
                         </div>
-                        <div class="file-item-button">
-                            <button
-                                @click.prevent="
-                                    removeAttacmentCancelFile(index)
-                                "
-                            >
-                                Remove
-                            </button>
-                        </div>
+
+                        <button
+                            class="btn"
+                            @click.prevent="removeAttacmentCancelFile(index)"
+                        >
+                            <TrashIcon />
+                        </button>
                     </div>
 
                     <label for="add-attachment-cancel-file" class="add-file"
@@ -109,12 +107,14 @@
 
 <script>
 import { mapGetters, mapActions } from "vuex";
+import TrashIcon from "./assets/icons/TrashIcon.vue";
 import ActionButton from "./ActionButton.vue";
 import Popup from "./Popup.vue";
 
 export default {
     name: "DetailTopPanel",
     components: {
+        TrashIcon,
         ActionButton,
         Popup,
     },
@@ -178,8 +178,9 @@ export default {
                 this.$router.push(`/`);
             }
         },
-        terminateInstruction() {
-            this.terminateInstructionsById(this.id);
+        async terminateInstruction() {
+            await this.terminateInstructionsById(this.id);
+            window.location.reload();
         },
     },
 };

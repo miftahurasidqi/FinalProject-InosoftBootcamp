@@ -23,9 +23,12 @@
                         <p>{{ newInvoiceAttachment.name }}</p>
                         <p>by user 13/11/2023</p>
                     </div>
-                    <div class="file-item-button">
-                        <button @click.prevent="deleteInvoiceAttachment">
-                            Remove
+                    <div>
+                        <button
+                            class="btn"
+                            @click.prevent="deleteInvoiceAttachment"
+                        >
+                            <TrashIcon />
                         </button>
                     </div>
                 </div>
@@ -50,9 +53,12 @@
                         <p>{{ file.name }}</p>
                         <p>by user 13/11/2023</p>
                     </div>
-                    <div class="file-item-button">
-                        <button @click.prevent="deleteSuportDoc(index)">
-                            Remove
+                    <div>
+                        <button
+                            class="btn"
+                            @click.prevent="deleteSuportDoc(index)"
+                        >
+                            <TrashIcon />
                         </button>
                     </div>
                 </div>
@@ -88,6 +94,7 @@
     <div class="panel-top">
         <p>Vendor Invoice</p>
         <ActionButton
+            v-if="isCompleted"
             text="Add Vendor Invoice"
             class="buttons"
             @click.prevent="showFormAddInvoice"
@@ -97,6 +104,7 @@
 
 <script>
 import { mapGetters, mapActions } from "vuex";
+import TrashIcon from "./assets/icons/TrashIcon.vue";
 import ActionButton from "./ActionButton.vue";
 import Popup from "./Popup.vue";
 
@@ -104,7 +112,13 @@ export default {
     name: "DetailPageVendorInvoice",
     components: {
         ActionButton,
+        TrashIcon,
         Popup,
+    },
+    props: {
+        status: {
+            type: String,
+        },
     },
     data() {
         return {
@@ -118,6 +132,12 @@ export default {
             newInvoiceAttachment: "newInvoiceAttachment",
             newInvoiceSuportDoc: "newInvoiceSuportDoc",
         }),
+        isCompleted() {
+            if (this.status == "completed") {
+                return false;
+            }
+            return true;
+        },
     },
     methods: {
         ...mapActions({
