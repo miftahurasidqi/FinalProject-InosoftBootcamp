@@ -138,7 +138,7 @@ export default {
             console.log(e.target.files[0]);
             this.$store.commit(
                 "handleInputInvoiceAttachment",
-                e.target.files[0],
+                e.target.files[0]
             );
         },
         deleteInvoiceAttachment() {
@@ -150,8 +150,9 @@ export default {
         deleteSuportDoc(index) {
             this.$store.commit("deleteSuportDoc", index);
         },
-        save() {
-            this.saveNewInvoice(this.$route.params.id);
+        async save() {
+            await this.saveNewInvoice(this.$route.params.id);
+            window.location.reload();
         },
     },
 };

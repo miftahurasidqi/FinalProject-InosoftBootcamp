@@ -12,7 +12,13 @@
                 </div>
                 <div class="detail">
                     <p class="head-d-s">Transfer No.</p>
-                    <p class="isi-d">{{ instruction.linkTo }}</p>
+                    <p
+                        v-for="(item, i) in instruction.linkTo"
+                        :key="i"
+                        class="isi-d"
+                    >
+                        {{ item }}
+                    </p>
                 </div>
                 <div class="detail">
                     <p class="head-d-s">Attention Of</p>

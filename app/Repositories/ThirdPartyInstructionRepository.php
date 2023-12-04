@@ -168,7 +168,11 @@ class ThirdPartyInstructionRepository
 
     public function getInstructionById($id)
     {
-        $instruction = ThirdPartyInstruction::with(['vendorInvoice', 'internalOnlyAttachment'])->find($id);
+        $instruction = ThirdPartyInstruction::with(['vendorInvoice', 'internalOnlyAttachment', 'internalOnlyNotes'])->find($id);
+        // $instruction = ThirdPartyInstruction::find($id);
+        // $invoice = $this->vendorInvoiceRepository->where('third_party_instruction_id', $id)->get()
+        // $internalAttachment = $this->vendorInvoiceRepository->where('third_party_instruction_id', $id)->get()
+        // $internalNotes = $this->vendorInvoiceRepository->where('third_party_instruction_id', $id)->get()
 
         if ($instruction) {
             return response()->json($instruction);
@@ -227,7 +231,6 @@ class ThirdPartyInstructionRepository
             ];
         }
     }
-
     public function setToCompleted($id)
     {
         try {
@@ -257,4 +260,68 @@ class ThirdPartyInstructionRepository
             ];
         }
     }
+    public function updateInstruction($id, $editData, $attachment)
+    {
+        // return [
+        //     $id, $editData, $attachment,
+        // ];
+
+        try {
+            $deleteFile = $editData['deleteAttachment'];
+            unset($editData['deleteAttachment']);
+
+            $instruction = ThirdPartyInstruction::find($id);
+            if (!$instruction) {
+                return response()->json(['message' => 'Data not found'], 404);
+            }
+            $lastStatus = $instruction['status'];
+            $newStatus = $editData['status'];
+
+            $lastAttachment = $instruction->costDetail->attachment;
+            $newAttachment = [];
+
+            $result = $lastAttachment;
+            if (count($deleteFile) != 0) {
+                for ($i = 0; $i < count($lastAttachment); $i++) {
+                    foreach ($deleteFile as $file) {
+                        if ($file['name'] == $lastAttachment[$i]['name']) {
+                            unset($result[$i]);
+                        }
+                    }
+                }
+            }
+
+            $newAttachment = $result + $attachment;
+            $costDetail = $editData['costDetail'];
+            unset($editData['costDetail']);
+            $costDetail['attachment'] = $newAttachment;
+
+            $instruction->update($editData);
+            $instruction->costDetail()->create(
+                [
+                    'costItems' => $costDetail['costItems'],
+                    'grandTotal' => $costDetail['grandTotal'],
+                    'attachment' => $costDetail['attachment'],
+                    'notes' => $costDetail['notes'],
+                ]
+            );
+
+            return [
+                'success' => true,
+                'id' => $id,
+                'deleteFile' => $deleteFile,
+                '$lastAttachment' => $lastAttachment,
+                '$lastStatus' => $lastStatus,
+                '$newStatus' => $newStatus,
+                '$editData' => $editData,
+                '$costDetail' => $costDetail,
+            ];
+        } catch (\Exception $e) {
+            return [
+                'success' => false,
+                'errors' => $e->getMessage(),
+            ];
+        }
+    }
+
 }

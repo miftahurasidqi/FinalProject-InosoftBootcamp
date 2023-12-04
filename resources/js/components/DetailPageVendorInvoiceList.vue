@@ -16,23 +16,7 @@
                         type="text"
                         v-model="editInvoice.invoiceNumber"
                     />
-                    <!-- @input="updateInvoiceNumber" -->
                 </div>
-
-                <!-- <div>
-                <p>Invoice Attachment</p>
-                <div
-                    v-if="editInvoice.invoiceAttachment.name"
-                    class="file-item"
-                >
-                    <p>{{ editInvoice.invoiceAttachment.name }}</p>
-                    <p>by user 13/11/2023</p>
-                    <button
-                        @click.prevent="
-                            deleteInvoiceAttachment(
-                                editInvoice.invoiceAttachment
-                            )
-                        " -->
 
                 <div>
                     <p class="input-title">Invoice Attachment</p>
@@ -123,7 +107,7 @@
             </div>
         </Popup>
 
-        <table v-if="vendor_invoice.length != 0" class="table">
+        <table v-if="Array.isArray(vendor_invoice)" class="table">
             <!-- <table class="table"> -->
             <thead>
                 <tr>
@@ -137,23 +121,11 @@
                 <td>{{ invoice.invoiceNumber }}</td>
                 <td>{{ invoice.invoiceAttachment.name }}</td>
                 <td>
-                    <span>
+                    <span v-if="Array.isArray(invoice.suportingDocument)">
                         {{ invoice.suportingDocument.length }}
                     </span>
                     <button class="btn" @click="showSuportDoc(index)">
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="25"
-                            height="25"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="#000000"
-                            stroke-width="2"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                        >
-                            <path d="M6 9l6 6 6-6" />
-                        </svg>
+                        <ArowBottom />
                     </button>
                     <div v-if="isShowSuportDoc == index" class="suport-doc">
                         <p
@@ -177,45 +149,13 @@
                         class="btn"
                         @click.prevent="showConfirmDeleteInvoice(invoice._id)"
                     >
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="25"
-                            height="25"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="#f80000"
-                            stroke-width="2"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                        >
-                            <polyline points="3 6 5 6 21 6"></polyline>
-                            <path
-                                d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"
-                            ></path>
-                            <line x1="10" y1="11" x2="10" y2="17"></line>
-                            <line x1="14" y1="11" x2="14" y2="17"></line>
-                        </svg>
+                        <TrashIcon />
                     </button>
                     <button
                         class="btn"
                         @click.prevent="showFormEditInvoice(index)"
                     >
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="25"
-                            height="25"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="#0cf800"
-                            stroke-width="2"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                        >
-                            <polygon
-                                points="14 2 18 6 7 17 3 17 3 13 14 2"
-                            ></polygon>
-                            <line x1="3" y1="22" x2="21" y2="22"></line>
-                        </svg>
+                        <PenIcon />
                     </button>
                 </td>
             </tr>
@@ -245,12 +185,18 @@
 <script>
 import { mapGetters, mapActions } from "vuex";
 import ActionButton from "./ActionButton.vue";
+import ArowBottom from "./assets/icons/ArowBottomIcon.vue";
+import TrashIcon from "./assets/icons/TrashIcon.vue";
+import PenIcon from "./assets/icons/PenIcon.vue";
 import Popup from "./Popup.vue";
 
 export default {
     name: "DetailPageVendorInvoiceList",
     components: {
         ActionButton,
+        ArowBottom,
+        TrashIcon,
+        PenIcon,
         Popup,
     },
     data() {
@@ -315,9 +261,10 @@ export default {
                 this.isShowSuportDoc = index;
             }
         },
-        deleteInvoice() {
+        async deleteInvoice() {
             // console.log("delete", this.deleteInvoiceId);
-            this.deleteInvoiceById(this.deleteInvoiceId);
+            await this.deleteInvoiceById(this.deleteInvoiceId);
+            window.location.reload();
         },
 
         handleInputInvoiceAttachment(e) {
@@ -356,7 +303,7 @@ export default {
 
             // this.$store.commit("deleteSuportDoc", index);
         },
-        save() {
+        async save() {
             const editData = {
                 id: this.editInvoice._id,
                 invoiceNumber: this.editInvoice.invoiceNumber,
@@ -365,7 +312,8 @@ export default {
             };
             //  deleteAttachment: this.deleteFile.invoiceAttachment,
             // deletesuportDoc: this.deleteFile.suportingDocument,
-            this.saveEditInvoice(editData);
+            await this.saveEditInvoice(editData);
+            window.location.reload();
         },
     },
 };

@@ -80,7 +80,7 @@
                     />
                 </tbody>
             </table>
-            <ActionButton @click="loadNextInstructions" text="Load Next Data" />
+            <!-- <ActionButton @click="loadNextInstructions" text="Load Next Data" /> -->
         </div>
     </div>
 </template>

@@ -74,7 +74,15 @@ export const state = {
             grandTotal: [],
             notes: "",
         },
-        vendor_invoice: [],
+        vendor_invoice: [
+            {
+                invoiceAttachment: {
+                    name: "",
+                    path: "",
+                },
+                suportingDocument: [],
+            },
+        ],
     },
     inputStatusInfo: {
         canceledBy: "User 1",
@@ -92,10 +100,24 @@ export const state = {
 
     // for Editpage start
     editIstruction: {
+        instructionType: "",
+        linkTo: [],
+        attentionOf: "",
+        invoiceTo: "",
+        assignedVendor: "",
+        vendorAddress: "",
+        vendorQuotationNo: "",
+        customerContract: "",
+        NoCustomerPO: "",
+        status: "",
         costDetail: {
             costItems: [],
             grandTotal: [],
             notes: "",
         },
+    },
+    changeFile: {
+        addFiles: [],
+        minFiles: [],
     },
 };

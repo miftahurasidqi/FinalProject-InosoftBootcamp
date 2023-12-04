@@ -115,8 +115,6 @@ class ThirdPartyInstructionController extends Controller
 
     public function updateInstruction(Request $request, $id)
     {
-        // return response()->json($id);
-
         // Menangkap data JSON
         $editData = json_decode($request->input('data'), true);
         // Menangkap file []
@@ -127,14 +125,13 @@ class ThirdPartyInstructionController extends Controller
         if ($files) {
             $attachment = $this->fileService->saveMultipleFile($files);
         }
+        // return response()->json([
+        //     'id' => $id,
+        //     'id2' => $editData,
+        //     'id3' => $attachment,
+        // ]);
 
-        $costDetail = $jsonData['costDetail'];
-        $costDetail['attachment'] = $attachment;
-        $jsonData['costDetail'] = $costDetail;
-
-        // return $this->thirdpartyinstructionservice->createInstruction($jsonData);
-
-        // return $thirdPartyInstruction = $this->thirdpartyinstructionservice->setToCompleted($id);
+        return $thirdPartyInstruction = $this->thirdpartyinstructionservice->updateInstruction($id, $editData, $attachment);
     }
 
 }

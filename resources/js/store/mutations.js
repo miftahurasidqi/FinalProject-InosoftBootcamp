@@ -97,6 +97,7 @@ export const updateNewNote = ({ newIstruction }, note) => {
 
 // for Detailpage start
 export const setInstructionDetail = (state, response) => {
+    state.editIstruction = response;
     state.instructionDetail = response;
 };
 export const updateDescription = ({ inputStatusInfo }, description) => {
@@ -140,4 +141,115 @@ export const deleteSuportDoc = ({ newInvoice }, index) => {
 export const setInstructionEdit = (state, response) => {
     state.editIstruction = response;
 };
+
+export const setEditCostItems = (state, index) => {
+    if (index === undefined) {
+        state.editIstruction.costDetail.costItems.push({
+            description: "",
+            qty: 0,
+            uom: "",
+            unitPrice: 0,
+            gst: 0,
+            currency: "",
+            vatAmount: 0,
+            subTotal: 0,
+            total: 0,
+            chargeTo: "",
+        });
+    } else {
+        state.editIstruction.costDetail.costItems.length == 1
+            ? console.log("minimal 1 data")
+            : state.editIstruction.costDetail.costItems.splice(index, 1);
+    }
+};
+
+export const setEditGrandTotal = (state) => {
+    const costItems = state.editIstruction.costDetail.costItems;
+    const totalByCurrency = {};
+
+    costItems.forEach((item) => {
+        console.log(item);
+        const { currency, vatAmount, subTotal, total } = item;
+
+        // Mengecek apakah mata uang sudah ada dalam objek totalByCurrency
+        if (currency !== "") {
+            if (!totalByCurrency[currency]) {
+                totalByCurrency[currency] = {
+                    vatAmount: 0,
+                    subTotal: 0,
+                    total: 0,
+                };
+            }
+            // Menjumlahkan data berdasarkan mata uang
+            totalByCurrency[currency].vatAmount += vatAmount;
+            totalByCurrency[currency].subTotal += subTotal;
+            totalByCurrency[currency].total += total;
+        }
+    });
+
+    // Mengonversi objek totalByCurrency ke dalam bentuk array
+    const grandTotal = Object.keys(totalByCurrency).map((currency) => ({
+        currency,
+        ...totalByCurrency[currency],
+    }));
+    state.editIstruction.costDetail.grandTotal = grandTotal;
+};
+
+export const calculateEditCostItem = (state, index) => {
+    const item = state.editIstruction.costDetail.costItems[index];
+
+    item.subTotal = item.qty * item.unitPrice;
+    item.vatAmount = (item.subTotal * item.gst) / 100;
+    item.total = item.subTotal + item.vatAmount;
+
+    state.editIstruction.costDetail.costItems[index] = item;
+};
+export const addAttacmentFileEdit = (state, file) => {
+    state.changeFile.addFiles.push(file);
+    state.editIstruction.costDetail.attachment.push(file);
+    console.log(state.changeFile);
+};
+export const minAttacmentFileEdit = (state, index) => {
+    const fileChose = state.editIstruction.costDetail.attachment[index];
+    const addFiles = state.changeFile.addFiles;
+    if (fileChose.path) {
+        state.changeFile.minFiles.push(fileChose);
+    } else {
+        state.changeFile.addFiles = addFiles.filter(
+            (item) => item.name !== fileChose.name
+        );
+    }
+
+    state.editIstruction.costDetail.attachment.splice(index, 1);
+    console.log(state.changeFile);
+};
+
+export const updateNoteEdit = ({ editIstruction }, note) => {
+    editIstruction.costDetail.notes = note;
+};
+
+export const clearEditData = (state) => {
+    state.editIstruction = {
+        instructionType: "",
+        linkTo: [],
+        attentionOf: "",
+        invoiceTo: "",
+        assignedVendor: "",
+        vendorAddress: "",
+        vendorQuotationNo: "",
+        customerContract: "",
+        NoCustomerPO: "",
+        status: "",
+        costDetail: {
+            costItems: [],
+            grandTotal: [],
+            notes: "",
+        },
+    };
+    state.changeFile = {
+        addFiles: [],
+        minFiles: [],
+    };
+};
+
 // for EditPage end

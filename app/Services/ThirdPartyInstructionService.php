@@ -101,9 +101,41 @@ class ThirdPartyInstructionService
         return $this->thirdPartyInstructionRepository->setToCompleted($id);
     }
 
-    // Get Instruction By Id
-    // public function getInstructionByIdService($id)
-    // {
-    //     return $this->thirdPartyInstructionRepository->getInstructionByIdRepo($id);
-    // }
+    public function updateInstruction($id, $editData, $attachment)
+    {
+
+        $validator = Validator::make($editData, [
+            'instructionType' => 'required|string',
+            'linkTo' => 'required|array',
+            'attentionOf' => 'required|string',
+            'invoiceTo' => 'required|string',
+            'assignedVendor' => 'required|string',
+            'vendorAddress' => 'required|string',
+            'vendorQuotationNo' => 'required|string',
+            'customerContract' => 'required|string',
+            'NoCustomerPO' => 'required|string',
+            'status' => 'required|string',
+            'costDetail' => 'required|array',
+            'costDetail.costItem.*.description' => 'required|string',
+            'costDetail.costItem.*.QTY' => 'required|numeric',
+            'costDetail.costItem.*.UOM' => 'required|string',
+            'costDetail.costItem.*.unitPrice' => 'required|numeric',
+            'costDetail.costItem.*.GST' => 'required|numeric',
+            'costDetail.costItem.*.currency' => 'required|string',
+            'costDetail.costItem.*.vatAmount' => 'required|numeric',
+            'costDetail.costItem.*.subTotal' => 'required|numeric',
+            'costDetail.costItem.*.total' => 'required|numeric',
+            'costDetail.grandTotal.*.currency' => 'required|string',
+            'costDetail.grandTotal.*.vatAmount' => 'required|numeric',
+            'costDetail.grandTotal.*.subTotal' => 'required|numeric',
+            'costDetail.grandTotal.*.total' => 'required|numeric',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['error' => $validator->errors()], 400);
+        }
+
+        $result = $this->thirdPartyInstructionRepository->updateInstruction($id, $editData, $attachment);
+        return response()->json($result);
+    }
 }

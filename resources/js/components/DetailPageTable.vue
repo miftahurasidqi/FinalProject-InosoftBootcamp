@@ -62,7 +62,7 @@
                             :key="index"
                         >
                             <p>
-                                {{ attachment }}
+                                {{ attachment.name }}
                             </p>
                         </div>
                         <button>Add Attachment</button>

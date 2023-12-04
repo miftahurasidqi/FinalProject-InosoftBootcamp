@@ -1,4 +1,15 @@
 <template>
+    <Popup
+        v-if="isDeleteAttachment"
+        @close="closeConfirmDelete"
+        title="Delete Attachment"
+    >
+        <p>Anda yakin Akan menghapus Attachment ini?</p>
+        <div>
+            <ActionButton text="Cancel" @click.prevent="closeConfirmDelete" />
+            <ActionButton text="Confirm" @click.prevent="deleteAttachment" />
+        </div>
+    </Popup>
     <div class="container-panel">
         <div id="internal-panel-header">
             <p>For Internal Only</p>
@@ -8,117 +19,24 @@
                 <p>Attachment</p>
                 <div>
                     <div>
-                        <div class="card attachment-panel">
-                            <p>filename.pdf</p>
+                        <div
+                            v-for="(attachment, index) in internalAttachment"
+                            :key="index"
+                            class="card attachment-panel"
+                        >
+                            <p>{{ attachment.file.name }}</p>
                             <div class="attachment-panel-bottom">
-                                <p>Upload By User 1 11/29/2023</p>
-                                <button class="btn">
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        width="25"
-                                        height="25"
-                                        viewBox="0 0 24 24"
-                                        fill="none"
-                                        stroke="#f80000"
-                                        stroke-width="2"
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                    >
-                                        <polyline
-                                            points="3 6 5 6 21 6"
-                                        ></polyline>
-                                        <path
-                                            d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"
-                                        ></path>
-                                        <line
-                                            x1="10"
-                                            y1="11"
-                                            x2="10"
-                                            y2="17"
-                                        ></line>
-                                        <line
-                                            x1="14"
-                                            y1="11"
-                                            x2="14"
-                                            y2="17"
-                                        ></line>
-                                    </svg>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="card attachment-panel">
-                            <p>filename.pdf</p>
-                            <div class="attachment-panel-bottom">
-                                <p>Upload By User 1 11/29/2023</p>
-                                <button class="btn">
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        width="25"
-                                        height="25"
-                                        viewBox="0 0 24 24"
-                                        fill="none"
-                                        stroke="#f80000"
-                                        stroke-width="2"
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                    >
-                                        <polyline
-                                            points="3 6 5 6 21 6"
-                                        ></polyline>
-                                        <path
-                                            d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"
-                                        ></path>
-                                        <line
-                                            x1="10"
-                                            y1="11"
-                                            x2="10"
-                                            y2="17"
-                                        ></line>
-                                        <line
-                                            x1="14"
-                                            y1="11"
-                                            x2="14"
-                                            y2="17"
-                                        ></line>
-                                    </svg>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="card attachment-panel">
-                            <p>filename.pdf</p>
-                            <div class="attachment-panel-bottom">
-                                <p>Upload By User 1 11/29/2023</p>
-                                <button class="btn">
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        width="25"
-                                        height="25"
-                                        viewBox="0 0 24 24"
-                                        fill="none"
-                                        stroke="#f80000"
-                                        stroke-width="2"
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                    >
-                                        <polyline
-                                            points="3 6 5 6 21 6"
-                                        ></polyline>
-                                        <path
-                                            d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"
-                                        ></path>
-                                        <line
-                                            x1="10"
-                                            y1="11"
-                                            x2="10"
-                                            y2="17"
-                                        ></line>
-                                        <line
-                                            x1="14"
-                                            y1="11"
-                                            x2="14"
-                                            y2="17"
-                                        ></line>
-                                    </svg>
+                                <p>
+                                    Upload By {{ attachment.uploadBy }}
+                                    {{ attachment.time }}
+                                </p>
+                                <button
+                                    class="btn"
+                                    @click.prevent="
+                                        showConfirmDelete(attachment._id)
+                                    "
+                                >
+                                    <TrashIcon />
                                 </button>
                             </div>
                         </div>
@@ -137,72 +55,35 @@
             <div class="c-i">
                 <p>Internal Notes</p>
                 <div>
-                    <div>
+                    <div
+                        v-for="(noteItem, index) in internalNotes"
+                        :key="index"
+                    >
                         <div class="d-flex notes-info">
                             <div>
-                                <p>By User 1 11/29/2023</p>
+                                <p>
+                                    By {{ noteItem.uploadBy }}
+                                    {{ noteItem.time }}
+                                </p>
                             </div>
                             <div>
-                                <button class="btn me-2">
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        width="25"
-                                        height="25"
-                                        viewBox="0 0 24 24"
-                                        fill="none"
-                                        stroke="#f80000"
-                                        stroke-width="2"
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                    >
-                                        <polyline
-                                            points="3 6 5 6 21 6"
-                                        ></polyline>
-                                        <path
-                                            d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"
-                                        ></path>
-                                        <line
-                                            x1="10"
-                                            y1="11"
-                                            x2="10"
-                                            y2="17"
-                                        ></line>
-                                        <line
-                                            x1="14"
-                                            y1="11"
-                                            x2="14"
-                                            y2="17"
-                                        ></line>
-                                    </svg>
+                                <button
+                                    class="btn me-2"
+                                    @click="showDeleteNote(noteItem._id)"
+                                >
+                                    <TrashIcon />
                                 </button>
-                                <button class="btn" @click="showEditNote">
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        width="25"
-                                        height="25"
-                                        viewBox="0 0 24 24"
-                                        fill="none"
-                                        stroke="#0cf800"
-                                        stroke-width="2"
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                    >
-                                        <polygon
-                                            points="14 2 18 6 7 17 3 17 3 13 14 2"
-                                        ></polygon>
-                                        <line
-                                            x1="3"
-                                            y1="22"
-                                            x2="21"
-                                            y2="22"
-                                        ></line>
-                                    </svg>
+                                <button
+                                    class="btn"
+                                    @click="showEditNote(index)"
+                                >
+                                    <PenIcon />
                                 </button>
                             </div>
                         </div>
                         <div class="card notes-panel">
                             <p>
-                                {{ notesPlaceholder }}
+                                {{ noteItem.note }}
                             </p>
                         </div>
                     </div>
@@ -222,7 +103,13 @@
     <Popup v-if="isAddNote" @close="closeAddNote" title="Add Note">
         <div class="modal-body notes-input">
             <p>By User</p>
-            <textarea rows="6" placeholder="Enter a note"></textarea>
+            <textarea
+                @input="handleInputNote"
+                rows="6"
+                placeholder="Enter a note"
+            >
+                {{ inputNote }}
+            </textarea>
         </div>
         <div class="modal-footer">
             <ActionButton
@@ -230,15 +117,31 @@
                 text="Cancel"
                 @click.prevent="closeAddNote"
             />
-            <ActionButton class="buttons" text="Confirm" />
+            <ActionButton
+                class="buttons"
+                text="Confirm"
+                @click.prevent="confimAddNote"
+            />
         </div>
     </Popup>
+
+    <Popup v-if="isDeleteNote" @close="closeDeleteNote" title="Delete Note">
+        <p>Anda yakin Akan menghapus Attachment ini?</p>
+        <div>
+            <ActionButton text="Cancel" @click.prevent="closeDeleteNote" />
+            <ActionButton text="Confirm" @click.prevent="deleteNote" />
+        </div>
+    </Popup>
+
     <Popup v-if="isEditNote" @close="closeEditNote" title="Edit Note">
         <div class="modal-body notes-input">
             <p>By User</p>
-            <textarea rows="6" placeholder="Enter a note">{{
-                notesPlaceholder
-            }}</textarea>
+            <textarea
+                rows="6"
+                placeholder="Enter a note"
+                @input="handleInputNote"
+                >{{ inputNote }}</textarea
+            >
         </div>
         <div class="modal-footer">
             <ActionButton
@@ -246,7 +149,11 @@
                 text="Cancel"
                 @click.prevent="closeEditNote"
             />
-            <ActionButton class="buttons" text="Confirm" />
+            <ActionButton
+                @click.prevent="saveEditNote"
+                class="buttons"
+                text="Confirm"
+            />
         </div>
     </Popup>
 </template>
@@ -254,33 +161,78 @@
 <script>
 import { mapGetters, mapActions } from "vuex";
 import ActionButton from "./ActionButton.vue";
+import TrashIcon from "./assets/icons/TrashIcon.vue";
+import PenIcon from "./assets/icons/PenIcon.vue";
 import Popup from "./Popup.vue";
 
 export default {
     name: "DetailPageInternalPanel",
     components: {
         ActionButton,
+        TrashIcon,
+        PenIcon,
         Popup,
     },
     data() {
         return {
+            isDeleteAttachment: false,
+            deleteAttachmentId: "",
+            inputNote: "",
             isAddNote: false,
+            deleteNoteId: "",
+            isDeleteNote: false,
+            editNoteID: "",
             isEditNote: false,
             notesPlaceholder:
                 "Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat.",
         };
     },
+    computed: {
+        ...mapGetters({
+            internalAttachment: "internalAttachment",
+            internalNotes: "internalNotes",
+        }),
+    },
     methods: {
         ...mapActions({
             addInternalAttachment: "addInternalAttachment",
+            deleteInternalAttachment: "deleteInternalAttachment",
+            addInternalNotes: "addInternalNotes",
+            editInternalNotes: "editInternalNotes",
+            deleteInternalNotes: "deleteInternalNotes",
         }),
-        handleInputFile(e) {
+        async handleInputFile(e) {
             console.log(e.target.files[0]);
             const reqData = {
                 id: this.$route.params.id,
                 file: e.target.files[0],
             };
-            this.addInternalAttachment(reqData);
+            await this.addInternalAttachment(reqData);
+            window.location.reload();
+        },
+        showConfirmDelete(id) {
+            this.deleteAttachmentId = id;
+            this.isDeleteAttachment = true;
+            document.body.style.overflow = "hidden";
+        },
+        closeConfirmDelete() {
+            this.isDeleteAttachment = false;
+            document.body.style.overflow = "";
+        },
+        async deleteAttachment() {
+            await this.deleteInternalAttachment(this.deleteAttachmentId);
+            window.location.reload();
+        },
+        handleInputNote(e) {
+            this.inputNote = e.target.value;
+        },
+        async confimAddNote() {
+            const reqData = {
+                id: this.$route.params.id,
+                note: this.inputNote,
+            };
+            await this.addInternalNotes(reqData);
+            window.location.reload();
         },
         showAddNote() {
             this.isAddNote = true;
@@ -290,13 +242,38 @@ export default {
             this.isAddNote = false;
             document.body.style.overflow = "";
         },
-        showEditNote() {
+        showDeleteNote(id) {
+            this.deleteNoteId = id;
+            this.isDeleteNote = true;
+            document.body.style.overflow = "hidden";
+        },
+        closeDeleteNote() {
+            this.isDeleteNote = false;
+            document.body.style.overflow = "";
+        },
+        async deleteNote() {
+            await this.deleteInternalNotes(this.deleteNoteId);
+            window.location.reload();
+        },
+        showEditNote(i) {
+            this.editNoteID = this.internalNotes[i]._id;
+            this.inputNote = this.internalNotes[i].note;
             this.isEditNote = true;
             document.body.style.overflow = "hidden";
         },
         closeEditNote() {
             this.isEditNote = false;
             document.body.style.overflow = "";
+        },
+        async saveEditNote() {
+            const reqData = {
+                id: this.editNoteID,
+                note: this.inputNote,
+            };
+            await this.editInternalNotes(reqData);
+            window.location.reload();
+
+            // console.log(this.editNoteID);
         },
     },
 };

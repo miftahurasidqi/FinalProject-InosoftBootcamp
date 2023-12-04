@@ -66,6 +66,12 @@ export const newInvoiceAttachment = (state) => {
 export const newInvoiceSuportDoc = (state) => {
     return state.newInvoice.suportingDocument;
 };
+export const internalAttachment = (state) => {
+    return state.instructionDetail.internal_only_attachment;
+};
+export const internalNotes = (state) => {
+    return state.instructionDetail.internal_only_notes;
+};
 
 // for Detailpage end
 
@@ -79,5 +85,14 @@ export const editCostItem = (state) => {
 };
 export const editGrandTotal = (state) => {
     return state.editIstruction.costDetail.grandTotal;
+};
+export const editAttacmentFile = (state) => {
+    // console.log(attacmentFile);
+    return state.editIstruction.costDetail.attachment;
+};
+
+export const editNote = ({ editIstruction }) => {
+    console.log(editIstruction.costDetail.notes);
+    return editIstruction.costDetail.notes;
 };
 // for EditPage end

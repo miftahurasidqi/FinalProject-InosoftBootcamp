@@ -7,30 +7,30 @@
             @submit.prevent="handleSubmit"
         >
             <EditPageInfoPanel
-                :newIstruction="newIstruction"
-                :getLinkTo="getLinkTo"
+                :editInstruction="editInstruction"
                 :getAssignedVendor="getAssignedVendor"
                 :getCustomer="getCustomer"
                 :getInvoiceTo="getInvoiceTo"
+                :getLinkTo="getLinkTo"
             />
             <EditPageTable
                 :newCostItems="newCostItems"
                 :newGrandTotal="newGrandTotal"
+                :newAttacmentFile="newAttacmentFile"
+                :note="note"
             />
             <div class="container-button-bottom">
                 <button type="button" @click="handleCancel">Cancel</button>
-                <button type="submit" @click="handleForDraft">
+                <button
+                    v-if="editInstruction.status == 'draft'"
+                    type="submit"
+                    @click="handleForDraft"
+                >
                     Save as Daft
                 </button>
                 <button type="submit" @click="handleForSubmit">Submit</button>
             </div>
         </form>
-        <!-- <div> -->
-        <!-- <SendMail />
-      <InternalNote />
-      <ReasonCancellation />
-      <VendorInvoice /> -->
-        <!-- <AddInvoiceTarget /> -->
     </div>
 </template>
 
@@ -60,20 +60,26 @@ export default {
             status: "",
         };
     },
+    mounted() {
+        this.getInstructionsById(this.$route.params.id);
+    },
     computed: {
         ...mapGetters({
-            newIstruction: "newIstruction",
-            newCostItems: "newCostItems",
-            newGrandTotal: "newGrandTotal",
-            getLinkTo: "getLinkTo",
             getAssignedVendor: "getAssignedVendor",
-            getCustomer: "getCustomer",
+            editInstruction: "editIstruction",
             getInvoiceTo: "getInvoiceTo",
+            getCustomer: "getCustomer",
+            getLinkTo: "getLinkTo",
+            newCostItems: "editCostItem",
+            newGrandTotal: "editGrandTotal",
+            newAttacmentFile: "editAttacmentFile",
+            note: "editNote",
         }),
     },
     methods: {
         ...mapActions({
-            saveNewInstruction: "saveNewInstruction",
+            getInstructionsById: "getInstructionsById",
+            saveEditInstruction: "saveEditInstruction",
         }),
         handleCancel() {
             this.$router.push("/");
@@ -85,7 +91,12 @@ export default {
             this.status = "in progres";
         },
         async handleSubmit() {
-            const response = await this.saveNewInstruction(this.status);
+            const reqData = {
+                id: this.$route.params.id,
+                status: this.status,
+            };
+            const response = await this.saveEditInstruction(reqData);
+
             await this.$router.push(`/detail/${response}`);
         },
     },

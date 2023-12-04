@@ -48,7 +48,7 @@ Route::group([
     Route::patch('/instruction/completed/{id}', [ThirdPartyInstructionController::class, 'setInstructionToCompleted']);
     Route::delete('/instruction/{id}', [ThirdPartyInstructionController::class, 'destroy']);
     //== belum
-    Route::patch('/instruction/update/{id}', [ThirdPartyInstructionController::class, 'updateInstruction']);
+    Route::post('/instruction/update/{id}', [ThirdPartyInstructionController::class, 'updateInstruction']);
 });
 
 // Route Api For VendorInvoice  Controller
@@ -64,8 +64,8 @@ Route::group([], function () {
     // belum
     Route::post('/internalOnly/attachment/add/{id}', [ForInternalController::class, 'addAttachment']);
     Route::delete('/internalOnly/attachment/delete/{id}', [ForInternalController::class, 'deleteAttachment']);
-    Route::delete('/internalOnly/note/add', [ForInternalController::class, 'addNote']);
-    Route::delete('/internalOnly/note/edit/{id}', [ForInternalController::class, 'editNote']);
+    Route::post('/internalOnly/note/add/{id}', [ForInternalController::class, 'addNote']);
+    Route::patch('/internalOnly/note/edit/{id}', [ForInternalController::class, 'editNote']);
     Route::delete('/internalOnly/note/delete/{id}', [ForInternalController::class, 'deleteNote']);
 });
 

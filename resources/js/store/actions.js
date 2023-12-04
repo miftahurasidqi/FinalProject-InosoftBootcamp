@@ -94,7 +94,7 @@ export const getInstructionsById = async ({ commit }, id) => {
         const response = await axios.get(`/api/instruction/${id}`);
         console.log(response);
         commit("setInstructionDetail", response.data);
-        commit("setInstructionEdit", response.data);
+        // commit("setInstructionEdit", response.data);
     } catch (error) {
         console.error("Error getInstruction data to API:", error);
     }
@@ -242,25 +242,32 @@ export const addInternalAttachment = async ({ commit }, reqData) => {
     }
 };
 
-export const deleteAttachmentForInternalOnly = async ({ commit }, id) => {
+export const deleteInternalAttachment = async ({ commit }, id) => {
     console.log(id);
 
-    // const response = await axios.delete(`api/forInternalOnly/attachment/${id}`);
-    // commit("setInstructionDetail", response);
-
-    // response: {
-    //     message: "Delete Attachment success",
-    //     data: [
-    //             {
-    //                 id: "string",
-    //                 internalAttachment: "string",           // berisi nama file
-    //             }
-    //     ]
-    // }
+    try {
+        const response = await axios.delete(
+            `/api/internalOnly/attachment/delete/${id}`
+        );
+        console.log(response.data);
+        // commit("setInstructionDetail", response);
+    } catch (error) {
+        console.log(error);
+    }
 };
 
-export const addNotesForInternalOnly = async ({ commit }, id) => {
-    console.log(id);
+export const addInternalNotes = async ({ commit }, reqData) => {
+    console.log(reqData);
+    const { id, note } = reqData;
+    try {
+        const response = await axios.post(`/api/internalOnly/note/add/${id}`, {
+            note,
+        });
+        console.log(response.data);
+        // commit("setInstructionDetail", response);
+    } catch (error) {
+        console.log(error);
+    }
     // request data: {
     //     note: "string",
     //     noteBy: "string",
@@ -281,44 +288,35 @@ export const addNotesForInternalOnly = async ({ commit }, id) => {
     // }
 };
 
-export const editNotesForInternalOnly = async ({ commit }, id) => {
-    console.log(id);
-    //     request data: {
-    //         note: "string",
-    //         noteBy: "string",
-    //     }
+export const editInternalNotes = async ({ commit }, reqData) => {
+    const { id, note } = reqData;
+    console.log(id, note);
 
-    // const response = await axios.patch(`api/forInternalOnly/note/${id}`);
-    // commit("setInstructionDetail", response);
-
-    // response: {
-    // message: "edit note success",
-    // data: [
-    //         {
-    //             id: "string",
-    //             note: "string",
-    //             noteBy: "string",
-    //             time: "string",
-    //         }
-    // ]
-    // }
+    try {
+        const response = await axios.patch(
+            `/api/internalOnly/note/edit/${id}`,
+            {
+                note,
+            }
+        );
+        console.log(response.data);
+        // commit("setInstructionDetail", response);
+    } catch (error) {
+        console.log(error);
+    }
+    // commit("setInstructionDetail", response)
 };
-export const deleteNotesForInternalOnly = async ({ commit }, id) => {
+export const deleteInternalNotes = async ({ commit }, id) => {
     console.log(id);
-    // const response = await axios.delete(`api/forInternalOnly/note/${id}`);
-    // commit("setInstructionDetail", response);
-
-    // response: {
-    //     message: "edit note success",
-    //     data: [
-    //             {
-    //                 id: "string",
-    //                 note: "string",
-    //                 noteBy: "string",
-    //                 time: "string",
-    //             }
-    //     ]
-    // }
+    try {
+        const response = await axios.delete(
+            `/api/internalOnly/note/delete/${id}`
+        );
+        console.log(response.data);
+        // commit("setInstructionDetail", response);
+    } catch (error) {
+        console.log(error);
+    }
 };
 
 export const downloadFile = async ({ commit }, id) => {
@@ -336,4 +334,46 @@ export const downloadFile = async ({ commit }, id) => {
 // for Detailpage end
 
 // for Editpage start
+
+export const saveEditInstruction = async ({ commit, state }, reqData) => {
+    const { status, id } = reqData;
+    const addFiles = state.changeFile.addFiles;
+    const editInstructionData = state.editIstruction;
+
+    editInstructionData["deleteAttachment"] = state.changeFile.minFiles;
+    editInstructionData.status = status;
+
+    delete editInstructionData.internal_only_attachment;
+    delete editInstructionData.internal_only_notes;
+    delete editInstructionData.vendor_invoice;
+    delete editInstructionData._id;
+    console.log(editInstructionData);
+
+    try {
+        const formData = new FormData();
+        formData.append("data", JSON.stringify(editInstructionData));
+        // Iterasi melalui setiap file dalam array attachmentFile
+        addFiles.forEach((file, i) => {
+            formData.append(`attachment[${i}]`, file);
+        });
+        // console.log(state.newIstruction);
+        // Mengirim data ke API menggunakan metode POST
+        const response = await axios.post(
+            `/api/instruction/update/${id}`,
+            formData,
+            {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                },
+            }
+        );
+        // Handle response
+        console.log(response.data);
+        commit("clearEditData");
+
+        return response.data.id;
+    } catch (error) {
+        console.error("Error sending data to API:", error);
+    }
+};
 // for EditPage end

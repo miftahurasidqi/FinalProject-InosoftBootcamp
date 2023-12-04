@@ -33,25 +33,24 @@ class ForInternalController extends Controller
 
     public function deleteAttachment($id)
     {
-        return response()->json([$id]);
-        // return $this->internalOnly->deleteAttachment($id);
+        // return response()->json([$id]);
+        return $this->internalOnly->deleteAttachment($id);
     }
 
     public function addNote(Request $request, $id)
     {
-        return response()->json([$id]);
-        // return $this->internalOnly->addNote($id, $note);
+        $note = $request->input('note', '');
+        return $this->internalOnly->addNote($id, $note);
     }
 
     public function editNote(Request $request, $id)
     {
-        return response()->json([$id]);
-        // return $this->internalOnly->editNote($id, $note);
+        $note = $request->input('note', '');
+        return $this->internalOnly->editNote($id, $note);
     }
 
-    public function deleteNote(Request $request, $id)
+    public function deleteNote($id)
     {
-        return response()->json([$id]);
-        // return $this->internalOnly->deleteNote($id);
+        return $this->internalOnly->deleteNote($id);
     }
 }

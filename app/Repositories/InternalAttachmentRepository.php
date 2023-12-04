@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Models\InternalOnlyAttachment;
 use App\Models\ThirdPartyInstruction;
+use App\Services\FileService;
 
 class InternalAttachmentRepository
 {
@@ -12,9 +13,12 @@ class InternalAttachmentRepository
     public function __construct(
         InternalOnlyAttachment $internalOnlyAttachment,
         ThirdPartyInstruction $thirdpartyinstruction,
+        FileService $fileService,
     ) {
         $this->internalOnlyAttachment = $internalOnlyAttachment;
         $this->thirdpartyinstruction = $thirdpartyinstruction;
+        $this->fileService = $fileService;
+
     }
 
     public function create($id, $attachment)
@@ -61,7 +65,7 @@ class InternalAttachmentRepository
             $internalAttachment->delete();
             return [
                 'success' => true,
-                'message' => 'Delete successfully',
+                'message' => 'Delete successfully' . $id,
             ];
         } catch (\Exception $e) {
             return [

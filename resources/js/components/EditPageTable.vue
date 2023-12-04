@@ -216,28 +216,36 @@ export default {
     name: "EditPageTable",
     data() {
         return {
-            newNote: "",
+            newNote: this.note,
         };
     },
     props: {
         newCostItems: Array,
         newGrandTotal: Array,
-    },
-    computed: {
-        ...mapGetters({
-            newAttacmentFile: "newAttacmentFile",
-            Note: "newNote",
-        }),
+        newAttacmentFile: Array,
+        note: String,
     },
     methods: {
         ...mapActions({
-            addCostItem: "addCostItem",
-            minCostItem: "minCostItem",
-            calculateCostItem: "calculateCostItem",
-            calculateGrandTotal: "calculateGrandTotal",
             addAttacmentFile: "addAttacmentFile",
             minAttachmentFile: "minAttachmentFile",
         }),
+        addCostItem() {
+            console.log("lala");
+            this.$store.commit("setEditCostItems");
+            this.$store.commit("setEditGrandTotal");
+        },
+        minCostItem(i) {
+            this.$store.commit("setEditCostItems", i);
+            this.$store.commit("setEditGrandTotal");
+        },
+        calculateCostItem(i) {
+            this.$store.commit("calculateEditCostItem", i);
+            this.$store.commit("setEditGrandTotal");
+        },
+        calculateGrandTotal() {
+            this.$store.commit("setEditGrandTotal");
+        },
         strToInt(str) {
             return str === "" ? 0 : parseInt(str);
         },
@@ -254,13 +262,15 @@ export default {
             this.calculateGrandTotal();
         },
         handleInputFile(e) {
-            this.addAttacmentFile(e.target.files[0]);
+            this.$store.commit("addAttacmentFileEdit", e.target.files[0]);
+            // this.addAttacmentFile(e.target.files[0]);
         },
         removeAttachmentFile(i) {
-            this.minAttachmentFile(i);
+            this.$store.commit("minAttacmentFileEdit", i);
+            // this.minAttachmentFile(i);
         },
         updateNewNote() {
-            this.$store.commit("updateNewNote", this.newNote);
+            this.$store.commit("updateNoteEdit", this.newNote);
         },
     },
 };
