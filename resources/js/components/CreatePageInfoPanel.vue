@@ -23,7 +23,10 @@
                     <div class="pilihan">
                         <label>Link To </label>
                         <div @click.prevent="toggleOptions" class="link-to">
-                            <p v-if="newIstruction.linkTo.length == 0">
+                            <p
+                                v-if="newIstruction.linkTo.length == 0"
+                                class="select-placeholder"
+                            >
                                 Select Link To
                             </p>
                             <p v-else class="overflow-h">
@@ -74,7 +77,13 @@
                             id=""
                             v-model="newIstruction.invoiceTo"
                         >
-                            <option disabled value="">Select an Option</option>
+                            <option
+                                class="select-placeholder"
+                                disabled
+                                value=""
+                            >
+                                Select an Option
+                            </option>
                             <option>MITO</option>
                             <option>Something</option>
                         </select>
@@ -204,13 +213,13 @@ export default {
     height: 35px;
     background: rgb(250, 250, 250);
     cursor: pointer;
-    color: rgb(165, 165, 165);
     font-size: small;
     font-weight: 400;
     padding: 4px 6px;
     border: 1px solid rgb(210, 210, 210);
     border-radius: 3px;
     padding-left: 10px;
+    max-width: 180px;
 }
 .link-to option {
     color: black;
@@ -321,5 +330,9 @@ export default {
 .overflow-h {
     height: 20px;
     overflow: hidden;
+}
+
+.select-placeholder {
+    color: rgb(165, 165, 165);
 }
 </style>

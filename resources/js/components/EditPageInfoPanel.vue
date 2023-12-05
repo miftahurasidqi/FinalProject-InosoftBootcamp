@@ -210,6 +210,7 @@ export default {
     border: 1px solid rgb(210, 210, 210);
     border-radius: 3px;
     padding-left: 10px;
+    max-width: 180px;
 }
 .link-to option {
     color: black;
