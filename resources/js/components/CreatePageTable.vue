@@ -81,13 +81,13 @@
                             <option>SGD</option>
                         </select>
                     </td>
-                    <td class="table-isi-hasil px-3">
+                    <td class="px-3 table-isi-hasil">
                         <p>{{ costItem.vatAmount }}</p>
                     </td>
-                    <td class="table-isi-hasil px-3">
+                    <td class="px-3 table-isi-hasil">
                         <p>{{ costItem.subTotal }}</p>
                     </td>
-                    <td class="table-isi-hasil px-3">
+                    <td class="px-3 table-isi-hasil">
                         <p>{{ costItem.total }}</p>
                     </td>
                     <!-- <td>
@@ -306,7 +306,7 @@ thead tr th p {
     border-radius: 3px;
     border: 1px solid rgb(165, 165, 165);
     background: rgb(250, 250, 250);
-    min-width: 150px;
+    max-width: 100px;
     /* color: rgb(165, 165, 165); */
 }
 .table-isi-input input::placeholder {
@@ -332,7 +332,7 @@ thead tr th p {
 }
 
 .table-hasil {
-    background: rgb(250, 250, 250);
+    padding: 8px 16px;
 }
 .table-hasil p {
     display: flex;
@@ -340,6 +340,8 @@ thead tr th p {
     font-size: small;
     font-weight: 500;
     height: 20px;
+    justify-content: flex-end;
+    background: rgb(250, 250, 250);
 }
 .table-hasil span {
     padding-left: 5px;

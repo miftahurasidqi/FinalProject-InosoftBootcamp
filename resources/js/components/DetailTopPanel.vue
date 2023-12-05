@@ -5,7 +5,22 @@
         style="margin: 0rem 2rem"
     >
         <div>
-            <p class="font-style">Back</p>
+            <router-link to="/" class="font-style">
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="22"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="#00c412"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                >
+                    <path d="M15 18l-6-6 6-6" />
+                </svg>
+                Back
+            </router-link>
         </div>
         <div class="d-flex fles-row" v-if="status === 'draft'">
             <ActionButton
@@ -193,6 +208,8 @@ textarea {
 .font-style {
     font-size: medium;
     font-weight: 600;
+    color: black;
+    text-decoration: none;
 }
 .add-file {
     /* background: rgb(95, 190, 155);
