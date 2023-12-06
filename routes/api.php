@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DownloadController;
 use App\Http\Controllers\ForInternalController;
 use App\Http\Controllers\ThirdPartyInstructionController;
 use App\Http\Controllers\VendorInvoiceController;
@@ -47,7 +48,6 @@ Route::group([
     Route::post('/instruction/canceled/{id}', [ThirdPartyInstructionController::class, 'setInstructionToCanceled']);
     Route::patch('/instruction/completed/{id}', [ThirdPartyInstructionController::class, 'setInstructionToCompleted']);
     Route::delete('/instruction/{id}', [ThirdPartyInstructionController::class, 'destroy']);
-    //== belum
     Route::post('/instruction/update/{id}', [ThirdPartyInstructionController::class, 'updateInstruction']);
 });
 
@@ -55,13 +55,11 @@ Route::group([
 Route::group([], function () {
     Route::post('/addInvoice/{id}', [VendorInvoiceController::class, 'store']);
     Route::delete('/deleteInvoice/{id}', [VendorInvoiceController::class, 'deleteInvoice']);
-    // belum
     Route::post('/editInvoice/{id}', [VendorInvoiceController::class, 'updateInvoice']);
 });
 
 // Route Api For Internal Only
 Route::group([], function () {
-    // belum
     Route::post('/internalOnly/attachment/add/{id}', [ForInternalController::class, 'addAttachment']);
     Route::delete('/internalOnly/attachment/delete/{id}', [ForInternalController::class, 'deleteAttachment']);
     Route::post('/internalOnly/note/add/{id}', [ForInternalController::class, 'addNote']);
@@ -69,6 +67,10 @@ Route::group([], function () {
     Route::delete('/internalOnly/note/delete/{id}', [ForInternalController::class, 'deleteNote']);
 });
 
+// Route Api Download
+Route::group([], function () {
+    Route::get('/download', [DownloadController::class, 'downloadFile']);
+});
 // nanti
 // // Route Api For Link To
 // Route::group(['prefix' => 'linkTo'], function () {

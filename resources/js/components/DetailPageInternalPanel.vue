@@ -24,7 +24,15 @@
                             :key="index"
                             class="card attachment-panel"
                         >
-                            <p>{{ attachment.file.name }}</p>
+                            <p>
+                                <span
+                                    class="download"
+                                    @click="download(attachment.file)"
+                                >
+                                    <DownloadIcon />
+                                </span>
+                                {{ attachment.file.name }}
+                            </p>
                             <div class="attachment-panel-bottom">
                                 <p>
                                     Upload By {{ attachment.uploadBy }}
@@ -164,11 +172,13 @@ import ActionButton from "./ActionButton.vue";
 import TrashIcon from "./assets/icons/TrashIcon.vue";
 import PenIcon from "./assets/icons/PenIcon.vue";
 import Popup from "./Popup.vue";
+import DownloadIcon from "./assets/icons/DownloadIcon.vue";
 
 export default {
     name: "DetailPageInternalPanel",
     components: {
         ActionButton,
+        DownloadIcon,
         TrashIcon,
         PenIcon,
         Popup,
@@ -200,7 +210,11 @@ export default {
             addInternalNotes: "addInternalNotes",
             editInternalNotes: "editInternalNotes",
             deleteInternalNotes: "deleteInternalNotes",
+            downloadFile: "downloadFile",
         }),
+        download(file) {
+            this.downloadFile(file);
+        },
         async handleInputFile(e) {
             console.log(e.target.files[0]);
             const reqData = {
@@ -365,5 +379,8 @@ export default {
     p {
         margin: 0;
     }
+}
+.download {
+    margin-right: 5px;
 }
 </style>

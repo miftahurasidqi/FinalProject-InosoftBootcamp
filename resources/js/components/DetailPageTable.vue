@@ -62,6 +62,12 @@
                             :key="index"
                         >
                             <p>
+                                <span
+                                    class="download"
+                                    @click="download(attachment)"
+                                >
+                                    <DownloadIcon />
+                                </span>
                                 {{ attachment.name }}
                             </p>
                         </div>
@@ -86,9 +92,13 @@
 
 <script>
 import { mapGetters, mapActions } from "vuex";
+import DownloadIcon from "./assets/icons/DownloadIcon.vue";
 
 export default {
     name: "DetailPageTable",
+    components: {
+        DownloadIcon,
+    },
     computed: {
         ...mapGetters({
             costDetail: "costDetail",
@@ -97,7 +107,11 @@ export default {
     methods: {
         ...mapActions({
             getInstructionsById: "getInstructionsById",
+            downloadFile: "downloadFile",
         }),
+        download(file) {
+            this.downloadFile(file);
+        },
     },
 };
 </script>
@@ -172,5 +186,8 @@ export default {
     border: none;
     height: 100px;
     background: rgb(245, 245, 245);
+}
+.download {
+    margin-right: 5px;
 }
 </style>

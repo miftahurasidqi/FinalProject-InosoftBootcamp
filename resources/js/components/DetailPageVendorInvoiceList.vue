@@ -119,7 +119,18 @@
             </thead>
             <tr v-for="(invoice, index) in vendor_invoice" :key="index">
                 <td>{{ invoice.invoiceNumber }}</td>
-                <td>{{ invoice.invoiceAttachment.name }}</td>
+                <td>
+                    <p>
+                        <span
+                            class="download"
+                            @click="download(invoice.invoiceAttachment)"
+                        >
+                            <DownloadIcon />
+                        </span>
+
+                        {{ invoice.invoiceAttachment.name }}
+                    </p>
+                </td>
                 <td>
                     <span v-if="Array.isArray(invoice.suportingDocument)">
                         {{ invoice.suportingDocument.length }}
@@ -132,6 +143,10 @@
                             v-for="(suportDoc, i) in invoice.suportingDocument"
                             :key="i"
                         >
+                            <span class="download" @click="download(suportDoc)">
+                                <DownloadIcon />
+                            </span>
+
                             {{ suportDoc.name }}
                         </p>
                     </div>
@@ -179,6 +194,7 @@
 import { mapGetters, mapActions } from "vuex";
 import ActionButton from "./ActionButton.vue";
 import ArowBottom from "./assets/icons/ArowBottomIcon.vue";
+import DownloadIcon from "./assets/icons/DownloadIcon.vue";
 import TrashIcon from "./assets/icons/TrashIcon.vue";
 import PenIcon from "./assets/icons/PenIcon.vue";
 import Popup from "./Popup.vue";
@@ -188,6 +204,7 @@ export default {
     components: {
         ActionButton,
         ArowBottom,
+        DownloadIcon,
         TrashIcon,
         PenIcon,
         Popup,
@@ -242,7 +259,11 @@ export default {
             setInstructionToCompleted: "setInstructionToCompleted",
             saveEditInvoice: "saveEditInvoice",
             deleteInvoiceById: "deleteInvoice",
+            downloadFile: "downloadFile",
         }),
+        download(file) {
+            this.downloadFile(file);
+        },
         setShowNoData() {
             if (vendor_invoice.length !== 0) {
                 showNoData = false;
@@ -410,7 +431,9 @@ td {
     font-weight: 600;
     color: rgb(120, 120, 120);
 }
-
+.download {
+    margin-right: 5px;
+}
 .recive-instruction {
     display: flex;
     justify-content: center;

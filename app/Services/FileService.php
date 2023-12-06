@@ -56,24 +56,24 @@ class FileService
         }
     }
 
-    public function downloadFile($filename)
+    public function downloadFile($name, $path)
     {
         // Ambil path lengkap file dari penyimpanan Laravel
-        $path = storage_path('app/public/' . $filename);
+        $filePath = storage_path('app/' . $path);
 
         // Validasi bahwa file ada sebelum diunduh
-        if (!Storage::exists('public/' . $filename)) {
+        if (!Storage::exists('public/' . $name)) {
             abort(404);
         }
 
         // Mengatur header untuk respons HTTP
         $headers = [
             'Content-Type' => 'application/octet-stream',
-            'Content-Disposition' => 'attachment; filename="' . $filename . '"',
+            'Content-Disposition' => 'attachment; filename="' . $name . '"',
         ];
 
         // Mengembalikan file sebagai respons HTTP
-        return response()->download($path, $filename, $headers);
+        return response()->download($filePath, $name, $headers);
     }
 
 }

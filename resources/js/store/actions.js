@@ -319,16 +319,40 @@ export const deleteInternalNotes = async ({ commit }, id) => {
     }
 };
 
-export const downloadFile = async ({ commit }, id) => {
-    console.log(id);
-    // request data: {
-    //     fileName: "string",
-    // }
+export const downloadFile = async ({ commit }, file) => {
+    try {
+        const { name, path } = file;
 
-    // const response = await axios.get(`api/download`);
-    // commit("setInstructionDetail", response);
+        const response = await axios.get(`/api/download`, {
+            params: {
+                name,
+                path,
+            },
+            responseType: "blob",
+        });
 
-    // respons => download file
+        console.log(response.data);
+        const url = window.URL.createObjectURL(new Blob([response.data]));
+        console.log(url);
+        const link = document.createElement("a");
+        link.href = url;
+
+        // Menentukan nama file untuk diunduh
+        link.setAttribute("download", name);
+
+        // Menambahkan tautan ke dokumen
+        document.body.appendChild(link);
+
+        // Memicu klik pada tautan untuk memulai unduhan
+        link.click();
+
+        // Menghapus tautan dari dokumen setelah unduhan selesai
+        document.body.removeChild(link);
+
+        // commit("setInstructionDetail", response);
+    } catch (error) {
+        console.log(error);
+    }
 };
 
 // for Detailpage end
