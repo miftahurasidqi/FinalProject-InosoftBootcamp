@@ -6,8 +6,7 @@
 
 import "./bootstrap";
 import { createApp } from "vue";
-import { createRouter, createWebHistory } from "vue-router";
-import { routes } from "./routes";
+import router from "./router";
 import store from "./store";
 
 /**
@@ -16,13 +15,9 @@ import store from "./store";
  * to use in your application's views. An example is included for you.
  */
 
-const app = createApp({});
-const router = createRouter({
-    history: createWebHistory(),
-    routes,
-});
-
 import App from "./App.vue"; // Komponen App ini untuk induk aplikasi
+
+const app = createApp({});
 app.component("App", App); // router-view sama navbar dipasang di App.vue
 
 /**

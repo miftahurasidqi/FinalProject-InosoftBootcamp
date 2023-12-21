@@ -28,14 +28,14 @@
 
 <script>
 import { mapGetters, mapActions } from "vuex";
-import ActionButton from "../ActionButton.vue";
+import ActionButton from "../components/ActionButton.vue";
 
-import DetailTopPanel from "../DetailTopPanel.vue";
-import DetailPageInfoPanel from "../DetailPageInfoPanel.vue";
-import DetailPageTable from "../DetailPageTable.vue";
-import DetailPageVendorInvoice from "../DetailPageVendorInvoice.vue";
-import DetailPageVendorInvoiceList from "../DetailPageVendorInvoiceList.vue";
-import DetailPageInternalPanel from "../DetailPageInternalPanel.vue";
+import DetailTopPanel from "../components/DetailTopPanel.vue";
+import DetailPageInfoPanel from "../components/DetailPageInfoPanel.vue";
+import DetailPageTable from "../components/DetailPageTable.vue";
+import DetailPageVendorInvoice from "../components/DetailPageVendorInvoice.vue";
+import DetailPageVendorInvoiceList from "../components/DetailPageVendorInvoiceList.vue";
+import DetailPageInternalPanel from "../components/DetailPageInternalPanel.vue";
 
 export default {
     name: "DetailPage",

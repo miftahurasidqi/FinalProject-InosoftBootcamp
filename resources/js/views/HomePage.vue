@@ -94,8 +94,8 @@
 
 <script>
 import { mapGetters, mapActions } from "vuex";
-import HomeTable from "../HomeTable.vue";
-import ActionButton from "../ActionButton.vue";
+import HomeTable from "../components/HomeTable.vue";
+import ActionButton from "../components/ActionButton.vue";
 
 export default {
     name: "HomePage",

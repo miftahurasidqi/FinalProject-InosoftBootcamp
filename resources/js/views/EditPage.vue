@@ -36,13 +36,13 @@
 
 <script>
 import { mapGetters, mapActions } from "vuex";
-import EditPageInfoPanel from "../EditPageInfoPanel.vue";
-import EditPageTable from "../EditPageTable.vue";
-import InternalNote from "../modal/InternalNote.vue";
-import VendorInvoice from "../modal/VendorInvoice.vue";
-import ReasonCancellation from "../modal/ReasonCancellation.vue";
-import SendMail from "../modal/SendMail.vue";
-import AddInvoiceTarget from "../modal/AddInvoiceTarget.vue";
+import EditPageInfoPanel from "../components/EditPageInfoPanel.vue";
+import EditPageTable from "../components/EditPageTable.vue";
+import InternalNote from "../components/modal/InternalNote.vue";
+import VendorInvoice from "../components/modal/VendorInvoice.vue";
+import ReasonCancellation from "../components/modal/ReasonCancellation.vue";
+import SendMail from "../components/modal/SendMail.vue";
+import AddInvoiceTarget from "../components/modal/AddInvoiceTarget.vue";
 
 export default {
     name: "EditPage",
