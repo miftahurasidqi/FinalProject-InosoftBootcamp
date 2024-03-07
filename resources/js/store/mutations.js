@@ -1,4 +1,4 @@
-// for Hompage start
+// ====== HOME PAGE ======
 export const setInstructions = (state, response) => {
     // merubah value state.instructions dengan data dari response
     // memeriksa respons yg diberikan adalah halaman 1
@@ -17,9 +17,8 @@ export const setInstructions = (state, response) => {
             state.instructions.page.size + response.data.page.size;
     }
 };
-// for Hompage end
 
-// for CreatePage start
+// ====== FOR CREATE PAGE ======
 export const setNewCostItems = (state, index) => {
     if (index === undefined) {
         state.newCostItems.push({
@@ -40,7 +39,6 @@ export const setNewCostItems = (state, index) => {
             : state.newCostItems.splice(index, 1);
     }
 };
-
 export const calculateNewCostItem = (state, index) => {
     const item = state.newCostItems[index];
 
@@ -50,7 +48,6 @@ export const calculateNewCostItem = (state, index) => {
 
     state.newCostItems[index] = item;
 };
-
 export const setGrandTotal = (state) => {
     const costItems = state.newCostItems;
     const totalByCurrency = {};
@@ -88,14 +85,11 @@ export const minAttacmentFile = ({ attacmentFile }, index) => {
     console.log(attacmentFile[index]);
     attacmentFile.splice(index, 1);
 };
-
 export const updateNewNote = ({ newIstruction }, note) => {
     newIstruction.costDetail.notes = note;
 };
 
-// for CreatePage end
-
-// for Detailpage start
+// ====== DETAIL PAGE ======
 export const setInstructionDetail = (state, response) => {
     state.editIstruction = response;
     state.instructionDetail = response;
@@ -107,14 +101,12 @@ export const updateDescription = ({ inputStatusInfo }, description) => {
 export const addAttacmentCancelFile = ({ inputStatusAttachmentFile }, file) => {
     inputStatusAttachmentFile.push(file);
 };
-
 export const removeAttacmentCancelFile = (
     { inputStatusAttachmentFile },
     index
 ) => {
     inputStatusAttachmentFile.splice(index, 1);
 };
-
 export const updateInvoiceNumber = ({ newInvoice }, value) => {
     newInvoice.invoiceNumber = value;
 };
@@ -135,13 +127,11 @@ export const handleInputSuportDoc = ({ newInvoice }, files) => {
 export const deleteSuportDoc = ({ newInvoice }, index) => {
     newInvoice.suportingDocument.splice(index, 1);
 };
-// for Detailpage end
 
-// for Editpage start
+// ====== EDIT PAGE ======
 export const setInstructionEdit = (state, response) => {
     state.editIstruction = response;
 };
-
 export const setEditCostItems = (state, index) => {
     if (index === undefined) {
         state.editIstruction.costDetail.costItems.push({
@@ -162,7 +152,6 @@ export const setEditCostItems = (state, index) => {
             : state.editIstruction.costDetail.costItems.splice(index, 1);
     }
 };
-
 export const setEditGrandTotal = (state) => {
     const costItems = state.editIstruction.costDetail.costItems;
     const totalByCurrency = {};
@@ -170,7 +159,6 @@ export const setEditGrandTotal = (state) => {
     costItems.forEach((item) => {
         console.log(item);
         const { currency, vatAmount, subTotal, total } = item;
-
         // Mengecek apakah mata uang sudah ada dalam objek totalByCurrency
         if (currency !== "") {
             if (!totalByCurrency[currency]) {
@@ -194,14 +182,11 @@ export const setEditGrandTotal = (state) => {
     }));
     state.editIstruction.costDetail.grandTotal = grandTotal;
 };
-
 export const calculateEditCostItem = (state, index) => {
     const item = state.editIstruction.costDetail.costItems[index];
-
     item.subTotal = item.qty * item.unitPrice;
     item.vatAmount = (item.subTotal * item.gst) / 100;
     item.total = item.subTotal + item.vatAmount;
-
     state.editIstruction.costDetail.costItems[index] = item;
 };
 export const addAttacmentFileEdit = (state, file) => {
@@ -223,11 +208,9 @@ export const minAttacmentFileEdit = (state, index) => {
     state.editIstruction.costDetail.attachment.splice(index, 1);
     console.log(state.changeFile);
 };
-
 export const updateNoteEdit = ({ editIstruction }, note) => {
     editIstruction.costDetail.notes = note;
 };
-
 export const clearEditData = (state) => {
     state.editIstruction = {
         instructionType: "",
@@ -251,5 +234,3 @@ export const clearEditData = (state) => {
         minFiles: [],
     };
 };
-
-// for EditPage end

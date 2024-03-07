@@ -1,14 +1,12 @@
-// for Hompage start
+// ====== HOME PAGE ======
 export const instructions = (state) => {
-    // console.log(state.openInstructions);
     return state.instructions.data;
 };
 export const pageInfo = (state) => {
     return state.instructions.page;
 };
-// for Hompage end
 
-// for CreatePage start
+// ====== FOR CREATE PAGE ======
 export const newIstruction = (state) => {
     return state.newIstruction;
 };
@@ -19,14 +17,11 @@ export const newGrandTotal = (state) => {
     return state.newGrandTotal;
 };
 export const newAttacmentFile = ({ attacmentFile }) => {
-    console.log(attacmentFile);
     return attacmentFile;
 };
 export const newNote = ({ newIstruction }) => {
-    console.log(newIstruction.costDetail.notes);
     return newIstruction.costDetail.notes;
 };
-
 export const getLinkTo = ({ pilihanInput }) => {
     return pilihanInput.linkTo;
 };
@@ -39,9 +34,8 @@ export const getCustomer = ({ pilihanInput }) => {
 export const getInvoiceTo = ({ pilihanInput }) => {
     return pilihanInput.newCostDetail;
 };
-// for CreatePage end
 
-// for Detailpage start
+// ====== DETAIL PAGE ======
 export const instructionDetail = (state) => {
     return state.instructionDetail;
 };
@@ -58,11 +52,9 @@ export const inputStatusAttachmentFile = (state) => {
 export const newInvoiceNumber = (state) => {
     return state.newInvoice.invoiceNumber;
 };
-
 export const newInvoiceAttachment = (state) => {
     return state.newInvoice.invoiceAttachment;
 };
-
 export const newInvoiceSuportDoc = (state) => {
     return state.newInvoice.suportingDocument;
 };
@@ -73,10 +65,7 @@ export const internalNotes = (state) => {
     return state.instructionDetail.internal_only_notes;
 };
 
-// for Detailpage end
-
-// for Editpage start
-
+// ====== EDIT PAGE ======
 export const editIstruction = (state) => {
     return state.editIstruction;
 };
@@ -87,12 +76,8 @@ export const editGrandTotal = (state) => {
     return state.editIstruction.costDetail.grandTotal;
 };
 export const editAttacmentFile = (state) => {
-    // console.log(attacmentFile);
     return state.editIstruction.costDetail.attachment;
 };
-
 export const editNote = ({ editIstruction }) => {
-    console.log(editIstruction.costDetail.notes);
     return editIstruction.costDetail.notes;
 };
-// for EditPage end

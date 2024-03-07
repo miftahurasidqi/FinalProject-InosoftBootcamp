@@ -1,6 +1,6 @@
 <template>
     <div id="container-utama">
-        <TheNavbar />
+        <!-- <TheNavbar /> -->
         <TheSideBar />
         <div class="conten">
             <router-view style="width: calc(100% - 75px)"></router-view>
@@ -9,15 +9,8 @@
 </template>
 
 <script>
-import TheNavbar from "./components/TheNavbar.vue";
-import TheSideBar from "./components/SideBar.vue";
-
 export default {
     name: "App",
-    components: {
-        TheNavbar,
-        TheSideBar,
-    },
 };
 </script>
 

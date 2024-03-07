@@ -1,9 +1,9 @@
 import { createRouter, createWebHistory } from "vue-router";
 
-import HomePage from "../views/HomePage.vue";
-import CreatePage from "../views/CreatePage.vue";
-import DetailPage from "../views/DetailPage.vue";
-import EditPage from "../views/EditPage.vue";
+import CreatePage from "../views/Create";
+import DetailPage from "../views/Detail";
+import HomePage from "../views/Home";
+import EditPage from "../views/Edit";
 
 const routes = [
     {

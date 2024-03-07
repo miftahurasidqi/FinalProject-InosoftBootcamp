@@ -168,21 +168,9 @@
 
 <script>
 import { mapGetters, mapActions } from "vuex";
-import ActionButton from "./ActionButton.vue";
-import TrashIcon from "./assets/icons/TrashIcon.vue";
-import PenIcon from "./assets/icons/PenIcon.vue";
-import Popup from "./Popup.vue";
-import DownloadIcon from "./assets/icons/DownloadIcon.vue";
 
 export default {
     name: "DetailPageInternalPanel",
-    components: {
-        ActionButton,
-        DownloadIcon,
-        TrashIcon,
-        PenIcon,
-        Popup,
-    },
     data() {
         return {
             isDeleteAttachment: false,

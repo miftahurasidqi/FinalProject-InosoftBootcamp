@@ -1,20 +1,16 @@
-// for Hompage start
+// ====== HOME PAGE ======
 export const getOpenInstructions = async ({ commit }, currrentPage) => {
     const page = currrentPage + 1;
     const response = await axios.get(`api/instructions/open?page=${page}`);
-
-    console.log(response.data);
-    commit("setInstructions", response); // menjalankan function setInstructions() yg ada pada file mutations.js
+    commit("setInstructions", response);
+    // console.log(response.data);
 };
-
 export const getCompletedInstructions = async ({ commit }, currrentPage) => {
     const page = currrentPage + 1;
     const response = await axios.get(`api/instructions/completed?page=${page}`);
-
-    console.log(response.data);
-    commit("setInstructions", response); // menjalankan function setInstructions() yg ada pada file mutations.js
+    commit("setInstructions", response);
+    // console.log(response.data);
 };
-
 export const searchInstructions = async ({ commit }, reqData) => {
     console.log(reqData);
     const { status, keyWord, currrentPage } = reqData;
@@ -27,40 +23,32 @@ export const searchInstructions = async ({ commit }, reqData) => {
     const response = await axios.get(`api/instructions/search`, {
         params: queryParameters,
     });
-
-    console.log(response.data);
-    commit("setInstructions", response); // menjalankan function setInstructions() yg ada pada file mutations.js
+    commit("setInstructions", response);
+    // console.log(response.data);
 };
 
-// for Hompage end
-
-// for CreatePage start
+// ====== FOR CREATE PAGE ======
 export const addCostItem = async ({ commit }) => {
     commit("setNewCostItems");
     commit("setGrandTotal");
 };
-
 export const minCostItem = async ({ commit }, index) => {
     commit("setNewCostItems", index);
     commit("setGrandTotal");
 };
-
 export const calculateCostItem = async ({ commit }, index) => {
     commit("calculateNewCostItem", index);
     commit("setGrandTotal");
 };
-
 export const calculateGrandTotal = async ({ commit }) => {
     commit("setGrandTotal");
 };
-
 export const addAttacmentFile = async ({ commit }, file) => {
     commit("addAttacmentFile", file);
 };
 export const minAttachmentFile = async ({ commit }, index) => {
     commit("minAttacmentFile", index);
 };
-
 export const saveNewInstruction = async ({ commit, state }, status) => {
     state.newIstruction.status = status;
     state.newIstruction.costDetail.costItems = state.newCostItems;
@@ -68,27 +56,23 @@ export const saveNewInstruction = async ({ commit, state }, status) => {
     try {
         const formData = new FormData();
         formData.append("data", JSON.stringify(state.newIstruction));
-        // Iterasi melalui setiap file dalam array attachmentFile
         state.attacmentFile.forEach((file, i) => {
             formData.append(`attachment[${i}]`, file);
         });
-        // console.log(state.newIstruction);
-        // Mengirim data ke API menggunakan metode POST
+
         const response = await axios.post("/api/newInstructions", formData, {
             headers: {
                 "Content-Type": "multipart/form-data",
             },
         });
-        // Handle response
         console.log(response);
         return response.data.id;
     } catch (error) {
         console.error("Error sending data to API:", error);
     }
 };
-// for CreatePage end
 
-// for Detailpage start
+// ====== DETAIL PAGE ======
 export const getInstructionsById = async ({ commit }, id) => {
     try {
         const response = await axios.get(`/api/instruction/${id}`);
@@ -99,7 +83,6 @@ export const getInstructionsById = async ({ commit }, id) => {
         console.error("Error getInstruction data to API:", error);
     }
 };
-
 export const deleteInstructionsById = async ({ commit }, id) => {
     console.log(id);
     try {
@@ -113,7 +96,6 @@ export const deleteInstructionsById = async ({ commit }, id) => {
         console.error("Error sending data to API:", error);
     }
 };
-
 export const terminateInstructionsById = async ({ commit, state }, id) => {
     console.log(state.inputStatusInfo);
     console.log(state.inputStatusAttachmentFile);
@@ -140,7 +122,6 @@ export const terminateInstructionsById = async ({ commit, state }, id) => {
         console.error("Error sending data to API:", error);
     }
 };
-
 export const saveNewInvoice = async ({ commit, state }, id) => {
     console.log(id);
     const formData = new FormData();
@@ -166,7 +147,6 @@ export const saveNewInvoice = async ({ commit, state }, id) => {
         console.error("Error sending data to API:", error);
     }
 };
-
 export const saveEditInvoice = async ({ commit }, editData) => {
     console.log(editData);
     const { id, invoiceNumber, deleteFile, addFile } = editData;
@@ -196,7 +176,6 @@ export const saveEditInvoice = async ({ commit }, editData) => {
         console.error("Error :", error);
     }
 };
-
 export const deleteInvoice = async ({ commit }, id) => {
     console.log(id);
     try {
@@ -217,7 +196,6 @@ export const setInstructionToCompleted = async ({ commit }, id) => {
         console.log(error);
     }
 };
-
 export const addInternalAttachment = async ({ commit }, reqData) => {
     console.log(reqData);
 
@@ -241,7 +219,6 @@ export const addInternalAttachment = async ({ commit }, reqData) => {
         console.error("Error :", error);
     }
 };
-
 export const deleteInternalAttachment = async ({ commit }, id) => {
     console.log(id);
 
@@ -255,7 +232,6 @@ export const deleteInternalAttachment = async ({ commit }, id) => {
         console.log(error);
     }
 };
-
 export const addInternalNotes = async ({ commit }, reqData) => {
     console.log(reqData);
     const { id, note } = reqData;
@@ -268,26 +244,7 @@ export const addInternalNotes = async ({ commit }, reqData) => {
     } catch (error) {
         console.log(error);
     }
-    // request data: {
-    //     note: "string",
-    //     noteBy: "string",
-    // }
-    // const response = await axios.post(`api/forInternalOnly/addNote/${id}`);
-    //     // commit("setInstructionDetail", response);
-
-    // response: {
-    // message: "add note success",
-    // data: [
-    //     {
-    //         id: "string",
-    //         note: "string",
-    //         noteBy: "string",
-    //         time: "string",
-    //     }
-    // ]
-    // }
 };
-
 export const editInternalNotes = async ({ commit }, reqData) => {
     const { id, note } = reqData;
     console.log(id, note);
@@ -304,7 +261,6 @@ export const editInternalNotes = async ({ commit }, reqData) => {
     } catch (error) {
         console.log(error);
     }
-    // commit("setInstructionDetail", response)
 };
 export const deleteInternalNotes = async ({ commit }, id) => {
     console.log(id);
@@ -318,7 +274,6 @@ export const deleteInternalNotes = async ({ commit }, id) => {
         console.log(error);
     }
 };
-
 export const downloadFile = async ({ commit }, file) => {
     try {
         const { name, path } = file;
@@ -354,11 +309,7 @@ export const downloadFile = async ({ commit }, file) => {
         console.log(error);
     }
 };
-
-// for Detailpage end
-
-// for Editpage start
-
+// ====== EDIT PAGE ======
 export const saveEditInstruction = async ({ commit, state }, reqData) => {
     const { status, id } = reqData;
     const addFiles = state.changeFile.addFiles;
@@ -376,12 +327,10 @@ export const saveEditInstruction = async ({ commit, state }, reqData) => {
     try {
         const formData = new FormData();
         formData.append("data", JSON.stringify(editInstructionData));
-        // Iterasi melalui setiap file dalam array attachmentFile
         addFiles.forEach((file, i) => {
             formData.append(`attachment[${i}]`, file);
         });
-        // console.log(state.newIstruction);
-        // Mengirim data ke API menggunakan metode POST
+
         const response = await axios.post(
             `/api/instruction/update/${id}`,
             formData,
@@ -391,13 +340,11 @@ export const saveEditInstruction = async ({ commit, state }, reqData) => {
                 },
             }
         );
-        // Handle response
+
         console.log(response.data);
         commit("clearEditData");
-
         return response.data.id;
     } catch (error) {
         console.error("Error sending data to API:", error);
     }
 };
-// for EditPage end

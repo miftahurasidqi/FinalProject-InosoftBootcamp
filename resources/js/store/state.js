@@ -1,12 +1,10 @@
 export const state = {
-    // for Hompage start
+    // ====== HOME PAGE ======
     instructions: {
         data: [],
         page: {},
     },
-    // for Hompage end
-
-    // for CreatePage start
+    // ====== FOR CREATE PAGE ======
     newIstruction: {
         instructionType: "",
         linkTo: [],
@@ -65,9 +63,8 @@ export const state = {
         customer: [],
         invoiceTo: [],
     },
-    // for CreatePage end
 
-    // for Detailpage start
+    // ====== DETAIL PAGE ======
     instructionDetail: {
         costDetail: {
             costItems: [],
@@ -96,9 +93,7 @@ export const state = {
         suportingDocument: [],
     },
 
-    // for Detailpage end
-
-    // for Editpage start
+    // ====== EDIT PAGE ======
     editIstruction: {
         instructionType: "",
         linkTo: [],

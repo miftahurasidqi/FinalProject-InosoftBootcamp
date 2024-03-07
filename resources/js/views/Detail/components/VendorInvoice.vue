@@ -104,17 +104,9 @@
 
 <script>
 import { mapGetters, mapActions } from "vuex";
-import TrashIcon from "./assets/icons/TrashIcon.vue";
-import ActionButton from "./ActionButton.vue";
-import Popup from "./Popup.vue";
 
 export default {
     name: "DetailPageVendorInvoice",
-    components: {
-        ActionButton,
-        TrashIcon,
-        Popup,
-    },
     props: {
         status: {
             type: String,

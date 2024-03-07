@@ -17,6 +17,7 @@
                 <p>Draft</p>
             </div>
         </div>
+
         <div class="container-content-1">
             <div class="container-content-1-left">
                 <div class="content-1-top" style="margin-bottom: 1rem">
@@ -156,24 +157,19 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+
 export default {
-    name: "CreatePageInfoPanel",
-    props: {
-        newIstruction: {
-            type: Object,
-        },
-        getLinkTo: {
-            type: Array,
-        },
-        getAssignedVendor: {
-            type: Array,
-        },
-        getCustomer: {
-            type: Array,
-        },
-        getInvoiceTo: {
-            type: Array,
-        },
+    name: "CreateInfoPanel",
+
+    computed: {
+        ...mapGetters({
+            newIstruction: "newIstruction",
+            getAssignedVendor: "getAssignedVendor",
+            getInvoiceTo: "getInvoiceTo",
+            getCustomer: "getCustomer",
+            getLinkTo: "getLinkTo",
+        }),
     },
     data() {
         return {

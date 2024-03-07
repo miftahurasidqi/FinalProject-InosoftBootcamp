@@ -225,12 +225,9 @@
 
 <script>
 import { mapGetters, mapActions } from "vuex";
-import TrashIcon from "./assets/icons/TrashIcon.vue";
+
 export default {
     name: "EditPageTable",
-    components: {
-        TrashIcon,
-    },
     data() {
         return {
             newNote: this.note,

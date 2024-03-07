@@ -192,23 +192,9 @@
 </template>
 <script>
 import { mapGetters, mapActions } from "vuex";
-import ActionButton from "./ActionButton.vue";
-import ArowBottom from "./assets/icons/ArowBottomIcon.vue";
-import DownloadIcon from "./assets/icons/DownloadIcon.vue";
-import TrashIcon from "./assets/icons/TrashIcon.vue";
-import PenIcon from "./assets/icons/PenIcon.vue";
-import Popup from "./Popup.vue";
 
 export default {
     name: "DetailPageVendorInvoiceList",
-    components: {
-        ActionButton,
-        ArowBottom,
-        DownloadIcon,
-        TrashIcon,
-        PenIcon,
-        Popup,
-    },
     props: {
         status: {
             type: String,
